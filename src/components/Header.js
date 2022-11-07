@@ -1,0 +1,102 @@
+import React from "react";
+import { Link } from "react-router-dom";
+import logo from "../images/logo.png";
+import glass from "../images/glass.png";
+import typewriter from "../images/typewriter.png";
+import lantern from "../images/lantern.png";
+import splashBlue from "../images/splash-blue.png";
+import splashBlueDark from "../images/splash-blue-darker.png";
+import splashGreen from "../images/splash-green.png";
+import splashPurple from "../images/splash-purple.png";
+import splashPurplePure from "../images/splash-purple-pure.png";
+import splashRed from "../images/splash-red.png";
+
+const Header = () => {
+  return (
+    <nav>
+      <Link to="/" className="home">
+        <img src={typewriter} alt="typewriter" />
+      </Link>
+      <div className="navbar">
+        <ul className="nav-main">
+          <Link to="/updates">
+            <li className="nav-main-item">
+              <div className="image-bag nav-img-one">
+                <img className="nav-main-icon" src={glass} alt="glass" />
+              </div>
+              <span className="nav-main-text">Updates</span>
+            </li>
+          </Link>
+
+          <Link to="/tasks">
+            <li className="nav-main-item">
+              <div className="image-bag nav-img-two">
+                <img className="nav-main-icon" src={glass} alt="glass" />
+              </div>
+              <span className="nav-main-text">Tasks</span>
+            </li>
+          </Link>
+
+          <Link to="/praxis">
+            <li className="nav-main-item">
+              <div className="image-bag nav-img-three">
+                <img className="nav-main-icon" src={glass} alt="glass" />
+              </div>
+              <span className="nav-main-text">Praxis</span>
+            </li>
+          </Link>
+
+          <Link to="/groups">
+            <li className="nav-main-item">
+              <div className="image-bag nav-img-four">
+                <img className="nav-main-icon" src={glass} alt="glass" />
+              </div>
+              <span className="nav-main-text">Groups</span>
+            </li>
+          </Link>
+
+          <Link to="/players">
+            <li className="nav-main-item">
+              <div className="image-bag nav-img-five">
+                <img className="nav-main-icon" src={glass} alt="glass" />
+              </div>
+              <span className="nav-main-text">Players</span>
+            </li>
+          </Link>
+        </ul>
+        <div className="right-side">
+          <div className="lantern-set">
+            <img src={lantern} alt="lantern" className="lantern" />
+            <span>LIGHT/DARK</span>
+          </div>
+          {/* <div className="login">
+          <span>Log In / Sign Up</span> */}
+          {/* </div> */}
+          <div className="login">
+            <form>
+              <div className="login-group">
+                <div className="login-set">
+                  <label for="username">Username:</label>
+                  <input type="text" name="username" id="username" />
+                </div>
+                <div className="login-set">
+                  <label for="password">Password:</label>
+                  <input type="text" name="password" />
+                </div>
+                <button className="login-button">Log In</button>
+              </div>
+              <p className="signup">
+                <span>New? </span>
+                <Link to="/register" className="signup-link">
+                  Sign Up Here
+                </Link>
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
+};
+
+export default Header;
