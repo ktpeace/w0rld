@@ -76,11 +76,11 @@ const Header = () => {
             <form>
               <div className="login-group">
                 <div className="login-set">
-                  <label for="username">Username:</label>
+                  <label htmlFor="username">Username:</label>
                   <input type="text" name="username" id="username" />
                 </div>
                 <div className="login-set">
-                  <label for="password">Password:</label>
+                  <label htmlFor="password">Password:</label>
                   <input type="text" name="password" />
                 </div>
                 <button className="login-button">Log In</button>

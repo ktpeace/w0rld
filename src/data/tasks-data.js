@@ -4,9 +4,10 @@ export const tasks = [
     name: "Calvinball",
     group: "S.N.I.D.E.",
     status: "Active",
-    level: 5,
+    level: 1,
     points: 3,
-    desc: "Show someone a better way to solve a mundane problem they are facing.",
+    description:
+      "Show someone a better way to solve a mundane problem they are facing.",
     completed: 15,
   },
   {
@@ -14,30 +15,30 @@ export const tasks = [
     name: "Thriddleblocky",
     group: "U.A. Masters Course",
     status: "Active",
-    level: 5,
-    points: 3,
-    desc: "Show someone a better way to solve a mundane problem they are facing.",
-    completed: 15,
+    level: 3,
+    points: 7,
+    description: "Play at being a dolphin.",
+    completed: 3,
   },
   {
     id: 3,
     name: "Sheepshearing",
     group: "Journeymen",
     status: "Active",
-    level: 5,
-    points: 3,
-    desc: "Show someone a better way to solve a mundane problem they are facing.",
-    completed: 15,
+    level: 0,
+    points: 9,
+    description: "Shear a sheep with sheer dedication.",
+    completed: 100,
   },
   {
     id: 4,
     name: "Seeing Beyond Sight Photo Challenge",
     group: "Analog",
     status: "Retired",
-    level: 5,
-    points: 3,
-    desc: "Show someone a better way to solve a mundane problem they are facing.",
-    completed: 15,
+    level: 2,
+    points: 10,
+    description: "Some photos or some shit, I dunno.",
+    completed: 45,
   },
   {
     id: 5,
@@ -46,7 +47,7 @@ export const tasks = [
     status: "Active",
     level: 5,
     points: 3,
-    desc: "Show someone a better way to solve a mundane problem they are facing.",
+    description: "Poemin' in places.",
     completed: 15,
   },
   {
@@ -56,7 +57,7 @@ export const tasks = [
     status: "Pretired",
     level: 5,
     points: 3,
-    desc: "Show someone a better way to solve a mundane problem they are facing.",
+    description: "Beat up a politician in VR.",
     completed: 15,
   },
   {
@@ -66,7 +67,8 @@ export const tasks = [
     status: "Active",
     level: 5,
     points: 3,
-    desc: "Show someone a better way to solve a mundane problem they are facing.",
+    description:
+      "This one might take a while and you'd better have a real good last one with your wife first.",
     completed: 15,
   },
   {
@@ -76,7 +78,8 @@ export const tasks = [
     status: "Retired",
     level: 5,
     points: 3,
-    desc: "Show someone a better way to solve a mundane problem they are facing.",
+    description:
+      "God has been waiting all his infinity for this one match. It's all up to you, little man",
     completed: 15,
   },
   {
@@ -86,7 +89,7 @@ export const tasks = [
     status: "Active",
     level: 5,
     points: 3,
-    desc: "Show someone a better way to solve a mundane problem they are facing.",
+    description: "Don't just stand there, PUNCH IT.",
     completed: 15,
   },
   {
@@ -96,7 +99,8 @@ export const tasks = [
     status: "Pretired",
     level: 5,
     points: 3,
-    desc: "Show someone a better way to solve a mundane problem they are facing.",
+    description:
+      "Some say it's too easy. I say it's the hardest task of all...",
     completed: 15,
   },
 ];

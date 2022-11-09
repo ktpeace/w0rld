@@ -1,10 +1,10 @@
 // todo
-// on click on a column, sort table by that column
-// filter options: group, & active/retired/pretired
+// on click on a column, sort table by that column ↑↓
 // selected filters with X's at top are on bg of ripped paper, maybe with typewriter-style font
 // useState of logged in & level to check whether can sort by active/retired
 // grey or color task on hover
 // make overflow be on 'next'
+// add a "clear all" for filters
 // colors beside groups to be round and look like gems in glass buttons (use images marbled/gem stuff not colors)
 
 import React, { useState, useEffect } from "react";
@@ -12,19 +12,23 @@ import { Link } from "react-router-dom";
 import { tasks } from "../data/tasks-data";
 import { groups } from "../data/groups-data";
 import pixie from "../images/pixie-avatar.jpeg";
+import { type } from "@testing-library/user-event/dist/type";
 
 const Tasks = () => {
   const [groupFilter, setGroupFilter] = useState([]);
   const [statusFilter, setStatusFilter] = useState([]);
   const [searchInput, setSearchInput] = useState("");
+  const [sorter, setSorter] = useState(null);
+  const [sortVal, setSortVal] = useState("");
   // const [searchClicked, setSearchClicked] = useState(false);
 
   const dummyDataMapper = tasks.map((task) => {
     return (
       <tr
+        key={task.name}
         status={task.status}
         name={task.name}
-        desc={task.desc}
+        description={task.description}
         group={task.group}
         level={task.level}
         points={task.points}
@@ -35,7 +39,7 @@ const Tasks = () => {
             {task.name}
           </Link>
         </td>
-        <td className="tx-desc">{task.desc}</td>
+        <td className="tx-desc">{task.description}</td>
         <td className="tx-group">{task.group}</td>
         <td>{task.level}</td>
         <td>{task.points}</td>
@@ -79,7 +83,6 @@ const Tasks = () => {
 
   const statusFilterHandler = (e) => {
     const status = e.currentTarget.innerText;
-    console.log(status);
     if (statusFilter.includes(status)) {
       setStatusFilter(
         statusFilter.filter((statusName) => statusName !== status)
@@ -105,12 +108,80 @@ const Tasks = () => {
   });
 
   const searchHandler = masterFilter.filter((item) => {
-    console.log(item);
     return Object.values(item.props)
       .join("")
       .toLowerCase()
       .includes(searchInput.toLowerCase());
   });
+
+  const sortHandler = (e) => {
+    const text = e.currentTarget.innerText;
+    const arrow = text[text.length - 1];
+    const header = text.slice(0, text.length - 2);
+    const allArrows = document.getElementsByClassName("arrow");
+    console.log(allArrows);
+    for (let i = 0; i < allArrows.length; i++) {
+      allArrows[i].innerText = "↕";
+    }
+    // allArrows.forEach((span) => (span.innerText = "↕"));
+    if (arrow === "↕") {
+      setSorter("↓");
+      setSortVal(header.toLowerCase());
+      e.currentTarget.innerHTML = `${header} <span title="sort" class="arrow">↓</span>`;
+      // sort data descending by header
+    } else if (arrow === "↓") {
+      setSorter("↑");
+      setSortVal(header.toLowerCase());
+      e.currentTarget.innerHTML = `${header} <span title="sort" class="arrow">↑</span>`;
+      // sort data ascending by header
+    } else if (arrow === "↑") {
+      setSorter(null);
+      setSortVal("");
+      e.currentTarget.innerHTML = `${header} <span title="sort" class="arrow">↕</span>`;
+      // remove sort
+    }
+  };
+
+  let tableData;
+
+  if (searchInput.length === 0) {
+    if (sorter) {
+      console.log(masterFilter[0].props);
+      const isNum =
+        sortVal === "level" || sortVal === "points" || sortVal === "completed";
+      if (sorter === "↓") {
+        if (isNum) {
+          tableData = masterFilter.sort(
+            (a, b) => a.props[sortVal] - b.props[sortVal]
+          );
+        } else {
+          tableData = masterFilter.sort((a, b) =>
+            a.props[sortVal].localeCompare(b.props[sortVal])
+          );
+        }
+      } else {
+        if (isNum) {
+          tableData = masterFilter.sort(
+            (a, b) => b.props[sortVal] - a.props[sortVal]
+          );
+        } else {
+          tableData = masterFilter.sort((a, b) =>
+            b.props[sortVal].localeCompare(a.props[sortVal])
+          );
+        }
+      }
+    } else {
+      tableData = masterFilter;
+    }
+  } else {
+    if (sorter) {
+      tableData = searchHandler.sort((a, b) =>
+        a.props[sortVal].localeCompare(b.props[sortVal])
+      );
+    } else {
+      tableData = searchHandler;
+    }
+  }
 
   return (
     <main className="task-page add">
@@ -253,7 +324,7 @@ const Tasks = () => {
                 className="filter-li-group"
                 onClick={(e) => statusFilterHandler(e)}
               >
-                <div className="filter-color"></div>
+                <div className="filter-color status-filter-color"></div>
                 <span
                   style={{
                     textDecoration: statusFilter.includes("Active")
@@ -270,7 +341,7 @@ const Tasks = () => {
                 className="filter-li-group"
                 onClick={(e) => statusFilterHandler(e)}
               >
-                <div className="filter-color"></div>
+                <div className="filter-color status-filter-color"></div>
                 <span
                   style={{
                     textDecoration: statusFilter.includes("Retired")
@@ -287,7 +358,7 @@ const Tasks = () => {
                 className="filter-li-group"
                 onClick={(e) => statusFilterHandler(e)}
               >
-                <div className="filter-color"></div>
+                <div className="filter-color status-filter-color"></div>
                 <span
                   style={{
                     textDecoration: statusFilter.includes("Pretired")
@@ -327,15 +398,59 @@ const Tasks = () => {
           </div>
         </div>
         <table className="tx-list">
-          <tr className="tx-head-col">
-            <th width="150px">Name</th>
-            <th width="400px">Description</th>
-            <th width="150px">Group</th>
-            <th width="100px">Level</th>
-            <th width="100px">Points</th>
-            <th width="100px">Completed</th>
-          </tr>
-          {searchInput.length === 0 ? masterFilter : searchHandler}
+          <thead>
+            <tr className="tx-head-col">
+              <th width="150px">
+                <div onClick={(e) => sortHandler(e)}>
+                  Name{" "}
+                  <span title="sort" className="arrow">
+                    ↕
+                  </span>
+                </div>
+              </th>
+              <th width="400px">
+                <div onClick={(e) => sortHandler(e)}>
+                  Description{" "}
+                  <span title="sort" className="arrow">
+                    ↕
+                  </span>
+                </div>
+              </th>
+              <th width="150px">
+                <div onClick={(e) => sortHandler(e)}>
+                  Group{" "}
+                  <span title="sort" className="arrow">
+                    ↕
+                  </span>
+                </div>
+              </th>
+              <th width="100px">
+                <div onClick={(e) => sortHandler(e)}>
+                  Level{" "}
+                  <span title="sort" className="arrow">
+                    ↕
+                  </span>
+                </div>
+              </th>
+              <th width="100px">
+                <div onClick={(e) => sortHandler(e)}>
+                  Points{" "}
+                  <span title="sort" className="arrow">
+                    ↕
+                  </span>
+                </div>
+              </th>
+              <th width="100px">
+                <div onClick={(e) => sortHandler(e)}>
+                  Completed{" "}
+                  <span title="sort" className="arrow">
+                    ↕
+                  </span>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>{tableData}</tbody>
         </table>
         <div className="tx-navlinks">
           <Link>Next</Link>

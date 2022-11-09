@@ -436,7 +436,7 @@ footer {
   margin-right: 5px;
 }
 
-.filter-li .filter-color {
+.status-filter-color {
   background-color: white;
   border: 3px solid black;
 }
@@ -508,6 +508,14 @@ footer {
   color: white;
   font-weight: bold;
   cursor: pointer;
+}
+
+.tx-head-col div:hover {
+  cursor: pointer;
+}
+
+.tx-head-col span {
+  color: darkgrey;
 }
 
 .tx-list {
