@@ -1,18 +1,15 @@
 // todo
-// on click on a column, sort table by that column ↑↓
-// selected filters with X's at top are on bg of ripped paper, maybe with typewriter-style font
+// fix how filters apply after pagination
+// make default sort by date
 // useState of logged in & level to check whether can sort by active/retired
-// grey or color task on hover
-// make overflow be on 'next'
-// add a "clear all" for filters
+// selected filters with X's at top are on bg of ripped paper, maybe with typewriter-style font
 // colors beside groups to be round and look like gems in glass buttons (use images marbled/gem stuff not colors)
 
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { tasks } from "../data/tasks-data";
-import { groups } from "../data/groups-data";
-import pixie from "../images/pixie-avatar.jpeg";
-import { type } from "@testing-library/user-event/dist/type";
+// import { groups } from "../data/groups-data";
+// import pixie from "../images/pixie-avatar.jpeg";
 
 const Tasks = () => {
   const [groupFilter, setGroupFilter] = useState([]);
@@ -20,12 +17,64 @@ const Tasks = () => {
   const [searchInput, setSearchInput] = useState("");
   const [sorter, setSorter] = useState(null);
   const [sortVal, setSortVal] = useState("");
-  // const [searchClicked, setSearchClicked] = useState(false);
+  const [tableRange, setTableRange] = useState([]);
 
-  const dummyDataMapper = tasks.map((task) => {
+  // PAGINATION
+  const calculateRange = (data, rowsPerPage) => {
+    const range = [];
+    const num = Math.ceil(data.length / rowsPerPage);
+    for (let i = 1; i <= num; i++) {
+      range.push(i);
+    }
+    return range;
+  };
+
+  const sliceData = (data, page, rowsPerPage) => {
+    return data.slice((page - 1) * rowsPerPage, page * rowsPerPage);
+  };
+
+  const useTable = (data, page, rowsPerPage) => {
+    const [slice, setSlice] = useState([]);
+
+    useEffect(() => {
+      const range = calculateRange(data, rowsPerPage);
+      setTableRange([...range]);
+      const slice = sliceData(data, page, rowsPerPage);
+      setSlice([...slice]);
+    }, [data, setTableRange, page, setSlice]);
+
+    return { slice, range: tableRange };
+  };
+
+  const [page, setPage] = useState(1);
+  const { slice } = useTable(tasks, page, 20);
+
+  const TableFooter = ({ range, setPage, page, slice }) => {
+    useEffect(() => {
+      if (slice.length < 1 && page !== 1) {
+        setPage(page - 1);
+      }
+    }, [slice, page, setPage]);
+    return (
+      <div className="tx-footer">
+        {range.map((el, index) => (
+          <button
+            key={index}
+            className="tx-footer-button"
+            onClick={() => setPage(el)}
+          >
+            {el}
+          </button>
+        ))}
+      </div>
+    );
+  };
+
+  // RAW TABLE MAPPING (PRE-FILTERING/SEARCHING)
+  const dummyDataMapper = slice.map((task) => {
     return (
       <tr
-        key={task.name}
+        key={task.id}
         status={task.status}
         name={task.name}
         description={task.description}
@@ -33,9 +82,10 @@ const Tasks = () => {
         level={task.level}
         points={task.points}
         completed={task.completed}
+        className="tx-row"
       >
         <td className="tx-name-cell">
-          <Link className="tx-name" to="/tasks/1">
+          <Link className="tx-name" to={`/tasks/${task.id}`}>
             {task.name}
           </Link>
         </td>
@@ -48,6 +98,7 @@ const Tasks = () => {
     );
   });
 
+  // FILTERING
   const groupFilterHandler = (e) => {
     const name = e.currentTarget.innerText;
     if (groupFilter.includes(name)) {
@@ -72,14 +123,6 @@ const Tasks = () => {
       </span>
     );
   });
-
-  // useEffect(() => {
-
-  // }, [groupFilter]);
-
-  // useEffect(() => {
-  //   setSearchClicked(false);
-  // }, [searchInput]);
 
   const statusFilterHandler = (e) => {
     const status = e.currentTarget.innerText;
@@ -107,6 +150,12 @@ const Tasks = () => {
     }
   });
 
+  const clearAllFilters = () => {
+    setGroupFilter([]);
+    setStatusFilter([]);
+  };
+
+  // SEARCHING
   const searchHandler = masterFilter.filter((item) => {
     return Object.values(item.props)
       .join("")
@@ -114,6 +163,7 @@ const Tasks = () => {
       .includes(searchInput.toLowerCase());
   });
 
+  // SORTING (SETTING ARROWS)
   const sortHandler = (e) => {
     const text = e.currentTarget.innerText;
     const arrow = text[text.length - 1];
@@ -123,30 +173,29 @@ const Tasks = () => {
     for (let i = 0; i < allArrows.length; i++) {
       allArrows[i].innerText = "↕";
     }
-    // allArrows.forEach((span) => (span.innerText = "↕"));
     if (arrow === "↕") {
+      // sort data descending by header
       setSorter("↓");
       setSortVal(header.toLowerCase());
       e.currentTarget.innerHTML = `${header} <span title="sort" class="arrow">↓</span>`;
-      // sort data descending by header
     } else if (arrow === "↓") {
+      // sort data ascending by header
       setSorter("↑");
       setSortVal(header.toLowerCase());
       e.currentTarget.innerHTML = `${header} <span title="sort" class="arrow">↑</span>`;
-      // sort data ascending by header
     } else if (arrow === "↑") {
+      // remove sort
       setSorter(null);
       setSortVal("");
       e.currentTarget.innerHTML = `${header} <span title="sort" class="arrow">↕</span>`;
-      // remove sort
     }
   };
 
+  // SORTING
   let tableData;
 
   if (searchInput.length === 0) {
     if (sorter) {
-      console.log(masterFilter[0].props);
       const isNum =
         sortVal === "level" || sortVal === "points" || sortVal === "completed";
       if (sorter === "↓") {
@@ -380,6 +429,13 @@ const Tasks = () => {
             <div className="filter-scraps">
               {filterItems}
               {filterStatusItems}
+              {groupFilter.length ? (
+                <span className="filter-scrap" onClick={clearAllFilters}>
+                  CLEAR ALL
+                </span>
+              ) : (
+                <span></span>
+              )}
             </div>
           </div>
           <div className="tx-search">
@@ -453,8 +509,12 @@ const Tasks = () => {
           <tbody>{tableData}</tbody>
         </table>
         <div className="tx-navlinks">
-          <Link>Next</Link>
-          <Link>Last</Link>
+          <TableFooter
+            range={tableRange}
+            slice={slice}
+            setPage={setPage}
+            page={page}
+          ></TableFooter>
         </div>
       </div>
     </main>

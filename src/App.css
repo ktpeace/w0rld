@@ -529,8 +529,16 @@ footer {
   padding: 7px 10px 7px 8px;
 }
 
+.tx-row:hover td {
+  background-color: rgb(252, 252, 252);
+}
+
 .tx-name-cell {
   text-align: left;
+}
+
+.tx-name-cell:hover {
+  font-weight: bold;
 }
 
 .tx-group {
@@ -564,20 +572,29 @@ footer {
 
 .tx-navlinks {
   display: flex;
-  justify-content: flex-end;
-  gap: 30px;
-  text-decoration: underline;
+  justify-content: center;
 }
 
-/* .tx-desc {
+.tx-footer {
   display: flex;
-  flex-direction: column;
-  border: 1px solid lightgrey;
-  margin: 10px;
-  margin-bottom: 10px;
-  padding: 10px 10px 0;
-  background-color: #fff;
-} */
+  gap: 10px;
+}
+
+.tx-footer-button {
+  margin-top: 20px;
+  width: 20px;
+  background-color: white;
+  border: 1px solid grey;
+  color: rgb(69, 69, 69);
+  border-radius: 5px;
+  font-family: "Roboto Condensed", sans-serif;
+}
+
+.tx-footer-button:hover {
+  cursor: pointer;
+  background-color: rgb(69, 69, 69);
+  color: white;
+}
 
 .tx-qualified {
   display: flex;
@@ -615,10 +632,6 @@ td {
 
 .lookout-below {
   margin-bottom: 10px;
-}
-
-.tx-links > *:hover {
-  cursor: pointer;
 }
 
 .tx-view-mine {
