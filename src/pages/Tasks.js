@@ -1,5 +1,5 @@
 // todo
-// fix how filters apply after pagination
+// fix that filters apply after pagination
 // make default sort by date
 // useState of logged in & level to check whether can sort by active/retired
 // selected filters with X's at top are on bg of ripped paper, maybe with typewriter-style font
@@ -33,21 +33,56 @@ const Tasks = () => {
     return data.slice((page - 1) * rowsPerPage, page * rowsPerPage);
   };
 
-  const useTable = (data, page, rowsPerPage) => {
+  // This can happen when a component calls setState inside useEffect, but one of the dependencies changes on every render.
+  // The issue is that data changes on every render.
+  // This is caused by ANY setState in useEffect, as long as data is a dependency
+
+  const useTable = (page, rowsPerPage) => {
     const [slice, setSlice] = useState([]);
+    const data = masterTasksFilter;
 
     useEffect(() => {
       const range = calculateRange(data, rowsPerPage);
       setTableRange([...range]);
       const slice = sliceData(data, page, rowsPerPage);
       setSlice([...slice]);
-    }, [data, setTableRange, page, setSlice]);
+    }, [page, rowsPerPage, groupFilter, statusFilter, searchInput]);
 
     return { slice, range: tableRange };
   };
 
+  let masterTasksFilter = tasks.filter((item) => {
+    if (groupFilter.length > 0 && statusFilter.length > 0) {
+      return (
+        groupFilter.includes(item.group) && statusFilter.includes(item.status)
+      );
+    } else if (groupFilter.length > 0) {
+      return groupFilter.includes(item.group);
+    } else if (statusFilter.length > 0) {
+      return statusFilter.includes(item.status);
+    } else {
+      return tasks;
+    }
+  });
+
+  if (searchInput)
+    masterTasksFilter = masterTasksFilter.filter((item) => {
+      console.log(item);
+      return Object.values(item)
+        .join("")
+        .toLowerCase()
+        .includes(searchInput.toLowerCase());
+    });
+
   const [page, setPage] = useState(1);
-  const { slice } = useTable(tasks, page, 20);
+  const { slice } = useTable(page, 20);
+
+  // create the slice of array data with useTable
+  // (useTable calls sliceData and calculateRange)
+  // dummyDataMapper maps from this slice
+  // masterFilter returns dummyDataMapper HTML, not an array of objects
+  // one method: change the data fed to useTable before dummyDataMapper gets it
+  //    this will require returning tasks data instead of messing with dummyDataMapper in masterFilter
 
   const TableFooter = ({ range, setPage, page, slice }) => {
     useEffect(() => {
