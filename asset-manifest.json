@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/w0rld/static/css/main.3dc2e1ab.css",
-    "main.js": "/w0rld/static/js/main.fbf74a05.js",
+    "main.css": "/w0rld/static/css/main.e52e432f.css",
+    "main.js": "/w0rld/static/js/main.971fe0cd.js",
     "static/media/lantern.png": "/w0rld/static/media/lantern.df2f37d430d360479f28.png",
     "static/media/sunflower.png": "/w0rld/static/media/sunflower.a18c2751a0b2cab62264.png",
     "static/media/barn-owl.png": "/w0rld/static/media/barn-owl.8759cd121c84ad5017b9.png",
@@ -12,18 +12,18 @@
     "static/media/splash-purple.png": "/w0rld/static/media/splash-purple.24e419ea5ce7a89eac99.png",
     "static/media/splash-green.png": "/w0rld/static/media/splash-green.b4e6a600a177b04b5332.png",
     "static/media/splash-blue.png": "/w0rld/static/media/splash-blue.17f27d68932a5fdca94f.png",
-    "static/media/splash-blue-darker.png": "/w0rld/static/media/splash-blue-darker.02d45956e96fb8469628.png",
+    "static/media/pixie-avatar.jpeg": "/w0rld/static/media/pixie-avatar.f2a3ba7b8bd4e7fd8c65.jpeg",
     "static/media/splash-red.png": "/w0rld/static/media/splash-red.9854994f7ce304175ab0.png",
     "static/media/torn-paper-pale.png": "/w0rld/static/media/torn-paper-pale.40778e3b687a199815e1.png",
     "static/media/torn-paper-tan.png": "/w0rld/static/media/torn-paper-tan.8f4d4d93b68ead8c377e.png",
     "static/media/glass.png": "/w0rld/static/media/glass.ce1d77055daa719b7713.png",
     "static/media/sloth.jpg": "/w0rld/static/media/sloth.227d985690dede543c43.jpg",
     "index.html": "/w0rld/index.html",
-    "main.3dc2e1ab.css.map": "/w0rld/static/css/main.3dc2e1ab.css.map",
-    "main.fbf74a05.js.map": "/w0rld/static/js/main.fbf74a05.js.map"
+    "main.e52e432f.css.map": "/w0rld/static/css/main.e52e432f.css.map",
+    "main.971fe0cd.js.map": "/w0rld/static/js/main.971fe0cd.js.map"
   },
   "entrypoints": [
-    "static/css/main.3dc2e1ab.css",
-    "static/js/main.fbf74a05.js"
+    "static/css/main.e52e432f.css",
+    "static/js/main.971fe0cd.js"
   ]
 }
