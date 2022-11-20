@@ -18,6 +18,7 @@ import Events from "./pages/Events";
 import Groups from "./pages/Groups";
 import Players from "./pages/Players";
 import Praxis from "./pages/Praxis";
+import Profile from "./pages/Profile";
 import Register from "./pages/Register";
 import Tasks from "./pages/Tasks";
 import Terms from "./pages/Terms";
@@ -91,6 +92,10 @@ function App() {
         {
           path: "/preview/:id",
           element: <Preview />,
+        },
+        {
+          path: "/profile",
+          element: <Profile />,
         },
         {
           path: "/register",
