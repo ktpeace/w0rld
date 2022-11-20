@@ -513,7 +513,7 @@ const Tasks = ({ isLoggedIn }) => {
             <div className="filter-scraps">
               {filterItems}
               {filterStatusItems}
-              {groupFilter.length ? (
+              {groupFilter.length || statusFilter.length ? (
                 <span className="filter-scrap" onClick={clearAllFilters}>
                   CLEAR ALL
                 </span>
