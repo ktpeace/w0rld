@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   createBrowserRouter,
   createHashRouter,
@@ -27,94 +28,97 @@ import Task from "./pages/Task";
 import Preview from "./pages/Preview";
 import Updates from "./pages/Updates";
 
-const Layout = () => {
-  return (
-    <>
-      <Header />
-      <Outlet />
-      <Footer />
-    </>
-  );
-};
-
-const router = createHashRouter([
-  {
-    path: "/",
-    element: <Layout />,
-    children: [
-      {
-        path: "/",
-        element: <Home />,
-      },
-      {
-        path: "/about",
-        element: <About />,
-      },
-      {
-        path: "/badges",
-        element: <Badges />,
-      },
-      {
-        path: "/contact",
-        element: <Contact />,
-      },
-      {
-        path: "/disclaimer",
-        element: <Disclaimer />,
-      },
-      {
-        path: "/donate",
-        element: <Donate />,
-      },
-      {
-        path: "/events",
-        element: <Events />,
-      },
-      {
-        path: "/groups",
-        element: <Groups />,
-      },
-      {
-        path: "/players",
-        element: <Players />,
-      },
-      {
-        path: "/praxis",
-        element: <Praxis />,
-      },
-      {
-        path: "/preview/:id",
-        element: <Preview />,
-      },
-      {
-        path: "/register",
-        element: <Register />,
-      },
-      {
-        path: "/tasks",
-        element: <Tasks />,
-      },
-      {
-        path: "/tasks/:id",
-        element: <Task />,
-      },
-      {
-        path: "/terms",
-        element: <Terms />,
-      },
-      {
-        path: "/territory",
-        element: <Territory />,
-      },
-      {
-        path: "/updates",
-        element: <Updates />,
-      },
-    ],
-  },
-]);
-
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    localStorage.getItem("isLoggedIn")
+  );
+
+  const Layout = () => {
+    return (
+      <>
+        <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+        <Outlet />
+        <Footer />
+      </>
+    );
+  };
+
+  const router = createHashRouter([
+    {
+      path: "/",
+      element: <Layout />,
+      children: [
+        {
+          path: "/",
+          element: <Home />,
+        },
+        {
+          path: "/about",
+          element: <About />,
+        },
+        {
+          path: "/badges",
+          element: <Badges />,
+        },
+        {
+          path: "/contact",
+          element: <Contact />,
+        },
+        {
+          path: "/disclaimer",
+          element: <Disclaimer />,
+        },
+        {
+          path: "/donate",
+          element: <Donate />,
+        },
+        {
+          path: "/events",
+          element: <Events />,
+        },
+        {
+          path: "/groups",
+          element: <Groups />,
+        },
+        {
+          path: "/players",
+          element: <Players />,
+        },
+        {
+          path: "/praxis",
+          element: <Praxis />,
+        },
+        {
+          path: "/preview/:id",
+          element: <Preview />,
+        },
+        {
+          path: "/register",
+          element: <Register />,
+        },
+        {
+          path: "/tasks",
+          element: <Tasks isLoggedIn={isLoggedIn} />,
+        },
+        {
+          path: "/tasks/:id",
+          element: <Task />,
+        },
+        {
+          path: "/terms",
+          element: <Terms />,
+        },
+        {
+          path: "/territory",
+          element: <Territory />,
+        },
+        {
+          path: "/updates",
+          element: <Updates />,
+        },
+      ],
+    },
+  ]);
   return (
     <div className="App">
       <div className="container">

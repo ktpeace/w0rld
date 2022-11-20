@@ -1,17 +1,32 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import logo from "../images/logo.png";
 import glass from "../images/glass.png";
 import typewriter from "../images/typewriter.png";
 import lantern from "../images/lantern.png";
-import splashBlue from "../images/splash-blue.png";
-import splashBlueDark from "../images/splash-blue-darker.png";
-import splashGreen from "../images/splash-green.png";
-import splashPurple from "../images/splash-purple.png";
-import splashPurplePure from "../images/splash-purple-pure.png";
-import splashRed from "../images/splash-red.png";
+import pixie from "../images/pixie-avatar.jpeg";
+// import splashBlue from "../images/splash-blue.png";
+// import splashBlueDark from "../images/splash-blue-darker.png";
+// import splashGreen from "../images/splash-green.png";
+// import splashPurple from "../images/splash-purple.png";
+// import splashPurplePure from "../images/splash-purple-pure.png";
+// import splashRed from "../images/splash-red.png";
 
-const Header = () => {
+const Header = ({ isLoggedIn, setIsLoggedIn }) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const validateLogin = (e) => {
+    e.preventDefault();
+    setIsLoggedIn(true);
+    localStorage.setItem("isLoggedIn", true);
+  };
+
+  const logout = () => {
+    setIsLoggedIn(false);
+    localStorage.setItem("isLoggedIn", false);
+  };
+
   return (
     <nav>
       <Link to="/" className="home">
@@ -69,30 +84,57 @@ const Header = () => {
             <img src={lantern} alt="lantern" className="lantern" />
             <span>LIGHT/DARK</span>
           </div>
-          {/* <div className="login">
-          <span>Log In / Sign Up</span> */}
-          {/* </div> */}
-          <div className="login">
-            <form>
-              <div className="login-group">
-                <div className="login-set">
-                  <label htmlFor="username">Username:</label>
-                  <input type="text" name="username" id="username" />
+          {!isLoggedIn ? (
+            <div className="login">
+              <form>
+                <div className="login-group">
+                  <div className="login-set">
+                    <label htmlFor="username">Username:</label>
+                    <input
+                      type="text"
+                      name="username"
+                      id="username"
+                      onChange={(e) => setUsername(e.target.value)}
+                    />
+                  </div>
+                  <div className="login-set">
+                    <label htmlFor="password">Password:</label>
+                    <input
+                      type="text"
+                      name="password"
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </div>
+                  <button
+                    className="login-button"
+                    onClick={(e) => validateLogin(e)}
+                  >
+                    Log In
+                  </button>
                 </div>
-                <div className="login-set">
-                  <label htmlFor="password">Password:</label>
-                  <input type="text" name="password" />
-                </div>
-                <button className="login-button">Log In</button>
-              </div>
-              <p className="signup">
-                <span>New? </span>
-                <Link to="/register" className="signup-link">
-                  Sign Up Here
-                </Link>
-              </p>
-            </form>
-          </div>
+                <p className="signup">
+                  <span>New? </span>
+                  <Link to="/register" className="signup-link">
+                    Sign Up Here
+                  </Link>
+                </p>
+              </form>
+            </div>
+          ) : (
+            <div className="logged-in">
+              <Link to="/profile">
+                <img
+                  src={pixie}
+                  alt="avatar"
+                  className="navatar"
+                  title="profile"
+                />
+              </Link>
+              <span onClick={logout} className="logout">
+                Log Out
+              </span>
+            </div>
+          )}
         </div>
       </div>
     </nav>

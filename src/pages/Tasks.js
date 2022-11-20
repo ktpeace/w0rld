@@ -1,23 +1,23 @@
 // todo
-// fix that filters apply after pagination
-// make default sort by date
 // useState of logged in & level to check whether can sort by active/retired
+// make default sort by date
 // selected filters with X's at top are on bg of ripped paper, maybe with typewriter-style font
 // colors beside groups to be round and look like gems in glass buttons (use images marbled/gem stuff not colors)
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { tasks } from "../data/tasks-data";
 // import { groups } from "../data/groups-data";
 // import pixie from "../images/pixie-avatar.jpeg";
 
-const Tasks = () => {
+const Tasks = ({ isLoggedIn }) => {
   const [groupFilter, setGroupFilter] = useState([]);
   const [statusFilter, setStatusFilter] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const [sorter, setSorter] = useState(null);
   const [sortVal, setSortVal] = useState("");
   const [tableRange, setTableRange] = useState([]);
+  const userLevel = 3;
 
   // PAGINATION
   const calculateRange = (data, rowsPerPage) => {
@@ -33,10 +33,6 @@ const Tasks = () => {
     return data.slice((page - 1) * rowsPerPage, page * rowsPerPage);
   };
 
-  // This can happen when a component calls setState inside useEffect, but one of the dependencies changes on every render.
-  // The issue is that data changes on every render.
-  // This is caused by ANY setState in useEffect, as long as data is a dependency
-
   const useTable = (page, rowsPerPage) => {
     const [slice, setSlice] = useState([]);
     const data = masterTasksFilter;
@@ -46,12 +42,25 @@ const Tasks = () => {
       setTableRange([...range]);
       const slice = sliceData(data, page, rowsPerPage);
       setSlice([...slice]);
-    }, [page, rowsPerPage, groupFilter, statusFilter, searchInput]);
+    }, [
+      page,
+      rowsPerPage,
+      groupFilter,
+      statusFilter,
+      searchInput,
+      sorter,
+      sortVal,
+    ]);
 
     return { slice, range: tableRange };
   };
 
-  let masterTasksFilter = tasks.filter((item) => {
+  let levelFilteredTasks = tasks;
+  if (!(isLoggedIn && userLevel >= 3)) {
+    levelFilteredTasks = tasks.filter((item) => item.status !== "Pretired");
+  }
+
+  let masterTasksFilter = levelFilteredTasks.filter((item) => {
     if (groupFilter.length > 0 && statusFilter.length > 0) {
       return (
         groupFilter.includes(item.group) && statusFilter.includes(item.status)
@@ -61,7 +70,7 @@ const Tasks = () => {
     } else if (statusFilter.length > 0) {
       return statusFilter.includes(item.status);
     } else {
-      return tasks;
+      return levelFilteredTasks;
     }
   });
 
@@ -74,15 +83,34 @@ const Tasks = () => {
         .includes(searchInput.toLowerCase());
     });
 
+  if (sorter) {
+    const isNum =
+      sortVal === "level" || sortVal === "points" || sortVal === "completed";
+    if (sorter === "↓") {
+      if (isNum) {
+        masterTasksFilter = masterTasksFilter.sort(
+          (a, b) => a[sortVal] - b[sortVal]
+        );
+      } else {
+        masterTasksFilter = masterTasksFilter.sort((a, b) =>
+          a[sortVal].localeCompare(b[sortVal])
+        );
+      }
+    } else {
+      if (isNum) {
+        masterTasksFilter = masterTasksFilter.sort(
+          (a, b) => b[sortVal] - a[sortVal]
+        );
+      } else {
+        masterTasksFilter = masterTasksFilter.sort((a, b) =>
+          b[sortVal].localeCompare(a[sortVal])
+        );
+      }
+    }
+  }
+
   const [page, setPage] = useState(1);
   const { slice } = useTable(page, 20);
-
-  // create the slice of array data with useTable
-  // (useTable calls sliceData and calculateRange)
-  // dummyDataMapper maps from this slice
-  // masterFilter returns dummyDataMapper HTML, not an array of objects
-  // one method: change the data fed to useTable before dummyDataMapper gets it
-  //    this will require returning tasks data instead of messing with dummyDataMapper in masterFilter
 
   const TableFooter = ({ range, setPage, page, slice }) => {
     useEffect(() => {
@@ -105,7 +133,7 @@ const Tasks = () => {
     );
   };
 
-  // RAW TABLE MAPPING (PRE-FILTERING/SEARCHING)
+  // TABLE MAPPING
   const dummyDataMapper = slice.map((task) => {
     return (
       <tr
@@ -170,20 +198,20 @@ const Tasks = () => {
     }
   };
 
-  const masterFilter = dummyDataMapper.filter((item) => {
-    if (groupFilter.length > 0 && statusFilter.length > 0) {
-      return (
-        groupFilter.includes(item.props.children[2].props.children) &&
-        statusFilter.includes(item.props.status)
-      );
-    } else if (groupFilter.length > 0) {
-      return groupFilter.includes(item.props.children[2].props.children);
-    } else if (statusFilter.length > 0) {
-      return statusFilter.includes(item.props.status);
-    } else {
-      return dummyDataMapper;
-    }
-  });
+  // const masterFilter = dummyDataMapper.filter((item) => {
+  //   if (groupFilter.length > 0 && statusFilter.length > 0) {
+  //     return (
+  //       groupFilter.includes(item.props.children[2].props.children) &&
+  //       statusFilter.includes(item.props.status)
+  //     );
+  //   } else if (groupFilter.length > 0) {
+  //     return groupFilter.includes(item.props.children[2].props.children);
+  //   } else if (statusFilter.length > 0) {
+  //     return statusFilter.includes(item.props.status);
+  //   } else {
+  //     return dummyDataMapper;
+  //   }
+  // });
 
   const clearAllFilters = () => {
     setGroupFilter([]);
@@ -191,12 +219,12 @@ const Tasks = () => {
   };
 
   // SEARCHING
-  const searchHandler = masterFilter.filter((item) => {
-    return Object.values(item.props)
-      .join("")
-      .toLowerCase()
-      .includes(searchInput.toLowerCase());
-  });
+  // const searchHandler = masterFilter.filter((item) => {
+  //   return Object.values(item.props)
+  //     .join("")
+  //     .toLowerCase()
+  //     .includes(searchInput.toLowerCase());
+  // });
 
   // SORTING (SETTING ARROWS)
   const sortHandler = (e) => {
@@ -227,45 +255,45 @@ const Tasks = () => {
   };
 
   // SORTING
-  let tableData;
+  // let tableData;
 
-  if (searchInput.length === 0) {
-    if (sorter) {
-      const isNum =
-        sortVal === "level" || sortVal === "points" || sortVal === "completed";
-      if (sorter === "↓") {
-        if (isNum) {
-          tableData = masterFilter.sort(
-            (a, b) => a.props[sortVal] - b.props[sortVal]
-          );
-        } else {
-          tableData = masterFilter.sort((a, b) =>
-            a.props[sortVal].localeCompare(b.props[sortVal])
-          );
-        }
-      } else {
-        if (isNum) {
-          tableData = masterFilter.sort(
-            (a, b) => b.props[sortVal] - a.props[sortVal]
-          );
-        } else {
-          tableData = masterFilter.sort((a, b) =>
-            b.props[sortVal].localeCompare(a.props[sortVal])
-          );
-        }
-      }
-    } else {
-      tableData = masterFilter;
-    }
-  } else {
-    if (sorter) {
-      tableData = searchHandler.sort((a, b) =>
-        a.props[sortVal].localeCompare(b.props[sortVal])
-      );
-    } else {
-      tableData = searchHandler;
-    }
-  }
+  // if (searchInput.length === 0) {
+  //   if (sorter) {
+  //     const isNum =
+  //       sortVal === "level" || sortVal === "points" || sortVal === "completed";
+  //     if (sorter === "↓") {
+  //       if (isNum) {
+  //         tableData = masterFilter.sort(
+  //           (a, b) => a.props[sortVal] - b.props[sortVal]
+  //         );
+  //       } else {
+  //         tableData = masterFilter.sort((a, b) =>
+  //           a.props[sortVal].localeCompare(b.props[sortVal])
+  //         );
+  //       }
+  //     } else {
+  //       if (isNum) {
+  //         tableData = masterFilter.sort(
+  //           (a, b) => b.props[sortVal] - a.props[sortVal]
+  //         );
+  //       } else {
+  //         tableData = masterFilter.sort((a, b) =>
+  //           b.props[sortVal].localeCompare(a.props[sortVal])
+  //         );
+  //       }
+  //     }
+  //   } else {
+  //     tableData = masterFilter;
+  //   }
+  // } else {
+  //   if (sorter) {
+  //     tableData = searchHandler.sort((a, b) =>
+  //       a.props[sortVal].localeCompare(b.props[sortVal])
+  //     );
+  //   } else {
+  //     tableData = searchHandler;
+  //   }
+  // }
 
   return (
     <main className="task-page add">
@@ -437,23 +465,44 @@ const Tasks = () => {
                 </span>
               </div>
             </li>
-            <li className="filter-li">
-              <div
-                className="filter-li-group"
-                onClick={(e) => statusFilterHandler(e)}
-              >
-                <div className="filter-color status-filter-color"></div>
-                <span
-                  style={{
-                    textDecoration: statusFilter.includes("Pretired")
-                      ? "underline"
-                      : "none",
-                  }}
+            {isLoggedIn && userLevel >= 3 ? (
+              <li className="filter-li">
+                <div
+                  className="filter-li-group"
+                  onClick={(e) => statusFilterHandler(e)}
                 >
-                  Pretired
-                </span>
-              </div>
-            </li>
+                  <div className="filter-color status-filter-color"></div>
+                  <span
+                    style={{
+                      textDecoration: statusFilter.includes("Pretired")
+                        ? "underline"
+                        : "none",
+                    }}
+                  >
+                    Pretired
+                  </span>
+                </div>
+              </li>
+            ) : null}
+            {isLoggedIn ? (
+              <li className="filter-li">
+                <div
+                  className="filter-li-group"
+                  onClick={(e) => statusFilterHandler(e)}
+                >
+                  <div className="filter-color status-filter-color"></div>
+                  <span
+                    style={{
+                      textDecoration: statusFilter.includes("Accepted")
+                        ? "underline"
+                        : "none",
+                    }}
+                  >
+                    Accepted
+                  </span>
+                </div>
+              </li>
+            ) : null}
           </ul>
         </div>
       </div>
@@ -481,11 +530,6 @@ const Tasks = () => {
               placeholder="search"
               onChange={(e) => setSearchInput(e.target.value)}
             />
-            {/* <div
-              className="search-button"
-            >
-              search
-            </div> */}
           </div>
         </div>
         <table className="tx-list">
@@ -541,7 +585,7 @@ const Tasks = () => {
               </th>
             </tr>
           </thead>
-          <tbody>{tableData}</tbody>
+          <tbody>{dummyDataMapper}</tbody>
         </table>
         <div className="tx-navlinks">
           <TableFooter

@@ -155,6 +155,40 @@ nav {
   font-weight: bold;
 }
 
+.lantern-set:hover {
+  cursor: pointer;
+}
+
+.logged-in {
+  width: 131px;
+  font-family: "Roboto Condensed", sans-serif;
+  text-transform: uppercase;
+  font-size: 10px;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.navatar {
+  width: 60px;
+  height: 60px;
+  box-sizing: border-box;
+  border: 4px solid transparent;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.navatar:hover {
+  border: 4px solid #fff9f688;
+}
+
+.logout:hover {
+  cursor: pointer;
+  color: #95b424;
+}
+
 .login {
   /* position: relative;
   top: 10px;
@@ -418,6 +452,7 @@ footer {
 
 .filter-li {
   display: flex;
+  list-style-type: space-counter;
 }
 
 .filter-li span:hover {
@@ -426,6 +461,7 @@ footer {
 
 .filter-li-group {
   display: flex;
+  align-items: center;
 }
 
 .filter-color {
@@ -437,7 +473,9 @@ footer {
 }
 
 .status-filter-color {
-  background-color: white;
+  width: 5px;
+  height: 5px;
+  background-color: black;
   border: 3px solid black;
 }
 
