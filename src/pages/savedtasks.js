@@ -3,27 +3,32 @@
 // selected filters with X's at top are on bg of ripped paper, maybe with typewriter-style font
 // colors beside groups to look like gems in glass buttons (use images marbled/gem stuff not colors)
 // add create task button
+// fix scraps disappearing on dark/light switch (useRef?)
 
-import React, {
-  useState,
-  useEffect,
-  // useContext
-} from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { tasks } from "../data/tasks-data";
-// import DarkModeContext from "../components/DarkModeContext";
-// const isDarkMode = useContext(DarkModeContext).isDarkMode;
+import DarkModeContext from "../components/DarkModeContext";
 // import { groups } from "../data/groups-data";
 // import pixie from "../images/pixie-avatar.jpeg";
 
-const DarkSwitcher = ({ isDarkMode, tableRange }) => {
+const Tasks = ({ isLoggedIn }) => {
+  const isDarkMode = useContext(DarkModeContext).isDarkMode;
+  const [groupFilter, setGroupFilter] = useState([]);
+  const [statusFilter, setStatusFilter] = useState([]);
+  const [searchInput, setSearchInput] = useState("");
+  const [sorter, setSorter] = useState(null);
+  const [sortVal, setSortVal] = useState("");
+  const [tableRange, setTableRange] = useState([]);
+  const userLevel = 3;
+
+  // TOGGLE DARK MODE
   useEffect(() => {
     const tableHeader = document.querySelector(".tx-head-col");
     const tableRows = document.querySelectorAll("tr");
     const filterBoxes = document.querySelectorAll(".filter-box");
     const filterScraps = document.querySelectorAll(".filter-scrap");
     const pageButtons = document.querySelectorAll(".tx-footer-button");
-
     if (isDarkMode) {
       tableRows.forEach((tr) => {
         if (tr.classList.contains("tr-light")) {
@@ -58,72 +63,8 @@ const DarkSwitcher = ({ isDarkMode, tableRange }) => {
         }
         button.classList.add("tx-footer-button-dark");
       });
-    } else {
-      tableRows.forEach((tr) => {
-        if (tr.classList.contains("tr-dark")) {
-          tr.classList.remove("tr-dark");
-        }
-        tr.classList.add("tr-light");
-      });
-
-      if (tableHeader.classList.contains("updates-text-dark")) {
-        tableHeader.classList.remove("updates-text-dark");
-      }
-      tableHeader.classList.remove("tr-light");
-      tableHeader.classList.add("updates-text-light");
-
-      filterBoxes.forEach((box) => {
-        if (box.classList.contains("filter-box-dark")) {
-          box.classList.remove("filter-box-dark");
-        }
-        box.classList.add("filter-box-light");
-      });
-
-      filterScraps.forEach((scrap) => {
-        if (scrap.classList.contains("filter-scrap-dark")) {
-          scrap.classList.remove("filter-scrap-dark");
-        }
-        scrap.classList.add("filter-scrap-light");
-      });
-
-      pageButtons.forEach((button) => {
-        if (button.classList.contains("tx-footer-button-dark")) {
-          button.classList.remove("tx-footer-button-dark");
-        }
-        button.classList.add("tx-footer-button-light");
-      });
     }
   }, [isDarkMode, tableRange]);
-};
-
-// END DARK MODE, START TASKS LOGIC
-const Tasks1 = ({ isLoggedIn, tableRange, setTableRange }) => {
-  const [groupFilter, setGroupFilter] = useState([]);
-  const [statusFilter, setStatusFilter] = useState([]);
-  const [searchInput, setSearchInput] = useState("");
-  const [sorter, setSorter] = useState(null);
-  const [sortVal, setSortVal] = useState("");
-  const userLevel = 3;
-
-  // REMOVE SPECIAL FILTERS ON LOGOUT
-  useEffect(() => {
-    let pretiredIndex = statusFilter.indexOf("Pretired");
-    let acceptedIndex = statusFilter.indexOf("Accepted");
-    if (!isLoggedIn) {
-      if (pretiredIndex !== -1) {
-        setStatusFilter((prev) => {
-          prev.splice(pretiredIndex, 1);
-          return prev;
-        });
-      }
-      if (acceptedIndex !== -1) {
-        setStatusFilter((prev) => {
-          prev.splice(acceptedIndex, 1);
-          return prev;
-        });
-      }
-    }
-  }, [isLoggedIn]);
 
   // PAGINATION
   const calculateRange = (data, rowsPerPage) => {
@@ -141,8 +82,9 @@ const Tasks1 = ({ isLoggedIn, tableRange, setTableRange }) => {
 
   const useTable = (page, rowsPerPage) => {
     const [slice, setSlice] = useState([]);
+    const data = masterTasksFilter;
+
     useEffect(() => {
-      const data = masterTasksFilter;
       const range = calculateRange(data, rowsPerPage);
       setTableRange([...range]);
       const slice = sliceData(data, page, rowsPerPage);
@@ -155,16 +97,11 @@ const Tasks1 = ({ isLoggedIn, tableRange, setTableRange }) => {
       searchInput,
       sorter,
       sortVal,
-      isLoggedIn,
-      tableRange,
     ]);
+
     return { slice, range: tableRange };
   };
 
-  const [page, setPage] = useState(1);
-  let { slice } = useTable(page, 20);
-
-  // FILTERING
   let levelFilteredTasks = tasks;
   if (!(isLoggedIn && userLevel >= 3)) {
     levelFilteredTasks = tasks.filter((item) => item.status !== "Pretired");
@@ -184,63 +121,15 @@ const Tasks1 = ({ isLoggedIn, tableRange, setTableRange }) => {
     }
   });
 
-  const groupFilterHandler = (e) => {
-    const name = e.currentTarget.innerText;
-    if (groupFilter.includes(name)) {
-      setGroupFilter(groupFilter.filter((groupName) => groupName !== name));
-    } else {
-      setGroupFilter((prev) => [...prev, name]);
-    }
-  };
-
-  const filterGroupItems = groupFilter.map((name) => {
-    return (
-      <span
-        className="filter-scrap filter-scrap-light"
-        onClick={(e) => groupFilterHandler(e)}
-      >
-        {name}
-      </span>
-    );
-  });
-
-  const filterStatusItems = statusFilter.map((name) => {
-    return (
-      <span
-        className="filter-scrap filter-scrap-light"
-        onClick={(e) => statusFilterHandler(e)}
-      >
-        {name}
-      </span>
-    );
-  });
-
-  const statusFilterHandler = (e) => {
-    const status = e.currentTarget.innerText;
-    if (statusFilter.includes(status)) {
-      setStatusFilter(
-        statusFilter.filter((statusName) => statusName !== status)
-      );
-    } else {
-      setStatusFilter((prev) => [...prev, status]);
-    }
-  };
-
-  const clearAllFilters = () => {
-    setGroupFilter([]);
-    setStatusFilter([]);
-  };
-
-  // SEARCHING
   if (searchInput)
     masterTasksFilter = masterTasksFilter.filter((item) => {
+      console.log(item);
       return Object.values(item)
         .join("")
         .toLowerCase()
         .includes(searchInput.toLowerCase());
     });
 
-  // SORTING
   if (sorter) {
     const isNum =
       sortVal === "level" || sortVal === "points" || sortVal === "completed";
@@ -267,35 +156,9 @@ const Tasks1 = ({ isLoggedIn, tableRange, setTableRange }) => {
     }
   }
 
-  // SORTING (SETTING ARROWS)
-  const sortHandler = (e) => {
-    const text = e.currentTarget.innerText;
-    const arrow = text[text.length - 1];
-    const header = text.slice(0, text.length - 2);
-    const allArrows = document.getElementsByClassName("arrow");
-    console.log(allArrows);
-    for (let i = 0; i < allArrows.length; i++) {
-      allArrows[i].innerText = "↕";
-    }
-    if (arrow === "↕") {
-      // sort data descending by header
-      setSorter("↓");
-      setSortVal(header.toLowerCase());
-      e.currentTarget.innerHTML = `${header} <span title="sort" class="arrow">↓</span>`;
-    } else if (arrow === "↓") {
-      // sort data ascending by header
-      setSorter("↑");
-      setSortVal(header.toLowerCase());
-      e.currentTarget.innerHTML = `${header} <span title="sort" class="arrow">↑</span>`;
-    } else if (arrow === "↑") {
-      // remove sort
-      setSorter(null);
-      setSortVal("");
-      e.currentTarget.innerHTML = `${header} <span title="sort" class="arrow">↕</span>`;
-    }
-  };
+  const [page, setPage] = useState(1);
+  const { slice } = useTable(page, 20);
 
-  // FOOTER PAGE NUMBERS
   const TableFooter = ({ range, setPage, page, slice }) => {
     useEffect(() => {
       if (slice.length < 1 && page !== 1) {
@@ -344,6 +207,146 @@ const Tasks1 = ({ isLoggedIn, tableRange, setTableRange }) => {
       </tr>
     );
   });
+
+  // FILTERING
+  const groupFilterHandler = (e) => {
+    const name = e.currentTarget.innerText;
+    if (groupFilter.includes(name)) {
+      setGroupFilter(groupFilter.filter((groupName) => groupName !== name));
+    } else {
+      setGroupFilter((prev) => [...prev, name]);
+    }
+  };
+
+  const filterItems = groupFilter.map((name) => {
+    return (
+      <span
+        className="filter-scrap filter-scrap-light"
+        onClick={(e) => groupFilterHandler(e)}
+      >
+        {name}
+      </span>
+    );
+  });
+
+  const filterStatusItems = statusFilter.map((name) => {
+    return (
+      <span
+        className="filter-scrap filter-scrap-light"
+        onClick={(e) => statusFilterHandler(e)}
+      >
+        {name}
+      </span>
+    );
+  });
+
+  const statusFilterHandler = (e) => {
+    const status = e.currentTarget.innerText;
+    if (statusFilter.includes(status)) {
+      setStatusFilter(
+        statusFilter.filter((statusName) => statusName !== status)
+      );
+    } else {
+      setStatusFilter((prev) => [...prev, status]);
+    }
+  };
+
+  // const masterFilter = dummyDataMapper.filter((item) => {
+  //   if (groupFilter.length > 0 && statusFilter.length > 0) {
+  //     return (
+  //       groupFilter.includes(item.props.children[2].props.children) &&
+  //       statusFilter.includes(item.props.status)
+  //     );
+  //   } else if (groupFilter.length > 0) {
+  //     return groupFilter.includes(item.props.children[2].props.children);
+  //   } else if (statusFilter.length > 0) {
+  //     return statusFilter.includes(item.props.status);
+  //   } else {
+  //     return dummyDataMapper;
+  //   }
+  // });
+
+  const clearAllFilters = () => {
+    setGroupFilter([]);
+    setStatusFilter([]);
+  };
+
+  // SEARCHING
+  // const searchHandler = masterFilter.filter((item) => {
+  //   return Object.values(item.props)
+  //     .join("")
+  //     .toLowerCase()
+  //     .includes(searchInput.toLowerCase());
+  // });
+
+  // SORTING (SETTING ARROWS)
+  const sortHandler = (e) => {
+    const text = e.currentTarget.innerText;
+    const arrow = text[text.length - 1];
+    const header = text.slice(0, text.length - 2);
+    const allArrows = document.getElementsByClassName("arrow");
+    console.log(allArrows);
+    for (let i = 0; i < allArrows.length; i++) {
+      allArrows[i].innerText = "↕";
+    }
+    if (arrow === "↕") {
+      // sort data descending by header
+      setSorter("↓");
+      setSortVal(header.toLowerCase());
+      e.currentTarget.innerHTML = `${header} <span title="sort" class="arrow">↓</span>`;
+    } else if (arrow === "↓") {
+      // sort data ascending by header
+      setSorter("↑");
+      setSortVal(header.toLowerCase());
+      e.currentTarget.innerHTML = `${header} <span title="sort" class="arrow">↑</span>`;
+    } else if (arrow === "↑") {
+      // remove sort
+      setSorter(null);
+      setSortVal("");
+      e.currentTarget.innerHTML = `${header} <span title="sort" class="arrow">↕</span>`;
+    }
+  };
+
+  // SORTING
+  // let tableData;
+
+  // if (searchInput.length === 0) {
+  //   if (sorter) {
+  //     const isNum =
+  //       sortVal === "level" || sortVal === "points" || sortVal === "completed";
+  //     if (sorter === "↓") {
+  //       if (isNum) {
+  //         tableData = masterFilter.sort(
+  //           (a, b) => a.props[sortVal] - b.props[sortVal]
+  //         );
+  //       } else {
+  //         tableData = masterFilter.sort((a, b) =>
+  //           a.props[sortVal].localeCompare(b.props[sortVal])
+  //         );
+  //       }
+  //     } else {
+  //       if (isNum) {
+  //         tableData = masterFilter.sort(
+  //           (a, b) => b.props[sortVal] - a.props[sortVal]
+  //         );
+  //       } else {
+  //         tableData = masterFilter.sort((a, b) =>
+  //           b.props[sortVal].localeCompare(a.props[sortVal])
+  //         );
+  //       }
+  //     }
+  //   } else {
+  //     tableData = masterFilter;
+  //   }
+  // } else {
+  //   if (sorter) {
+  //     tableData = searchHandler.sort((a, b) =>
+  //       a.props[sortVal].localeCompare(b.props[sortVal])
+  //     );
+  //   } else {
+  //     tableData = searchHandler;
+  //   }
+  // }
 
   return (
     <main className="task-page add">
@@ -561,7 +564,7 @@ const Tasks1 = ({ isLoggedIn, tableRange, setTableRange }) => {
         <div className="flex-between space-below">
           <div className="filters">
             <div className="filter-scraps">
-              {filterGroupItems}
+              {filterItems}
               {filterStatusItems}
               {groupFilter.length || statusFilter.length ? (
                 <span
@@ -650,21 +653,6 @@ const Tasks1 = ({ isLoggedIn, tableRange, setTableRange }) => {
         </div>
       </div>
     </main>
-  );
-};
-
-const Tasks = ({ isLoggedIn, isDarkMode }) => {
-  const [tableRange, setTableRange] = useState([]);
-
-  return (
-    <div>
-      <DarkSwitcher isDarkMode={isDarkMode} tableRange={tableRange} />
-      <Tasks1
-        tableRange={tableRange}
-        setTableRange={setTableRange}
-        isLoggedIn={isLoggedIn}
-      />
-    </div>
   );
 };
 

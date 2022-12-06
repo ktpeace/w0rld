@@ -4,6 +4,13 @@ font-family: 'Galdeano', sans-serif;
 font-family: 'Oswald', sans-serif;
 font-family: 'Roboto Condensed', sans-serif; */
 
+/* Dark Mode
+background-color: #0D1D24; // body
+color: #E0E0E0; // body
+color: #BD992A // nav unselected
+color: #EBD16D // nav selected
+*/
+
 /* RESET STYLES */
 
 @import-normalize;
@@ -26,6 +33,11 @@ body {
 body {
   background-color: #fff9f6;
   overflow-x: hidden;
+}
+
+.dark-mode {
+  background-color: #071013;
+  color: #e0e0e0;
 }
 
 main {
@@ -51,6 +63,7 @@ li {
 /* HEADER/NAV */
 
 nav {
+  color: black;
   background-image: url("./images/torn-paper-pale.png");
   background-size: 105%;
   background-position: bottom;
@@ -328,9 +341,18 @@ footer {
   max-height: 700px;
   min-height: 400px;
   padding: 20px;
+  font-size: 20px;
+}
+
+.updates-text-light {
   background-color: #fefefe;
   border: 5px solid #f4efec;
-  font-size: 20px;
+  color: black;
+}
+
+.updates-text-dark {
+  color: #e0e0e0;
+  border: 5px solid #645116;
 }
 
 .two {
@@ -420,6 +442,12 @@ footer {
   margin: 150px 0 100px 0;
 }
 
+/* .task-page-dark {
+  background-color: 11ee1e;
+  border: 5px solid #614e15;
+  color: #e0e0e0;
+} */
+
 .filter-options {
   display: flex;
   flex-direction: column;
@@ -428,10 +456,20 @@ footer {
 }
 
 .filter-box {
-  background-color: white;
-  border: 3px solid #ebebeb;
   padding: 15px 10px;
   width: 220px;
+}
+
+.filter-box-light {
+  background-color: white;
+  color: black;
+  border: 3px solid #ebebeb;
+}
+
+.filter-box-dark {
+  background-color: #06181c;
+  color: #e0e0e0;
+  border: 3px solid #645116;
 }
 
 .filter-groups {
@@ -489,8 +527,14 @@ footer {
   flex-wrap: wrap;
 }
 
-.filter-scrap {
+.filter-scrap-light {
   background-color: white;
+  color: black;
+}
+
+.filter-scrap-dark {
+  background-color: #06181c;
+  color: #c9a330;
 }
 
 .filter-scrap::after {
@@ -563,12 +607,24 @@ footer {
 }
 
 .tx-list td {
-  background-color: #ffffff;
   padding: 7px 10px 7px 8px;
 }
 
-.tx-row:hover td {
+.tr-light {
+  background-color: #ffffff;
+}
+
+.tr-dark {
+  background-color: #06181c;
+  color: #e0e0e0;
+}
+
+.tr-light:hover td {
   background-color: rgb(252, 252, 252);
+}
+
+.tr-dark:hover td {
+  background-color: #193e49;
 }
 
 .tx-name-cell {
@@ -621,11 +677,20 @@ footer {
 .tx-footer-button {
   margin-top: 20px;
   width: 20px;
-  background-color: white;
-  border: 1px solid grey;
-  color: rgb(69, 69, 69);
   border-radius: 5px;
   font-family: "Roboto Condensed", sans-serif;
+}
+
+.tx-footer-button-light {
+  background-color: white;
+  color: rgb(69, 69, 69);
+  border: 1px solid grey;
+}
+
+.tx-footer-button-dark {
+  background-color: #06181c;
+  color: white;
+  border: 1px solid #645116;
 }
 
 .tx-footer-button:hover {

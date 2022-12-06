@@ -1,20 +1,29 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import logo from "../images/logo.png";
+import DarkModeContext from "./DarkModeContext";
 import glass from "../images/glass.png";
 import typewriter from "../images/typewriter.png";
 import lantern from "../images/lantern.png";
 import pixie from "../images/pixie-avatar.jpeg";
-// import splashBlue from "../images/splash-blue.png";
-// import splashBlueDark from "../images/splash-blue-darker.png";
-// import splashGreen from "../images/splash-green.png";
-// import splashPurple from "../images/splash-purple.png";
-// import splashPurplePure from "../images/splash-purple-pure.png";
-// import splashRed from "../images/splash-red.png";
 
-const Header = ({ isLoggedIn, setIsLoggedIn }) => {
+const Header = ({ isLoggedIn, setIsLoggedIn, isDarkMode, toggleDarkMode }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  // const isDarkMode = useContext(DarkModeContext).isDarkMode;
+  // const toggleDarkMode = useContext(DarkModeContext).toggleDarkMode;
+
+  useEffect(() => {
+    if (isDarkMode) {
+      const body = document.querySelector("body");
+      if (!body.classList.contains("dark-mode"))
+        body.classList.add("dark-mode");
+    } else {
+      const body = document.querySelector("body");
+      if (body.classList.contains("dark-mode"))
+        body.classList.remove("dark-mode");
+    }
+  }, [isDarkMode]);
 
   const validateLogin = (e) => {
     e.preventDefault();
@@ -80,7 +89,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
           </Link>
         </ul>
         <div className="right-side">
-          <div className="lantern-set">
+          <div className="lantern-set" onClick={toggleDarkMode}>
             <img src={lantern} alt="lantern" className="lantern" />
             <span>LIGHT/DARK</span>
           </div>

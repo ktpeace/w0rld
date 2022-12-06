@@ -1,69 +1,91 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useContext } from "react";
+// import { Link } from "react-router-dom";
+import DarkModeContext from "../components/DarkModeContext";
 import sloth from "../images/sloth.jpg";
 import barnOwl from "../images/barn-owl.png";
 import branch from "../images/branch.png";
 import sunflower from "../images/sunflower.png";
-import { tasks } from "../data/tasks-data";
+// import { tasks } from "../data/tasks-data";
 
 const Updates = () => {
-  const username = "Fakename McBiddlesby";
-  const level = 2;
-  const postCount = 1025;
-  const completedTasks = 5;
-  const workingTasks = 3;
-  const totalTasks = 10;
-  const friendUsername = "Pixie";
-  const eventName = "Putting Things Out With Rain";
-  const eventStatus = "no response";
-  const eventDate = "12/03/2022";
+  const isDarkMode = useContext(DarkModeContext).isDarkMode;
+  console.log(isDarkMode);
+  // const friendUsername = "Pixie";
+  // const username = "Fakename McBiddlesby";
+  // const level = 2;
+  // const postCount = 1025;
+  // const completedTasks = 5;
+  // const workingTasks = 3;
+  // const totalTasks = 10;
+  // const eventName = "Putting Things Out With Rain";
+  // const eventStatus = "no response";
+  // const eventDate = "12/03/2022";
 
-  const dummyItem = (
-    <li className="task-li">
-      <div className="task-item">
-        <div className="task-item-name">
-          <div className="group-color"></div>
-          <Link className="task-name">Odyssey</Link>
-        </div>
-        <span className="task-status">missing requirements</span>
-      </div>
-      <div className="task-options">
-        <Link to="./1" className="task-options-link">
-          edit
-        </Link>
-        <Link to="/preview/1" className="task-options-link">
-          preview
-        </Link>
-      </div>
-    </li>
-  );
+  // const dummyItem = (
+  //   <li className="task-li">
+  //     <div className="task-item">
+  //       <div className="task-item-name">
+  //         <div className="group-color"></div>
+  //         <Link className="task-name">Odyssey</Link>
+  //       </div>
+  //       <span className="task-status">missing requirements</span>
+  //     </div>
+  //     <div className="task-options">
+  //       <Link to="./1" className="task-options-link">
+  //         edit
+  //       </Link>
+  //       <Link to="/preview/1" className="task-options-link">
+  //         preview
+  //       </Link>
+  //     </div>
+  //   </li>
+  // );
 
-  const dummyComment = (
-    <li className="comment-li">
-      <div className="task-item">
-        <div className="task-item-name">
-          <div className="group-color"></div>
-          <Link className="task-name">Counting by Pixie</Link>
-        </div>
-      </div>
-      <div className="friend-comment">
-        <img className="friend-avatar" src={sloth} alt="friend avatar"></img>
-        <div className="friend-comment-pair">
-          <span className="friend-says">{friendUsername} says:</span>
-          <span className="friend-comment-text">
-            If you go swimming in the air you don't have to towel off after
-          </span>
-        </div>
-      </div>
-    </li>
-  );
+  // const dummyComment = (
+  //   <li className="comment-li">
+  //     <div className="task-item">
+  //       <div className="task-item-name">
+  //         <div className="group-color"></div>
+  //         <Link className="task-name">Counting by Pixie</Link>
+  //       </div>
+  //     </div>
+  //     <div className="friend-comment">
+  //       <img className="friend-avatar" src={sloth} alt="friend avatar"></img>
+  //       <div className="friend-comment-pair">
+  //         <span className="friend-says">{friendUsername} says:</span>
+  //         <span className="friend-comment-text">
+  //           If you go swimming in the air you don't have to towel off after
+  //         </span>
+  //       </div>
+  //     </div>
+  //   </li>
+  // );
+  useEffect(() => {
+    const updatesText = document.querySelectorAll(".updates-text");
+    if (isDarkMode) {
+      updatesText.forEach((div) => {
+        if (div.classList.contains("updates-text-light")) {
+          div.classList.remove("updates-text-light");
+          console.log("removed light");
+        }
+        div.classList.add("updates-text-dark");
+      });
+    } else {
+      updatesText.forEach((div) => {
+        if (div.classList.contains("updates-text-dark")) {
+          div.classList.remove("updates-text-dark");
+        }
+        div.classList.add("updates-text-light");
+      });
+    }
+  }, [isDarkMode]);
 
   return (
     <main className="updates-page">
       <div className="image-pair">
         <img src={barnOwl} alt="watercolor barn owl" className="barn-owl"></img>
 
-        <div className="updates-text first">
+        <div className="updates-text updates-text-light first">
           <h2>Global Completed Tasks</h2>
           <ul>
             <li>
@@ -105,7 +127,7 @@ const Updates = () => {
         </div>
       </div>
       <div className="image-pair">
-        <div className="updates-text two">
+        <div className="updates-text updates-text-light two">
           <h2>Activity on Your Tasks</h2>
           <ul>
             <li>
@@ -144,7 +166,7 @@ const Updates = () => {
       <div className="image-pair">
         <img src={sunflower} alt="sunflower" className="sunflower" />
 
-        <div className="updates-text three">
+        <div className="updates-text updates-text-light three">
           <h2>Friend/Foe Requests</h2>
           <ul>
             <li>
