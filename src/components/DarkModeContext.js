@@ -1,5 +1,6 @@
 import { createContext } from "react";
 
-const DarkModeContext = createContext(false);
-
-export default DarkModeContext;
+export const DarkModeContext = createContext({
+  isDarkMode: false,
+  toggleDarkMode: () => {},
+});

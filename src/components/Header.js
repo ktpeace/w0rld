@@ -1,20 +1,21 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import DarkModeContext from "./DarkModeContext";
+import { DarkModeContext } from "../components/DarkModeContext";
+import { UserContext } from "./UserContext";
 import glass from "../images/glass.png";
 import typewriter from "../images/typewriter.png";
 import lantern from "../images/lantern.png";
 import pixie from "../images/pixie-avatar.jpeg";
 
-const Header = ({ isLoggedIn, setIsLoggedIn, isDarkMode, toggleDarkMode }) => {
+const Header = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { darkMode, setDarkMode } = useContext(DarkModeContext);
+  const { user, setUser } = useContext(UserContext);
 
-  // const isDarkMode = useContext(DarkModeContext).isDarkMode;
-  // const toggleDarkMode = useContext(DarkModeContext).toggleDarkMode;
-
-  useEffect(() => {
-    if (isDarkMode) {
+  const handleLanternClick = () => {
+    setDarkMode((prev) => !prev);
+    if (darkMode) {
       const body = document.querySelector("body");
       if (!body.classList.contains("dark-mode"))
         body.classList.add("dark-mode");
@@ -23,17 +24,20 @@ const Header = ({ isLoggedIn, setIsLoggedIn, isDarkMode, toggleDarkMode }) => {
       if (body.classList.contains("dark-mode"))
         body.classList.remove("dark-mode");
     }
-  }, [isDarkMode]);
+  };
 
   const validateLogin = (e) => {
     e.preventDefault();
-    setIsLoggedIn(true);
-    localStorage.setItem("isLoggedIn", true);
+    const userInfo = { username: username, level: 3 };
+    if (password) {
+      localStorage.setItem("user", userInfo);
+      setUser(userInfo);
+    }
   };
 
   const logout = () => {
-    setIsLoggedIn(false);
-    localStorage.setItem("isLoggedIn", false);
+    setUser(null);
+    localStorage.setItem("user", null);
   };
 
   return (
@@ -89,11 +93,11 @@ const Header = ({ isLoggedIn, setIsLoggedIn, isDarkMode, toggleDarkMode }) => {
           </Link>
         </ul>
         <div className="right-side">
-          <div className="lantern-set" onClick={toggleDarkMode}>
+          <div className="lantern-set" onClick={handleLanternClick}>
             <img src={lantern} alt="lantern" className="lantern" />
             <span>LIGHT/DARK</span>
           </div>
-          {!isLoggedIn ? (
+          {!user ? (
             <div className="login">
               <form>
                 <div className="login-group">
@@ -103,14 +107,17 @@ const Header = ({ isLoggedIn, setIsLoggedIn, isDarkMode, toggleDarkMode }) => {
                       type="text"
                       name="username"
                       id="username"
+                      autoComplete="username"
                       onChange={(e) => setUsername(e.target.value)}
                     />
                   </div>
                   <div className="login-set">
                     <label htmlFor="password">Password:</label>
                     <input
-                      type="text"
+                      type="password"
                       name="password"
+                      id="password"
+                      autoComplete="current-password"
                       onChange={(e) => setPassword(e.target.value)}
                     />
                   </div>

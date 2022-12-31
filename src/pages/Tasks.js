@@ -96,20 +96,26 @@ const DarkSwitcher = ({ isDarkMode, tableRange }) => {
   }, [isDarkMode, tableRange]);
 };
 
-// END DARK MODE, START TASKS LOGIC
+// END DARK MODE, START TASKS LOGIC !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 const Tasks1 = ({ isLoggedIn, tableRange, setTableRange }) => {
   const [groupFilter, setGroupFilter] = useState([]);
   const [statusFilter, setStatusFilter] = useState([]);
+  const [masterTasksFilter, setMasterTasksFilter] = useState(tasks);
   const [searchInput, setSearchInput] = useState("");
   const [sorter, setSorter] = useState(null);
   const [sortVal, setSortVal] = useState("");
   const userLevel = 3;
 
-  // REMOVE SPECIAL FILTERS ON LOGOUT
+  // ADJUST FILTERS ON LOGOUT
   useEffect(() => {
     let pretiredIndex = statusFilter.indexOf("Pretired");
     let acceptedIndex = statusFilter.indexOf("Accepted");
     if (!isLoggedIn) {
+      setMasterTasksFilter((prev) =>
+        prev.filter((item) => item.status !== "Accepted")
+      );
       if (pretiredIndex !== -1) {
         setStatusFilter((prev) => {
           prev.splice(pretiredIndex, 1);
@@ -122,6 +128,8 @@ const Tasks1 = ({ isLoggedIn, tableRange, setTableRange }) => {
           return prev;
         });
       }
+    } else if (userLevel < 3) {
+      setMasterTasksFilter(tasks.filter((item) => item.status !== "Pretired"));
     }
   }, [isLoggedIn]);
 
@@ -139,10 +147,67 @@ const Tasks1 = ({ isLoggedIn, tableRange, setTableRange }) => {
     return data.slice((page - 1) * rowsPerPage, page * rowsPerPage);
   };
 
+  // let levelFilteredTasks = tasks;
+  // if (!(isLoggedIn && userLevel >= 3)) {
+  //   // levelFilteredTasks = tasks.filter((item) => item.status !== "Pretired");
+  //   setMasterTasksFilter(tasks.filter((item) => item.status !== "Pretired"));
+  // }
+
+  // let masterTasksFilter = masterFilter.filter((item) => {
+  //   if (groupFilter.length > 0 && statusFilter.length > 0) {
+  //     return (
+  //       groupFilter.includes(item.group) && statusFilter.includes(item.status)
+  //     );
+  //   } else if (groupFilter.length > 0) {
+  //     return groupFilter.includes(item.group);
+  //   } else if (statusFilter.length > 0) {
+  //     return statusFilter.includes(item.status);
+  //   } else {
+  //     return levelFilteredTasks;
+  //   }
+  // });
+  useEffect(() => {
+    setMasterTasksFilter((prev) =>
+      prev.filter((item) => {
+        if (groupFilter.length > 0 && statusFilter.length > 0) {
+          return (
+            groupFilter.includes(item.group) &&
+            statusFilter.includes(item.status)
+          );
+        } else if (groupFilter.length > 0) {
+          return groupFilter.includes(item.group);
+        } else if (statusFilter.length > 0) {
+          return statusFilter.includes(item.status);
+        } else {
+          return prev;
+        }
+      })
+    );
+  }, [groupFilter, statusFilter]);
+
   const useTable = (page, rowsPerPage) => {
     const [slice, setSlice] = useState([]);
     useEffect(() => {
+      // in this useEffect,
+      // masterTasksFilter is getting an empty array when Pretired/Accepted are removed on logout
+      // the code of masterTasksFilter pasted directly works
       const data = masterTasksFilter;
+      console.log(masterTasksFilter);
+      // console.log(data);
+      // levelFilteredTasks.filter((item) => {
+      //   if (groupFilter.length > 0 && statusFilter.length > 0) {
+      //     return (
+      //       groupFilter.includes(item.group) &&
+      //       statusFilter.includes(item.status)
+      //     );
+      //   } else if (groupFilter.length > 0) {
+      //     return groupFilter.includes(item.group);
+      //   } else if (statusFilter.length > 0) {
+      //     return statusFilter.includes(item.status);
+      //   } else {
+      //     return levelFilteredTasks;
+      //   }
+      // });
       const range = calculateRange(data, rowsPerPage);
       setTableRange([...range]);
       const slice = sliceData(data, page, rowsPerPage);
@@ -156,7 +221,6 @@ const Tasks1 = ({ isLoggedIn, tableRange, setTableRange }) => {
       sorter,
       sortVal,
       isLoggedIn,
-      tableRange,
     ]);
     return { slice, range: tableRange };
   };
@@ -165,24 +229,20 @@ const Tasks1 = ({ isLoggedIn, tableRange, setTableRange }) => {
   let { slice } = useTable(page, 20);
 
   // FILTERING
-  let levelFilteredTasks = tasks;
-  if (!(isLoggedIn && userLevel >= 3)) {
-    levelFilteredTasks = tasks.filter((item) => item.status !== "Pretired");
-  }
 
-  let masterTasksFilter = levelFilteredTasks.filter((item) => {
-    if (groupFilter.length > 0 && statusFilter.length > 0) {
-      return (
-        groupFilter.includes(item.group) && statusFilter.includes(item.status)
-      );
-    } else if (groupFilter.length > 0) {
-      return groupFilter.includes(item.group);
-    } else if (statusFilter.length > 0) {
-      return statusFilter.includes(item.status);
-    } else {
-      return levelFilteredTasks;
-    }
-  });
+  // let { levelFilteredTasks, setLevelFilteredTasks } = useState(tasks);
+  // useEffect(() => {
+  //   if (!(isLoggedIn && userLevel >= 3)) {
+  //     setLevelFilteredTasks((prev) =>
+  //       prev.filter((item) => item.status !== "Pretired")
+  //     );
+  //   }
+  //   if (!isLoggedIn) {
+  //     setLevelFilteredTasks((prev) =>
+  //       prev.filter((item) => item.status !== "Accepted")
+  //     );
+  //   }
+  // }, [isLoggedIn]);
 
   const groupFilterHandler = (e) => {
     const name = e.currentTarget.innerText;
@@ -198,6 +258,7 @@ const Tasks1 = ({ isLoggedIn, tableRange, setTableRange }) => {
       <span
         className="filter-scrap filter-scrap-light"
         onClick={(e) => groupFilterHandler(e)}
+        key={name}
       >
         {name}
       </span>
@@ -209,6 +270,7 @@ const Tasks1 = ({ isLoggedIn, tableRange, setTableRange }) => {
       <span
         className="filter-scrap filter-scrap-light"
         onClick={(e) => statusFilterHandler(e)}
+        key={name}
       >
         {name}
       </span>
@@ -232,40 +294,45 @@ const Tasks1 = ({ isLoggedIn, tableRange, setTableRange }) => {
   };
 
   // SEARCHING
-  if (searchInput)
-    masterTasksFilter = masterTasksFilter.filter((item) => {
-      return Object.values(item)
-        .join("")
-        .toLowerCase()
-        .includes(searchInput.toLowerCase());
-    });
+  useEffect(() => {
+    if (searchInput) {
+      setMasterTasksFilter((prev) =>
+        prev.filter((item) => {
+          return Object.values(item)
+            .join("")
+            .toLowerCase()
+            .includes(searchInput.toLowerCase());
+        })
+      );
+    }
+  }, [searchInput]);
 
   // SORTING
-  if (sorter) {
-    const isNum =
-      sortVal === "level" || sortVal === "points" || sortVal === "completed";
-    if (sorter === "↓") {
-      if (isNum) {
-        masterTasksFilter = masterTasksFilter.sort(
-          (a, b) => a[sortVal] - b[sortVal]
-        );
-      } else {
-        masterTasksFilter = masterTasksFilter.sort((a, b) =>
-          a[sortVal].localeCompare(b[sortVal])
-        );
-      }
-    } else {
-      if (isNum) {
-        masterTasksFilter = masterTasksFilter.sort(
-          (a, b) => b[sortVal] - a[sortVal]
-        );
-      } else {
-        masterTasksFilter = masterTasksFilter.sort((a, b) =>
-          b[sortVal].localeCompare(a[sortVal])
-        );
-      }
-    }
-  }
+  // if (sorter) {
+  //   const isNum =
+  //     sortVal === "level" || sortVal === "points" || sortVal === "completed";
+  //   if (sorter === "↓") {
+  //     if (isNum) {
+  //       masterTasksFilter = masterTasksFilter.sort(
+  //         (a, b) => a[sortVal] - b[sortVal]
+  //       );
+  //     } else {
+  //       masterTasksFilter = masterTasksFilter.sort((a, b) =>
+  //         a[sortVal].localeCompare(b[sortVal])
+  //       );
+  //     }
+  //   } else {
+  //     if (isNum) {
+  //       masterTasksFilter = masterTasksFilter.sort(
+  //         (a, b) => b[sortVal] - a[sortVal]
+  //       );
+  //     } else {
+  //       masterTasksFilter = masterTasksFilter.sort((a, b) =>
+  //         b[sortVal].localeCompare(a[sortVal])
+  //       );
+  //     }
+  //   }
+  // }
 
   // SORTING (SETTING ARROWS)
   const sortHandler = (e) => {
@@ -273,7 +340,6 @@ const Tasks1 = ({ isLoggedIn, tableRange, setTableRange }) => {
     const arrow = text[text.length - 1];
     const header = text.slice(0, text.length - 2);
     const allArrows = document.getElementsByClassName("arrow");
-    console.log(allArrows);
     for (let i = 0; i < allArrows.length; i++) {
       allArrows[i].innerText = "↕";
     }

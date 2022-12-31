@@ -1,8 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-//  ⚜
+
 const Footer = () => {
-  console.log("rerender");
   return (
     <footer>
       <ul className="footer-links">

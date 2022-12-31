@@ -1,6 +1,6 @@
-import React, { useEffect, useContext } from "react";
+import React, { useContext } from "react";
 // import { Link } from "react-router-dom";
-import DarkModeContext from "../components/DarkModeContext";
+import { DarkModeContext } from "../components/DarkModeContext";
 import sloth from "../images/sloth.jpg";
 import barnOwl from "../images/barn-owl.png";
 import branch from "../images/branch.png";
@@ -8,8 +8,8 @@ import sunflower from "../images/sunflower.png";
 // import { tasks } from "../data/tasks-data";
 
 const Updates = () => {
-  const isDarkMode = useContext(DarkModeContext).isDarkMode;
-  console.log(isDarkMode);
+  const { darkMode } = useContext(DarkModeContext);
+
   // const friendUsername = "Pixie";
   // const username = "Fakename McBiddlesby";
   // const level = 2;
@@ -60,25 +60,24 @@ const Updates = () => {
   //     </div>
   //   </li>
   // );
-  useEffect(() => {
-    const updatesText = document.querySelectorAll(".updates-text");
-    if (isDarkMode) {
-      updatesText.forEach((div) => {
-        if (div.classList.contains("updates-text-light")) {
-          div.classList.remove("updates-text-light");
-          console.log("removed light");
-        }
-        div.classList.add("updates-text-dark");
-      });
-    } else {
-      updatesText.forEach((div) => {
-        if (div.classList.contains("updates-text-dark")) {
-          div.classList.remove("updates-text-dark");
-        }
-        div.classList.add("updates-text-light");
-      });
-    }
-  }, [isDarkMode]);
+  const updatesText = document.querySelectorAll(".updates-text");
+
+  if (darkMode) {
+    updatesText.forEach((div) => {
+      if (div.classList.contains("updates-text-light")) {
+        div.classList.remove("updates-text-light");
+        console.log("removed light");
+      }
+      div.classList.add("updates-text-dark");
+    });
+  } else {
+    updatesText.forEach((div) => {
+      if (div.classList.contains("updates-text-dark")) {
+        div.classList.remove("updates-text-dark");
+      }
+      div.classList.add("updates-text-light");
+    });
+  }
 
   return (
     <main className="updates-page">
