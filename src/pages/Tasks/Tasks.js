@@ -1,81 +1,58 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { tasks } from "../../data/tasks-data";
 // import { DarkModeContext } from "../../components/DarkModeContext";
-// import { UserContext } from "../../components/UserContext";
+import { UserContext } from "../../components/UserContext";
 
 // remove/apply dark mode to all elements on toggle
 // control all the dark/light styles in one CSS thing
-// search
-// filter by group
-// filter by status
-// filter by search text
-// remove filters on logout
-// clear all filters on clear click
-
-// STATUS: Table doesn't use searchedTasks data
-// Work out the entire logic around sorted/searched/filtered
+// exclude pretired/active if user <3 / null
+// separate group/status filters, will be best in long run anyway
 
 const Tasks = () => {
   console.log("Tasks");
   // const { darkMode } = useContext(DarkModeContext);
-  // const { user } = useContext(UserContext);
-  const [currentPage, setCurrentPage] = useState([1]);
+  const { user } = useContext(UserContext);
+  const [sortedTasks, setSortedTasks] = useState(tasks);
   const [searchInput, setSearchInput] = useState("");
-  const [currentTasks, setCurrentTasks] = useState(tasks);
-  const [sortedTasks, setSortedTasks] = useState(currentTasks);
-  // const [filteredTasks, setFilteredTasks] = useState(currentTasks);
-  const [searchedTasks, setSearchedTasks] = useState(currentTasks);
-  const rowsPerPage = 19;
-  const totalPages = Math.ceil(currentTasks.length / rowsPerPage);
-  let pageSlice = currentTasks.slice(
-    (currentPage - 1) * rowsPerPage,
-    currentPage * rowsPerPage
+  const [filters, setFilters] = useState([]);
+  const [currentPage, setCurrentPage] = useState([1]);
+  const rowsPerPage = 17;
+  const [totalPages, setTotalPages] = useState(
+    Math.ceil(sortedTasks.length / rowsPerPage)
   );
 
-  // SEARCHING
-  function searchHandler(e) {
-    setSearchInput(e.target.value);
-    if (searchInput) {
-      setSearchedTasks((prev) =>
-        prev.filter((item) => {
-          return Object.values(item)
-            .join("")
-            .toLowerCase()
-            .includes(searchInput.toLowerCase());
-        })
-      );
-    }
-  }
+  // RESET FILTERS ON LOGOUT
+  useEffect(() => {
+    setFilters([]);
+    setSearchInput("");
+  }, [user]);
 
   // SORTING 1/2 DATA SORTING
-  // if all filters/sorts/searches are in one spot how to revert just one
   function sortTasks(value, direction) {
     value = value.toLowerCase();
-    let currentTasksCopy = [...currentTasks];
+    let sortedTasksCopy = [...sortedTasks];
     const isNum =
       value === "level" || value === "points" || value === "completed";
     if (direction === "↓") {
       if (isNum) {
-        currentTasksCopy.sort((a, b) => a[value] - b[value]);
+        sortedTasksCopy.sort((a, b) => a[value] - b[value]);
       } else {
-        currentTasksCopy.sort((a, b) => a[value].localeCompare(b[value]));
+        sortedTasksCopy.sort((a, b) => a[value].localeCompare(b[value]));
       }
     } else if (direction === "↑") {
       if (isNum) {
-        currentTasksCopy.sort((a, b) => b[value] - a[value]);
+        sortedTasksCopy.sort((a, b) => b[value] - a[value]);
       } else {
-        currentTasksCopy.sort((a, b) => b[value].localeCompare(a[value]));
+        sortedTasksCopy.sort((a, b) => b[value].localeCompare(a[value]));
       }
     } else {
-      // the below needs to revert to searched + filtered tasks
-      currentTasksCopy = tasks;
+      sortedTasksCopy = tasks;
     }
-    setSortedTasks(currentTasksCopy);
-    setCurrentTasks(currentTasksCopy);
+    setSortedTasks(sortedTasksCopy);
   }
 
-  // SORTING 2/2 SETTING ARROWS
+  // SORTING 2/2 SETTING TABLE HEADER ARROWS
   const sortHandler = (e) => {
     const text = e.currentTarget.innerText;
     const arrow = text[text.length - 1];
@@ -96,9 +73,55 @@ const Tasks = () => {
     }
   };
 
-  // PAGINATION 1/2 TABLE MAPPING
-  const DummyDataMapper = () =>
-    pageSlice.map((task) => {
+  // FILTERING
+  // Task Filtering & Searching
+  function filterClickHandler(e) {
+    const name = e.currentTarget.innerText;
+    if (filters.includes(name)) {
+      setFilters(filters.filter((filterName) => filterName !== name));
+    } else {
+      setFilters((prev) => [...prev, name]);
+    }
+  }
+
+  const filterTasks = () =>
+    sortedTasks.filter(
+      (task) => filters.includes(task.status) || filters.includes(task.group)
+    );
+
+  function searchTasks(data) {
+    return data.filter((task) => {
+      return Object.values(task)
+        .join("")
+        .toLowerCase()
+        .includes(searchInput.toLowerCase());
+    });
+  }
+
+  // Adding/Removing Filter Semi-Buttons
+  const filterScraps = filters.map((name) => {
+    return (
+      <span
+        className="filter-scrap filter-scrap-light"
+        onClick={(e) => filterClickHandler(e)}
+        key={name}
+      >
+        {name}
+      </span>
+    );
+  });
+
+  // TABLE MAPPING BY PAGE
+  const DummyDataMapper = () => {
+    let sortedTasksCopy = [...sortedTasks];
+    if (filters.length > 0) sortedTasksCopy = filterTasks();
+    if (searchInput) sortedTasksCopy = searchTasks(sortedTasksCopy);
+    setTotalPages(Math.ceil(sortedTasksCopy.length / rowsPerPage));
+    const pageSlice = sortedTasksCopy.slice(
+      (currentPage - 1) * rowsPerPage,
+      currentPage * rowsPerPage
+    );
+    return pageSlice.map((task) => {
       console.log("DummyDataMapper");
       return (
         <tr
@@ -125,13 +148,14 @@ const Tasks = () => {
         </tr>
       );
     });
+  };
 
-  // PAGINATION 2/2 PAGE NUMBER BUTTONS
+  // PAGE NUMBER BUTTONS
   const TableFooter = () => {
     const allPages = Array.from({ length: totalPages }, (_, i) => i + 1);
     return (
       <div className="tx-footer">
-        {allPages.map((num, index) => (
+        {allPages.map((num) => (
           <button
             key={num}
             className="tx-footer-button tx-footer-button-light"
@@ -144,8 +168,6 @@ const Tasks = () => {
     );
   };
 
-  function placeholderFunction() {}
-
   // MAIN JSX
   return (
     <main className="task-page add">
@@ -154,16 +176,32 @@ const Tasks = () => {
           <h3>Filter by Group</h3>
           <ul className="filter-list">
             <li className="filter-li">
-              <div className="filter-li-group" onClick={placeholderFunction}>
+              <div
+                className="filter-li-group"
+                onClick={(e) => filterClickHandler(e)}
+              >
                 <div
                   className="filter-color"
                   style={{ backgroundColor: "#000" }}
                 ></div>
-                <span>University of Aesthematics</span>
+                <span
+                  style={{
+                    textDecoration: filters.includes(
+                      "University of Aesthematics"
+                    )
+                      ? "underline"
+                      : "none",
+                  }}
+                >
+                  University of Aesthematics
+                </span>
               </div>
             </li>
             <li className="filter-li">
-              <div className="filter-li-group" onClick={placeholderFunction}>
+              <div
+                className="filter-li-group"
+                onClick={(e) => filterClickHandler(e)}
+              >
                 <div
                   className="filter-color"
                   style={{
@@ -171,43 +209,95 @@ const Tasks = () => {
                     border: "3px solid #BA4C00",
                   }}
                 ></div>
-                <span>U.A. Masters Course</span>
+                <span
+                  style={{
+                    textDecoration: filters.includes("U.A. Masters Course")
+                      ? "underline"
+                      : "none",
+                  }}
+                >
+                  U.A. Masters Course
+                </span>
               </div>
             </li>
             <li className="filter-li">
-              <div className="filter-li-group" onClick={placeholderFunction}>
+              <div
+                className="filter-li-group"
+                onClick={(e) => filterClickHandler(e)}
+              >
                 <div
                   className="filter-color"
                   style={{ backgroundColor: "#660B09" }}
                 ></div>
-                <span>S.N.I.D.E.</span>
+                <span
+                  style={{
+                    textDecoration: filters.includes("S.N.I.D.E.")
+                      ? "underline"
+                      : "none",
+                  }}
+                >
+                  S.N.I.D.E.
+                </span>
               </div>
             </li>
             <li className="filter-li">
-              <div className="filter-li-group" onClick={placeholderFunction}>
+              <div
+                className="filter-li-group"
+                onClick={(e) => filterClickHandler(e)}
+              >
                 <div
                   className="filter-color"
                   style={{ backgroundColor: "#EAB547" }}
                 ></div>
-                <span>Journeymen</span>
+                <span
+                  style={{
+                    textDecoration: filters.includes("Journeymen")
+                      ? "underline"
+                      : "none",
+                  }}
+                >
+                  Journeymen
+                </span>
               </div>
             </li>
             <li className="filter-li">
-              <div className="filter-li-group" onClick={placeholderFunction}>
+              <div
+                className="filter-li-group"
+                onClick={(e) => filterClickHandler(e)}
+              >
                 <div
                   className="filter-color"
                   style={{ backgroundColor: "#007549" }}
                 ></div>
-                <span>Analog</span>
+                <span
+                  style={{
+                    textDecoration: filters.includes("Analog")
+                      ? "underline"
+                      : "none",
+                  }}
+                >
+                  Analog
+                </span>
               </div>
             </li>
             <li className="filter-li">
-              <div className="filter-li-group" onClick={placeholderFunction}>
+              <div
+                className="filter-li-group"
+                onClick={(e) => filterClickHandler(e)}
+              >
                 <div
                   className="filter-color"
                   style={{ backgroundColor: "#4D1568" }}
                 ></div>
-                <span>Gestalt</span>
+                <span
+                  style={{
+                    textDecoration: filters.includes("Gestalt")
+                      ? "underline"
+                      : "none",
+                  }}
+                >
+                  Gestalt
+                </span>
               </div>
             </li>
           </ul>
@@ -216,33 +306,77 @@ const Tasks = () => {
           <h3>Filter by Status</h3>
           <ul className="filter-list">
             <li className="filter-li">
-              <div className="filter-li-group" onClick={placeholderFunction}>
+              <div
+                className="filter-li-group"
+                onClick={(e) => filterClickHandler(e)}
+              >
                 <div className="filter-color status-filter-color"></div>
-                <span>Active</span>
+                <span
+                  style={{
+                    textDecoration: filters.includes("Active")
+                      ? "underline"
+                      : "none",
+                  }}
+                >
+                  Active
+                </span>
               </div>
             </li>
             <li className="filter-li">
-              <div className="filter-li-group" onClick={placeholderFunction}>
+              <div
+                className="filter-li-group"
+                onClick={(e) => filterClickHandler(e)}
+              >
                 <div className="filter-color status-filter-color"></div>
-                <span>Retired</span>
+                <span
+                  style={{
+                    textDecoration: filters.includes("Retired")
+                      ? "underline"
+                      : "none",
+                  }}
+                >
+                  Retired
+                </span>
               </div>
             </li>
-            {/* {isLoggedIn && userLevel >= 3 ? ( */}
-            <li className="filter-li">
-              <div className="filter-li-group" onClick={placeholderFunction}>
-                <div className="filter-color status-filter-color"></div>
-                <span>Pretired</span>
-              </div>
-            </li>
-            {/* ) : null} */}
-            {/* {isLoggedIn ? ( */}
-            <li className="filter-li">
-              <div className="filter-li-group" onClick={placeholderFunction}>
-                <div className="filter-color status-filter-color"></div>
-                <span>Accepted</span>
-              </div>
-            </li>
-            {/* ) : null} */}
+            {user && user.level >= 3 ? (
+              <li className="filter-li">
+                <div
+                  className="filter-li-group"
+                  onClick={(e) => filterClickHandler(e)}
+                >
+                  <div className="filter-color status-filter-color"></div>
+                  <span
+                    style={{
+                      textDecoration: filters.includes("Pretired")
+                        ? "underline"
+                        : "none",
+                    }}
+                  >
+                    Pretired
+                  </span>
+                </div>
+              </li>
+            ) : null}
+            {user ? (
+              <li className="filter-li">
+                <div
+                  className="filter-li-group"
+                  onClick={(e) => filterClickHandler(e)}
+                >
+                  <div className="filter-color status-filter-color"></div>
+                  <span
+                    style={{
+                      textDecoration: filters.includes("Accepted")
+                        ? "underline"
+                        : "none",
+                    }}
+                  >
+                    Accepted
+                  </span>
+                </div>
+              </li>
+            ) : null}
           </ul>
         </div>
       </div>
@@ -250,7 +384,19 @@ const Tasks = () => {
       <div>
         <div className="flex-between space-below">
           <div className="filters">
-            <div className="filter-scraps"></div>
+            <div className="filter-scraps">
+              {filterScraps}
+              {filters.length ? (
+                <span
+                  className="filter-scrap filter-scrap-light"
+                  onClick={() => setFilters([])}
+                >
+                  CLEAR ALL
+                </span>
+              ) : (
+                <span></span>
+              )}
+            </div>
           </div>
           <div className="tx-search">
             <input
@@ -258,7 +404,7 @@ const Tasks = () => {
               id="site-search"
               name="search"
               placeholder="search"
-              onChange={(e) => searchHandler(e)}
+              onChange={(e) => setSearchInput(e.target.value)}
             />
           </div>
         </div>
