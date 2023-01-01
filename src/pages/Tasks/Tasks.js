@@ -81,12 +81,16 @@ const Tasks = () => {
     }
   }
 
+  function filterByUserStatus() {
+    return sortedTasks.filter((task) => task.status !== "Pretired");
+  }
+
   // this filter works by separating out groups + statuses so they can both apply at once
   // could make them separate filter states from the start if the separation also becomes needed elsewhere
-  const filterTasks = () => {
+  const filterTasks = (taskArray) => {
     const groups = [];
     const statuses = [];
-    sortedTasks.forEach((task) => {
+    taskArray.forEach((task) => {
       if (filters.includes(task.status)) {
         statuses.push(task.status);
       } else if (filters.includes(task.group)) {
@@ -94,15 +98,15 @@ const Tasks = () => {
       }
     });
     if (groups.length > 0 && statuses.length > 0) {
-      return sortedTasks.filter(
+      return taskArray.filter(
         (task) => groups.includes(task.group) && statuses.includes(task.status)
       );
     } else if (groups.length > 0) {
-      return sortedTasks.filter((task) => groups.includes(task.group));
+      return taskArray.filter((task) => groups.includes(task.group));
     } else if (statuses.length > 0) {
-      return sortedTasks.filter((task) => statuses.includes(task.status));
+      return taskArray.filter((task) => statuses.includes(task.status));
     } else {
-      return sortedTasks;
+      return taskArray;
     }
   };
 
@@ -132,7 +136,8 @@ const Tasks = () => {
   // MAP TABLE BY PAGE
   const DummyDataMapper = () => {
     let sortedTasksCopy = [...sortedTasks];
-    if (filters.length > 0) sortedTasksCopy = filterTasks();
+    if (!user || user.level < 3) sortedTasksCopy = filterByUserStatus();
+    if (filters.length > 0) sortedTasksCopy = filterTasks(sortedTasks);
     if (searchInput) sortedTasksCopy = searchTasks(sortedTasksCopy);
     totalPages = Math.ceil(sortedTasksCopy.length / rowsPerPage);
     const pageSlice = sortedTasksCopy.slice(
