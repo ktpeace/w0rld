@@ -7,7 +7,6 @@ import { UserContext } from "../../components/UserContext";
 // remove/apply dark mode to all elements on toggle
 // control all the dark/light styles in one CSS thing
 // exclude pretired/active if user <3 / null
-// separate group/status filters, will be best in long run anyway
 
 const Tasks = () => {
   console.log("Tasks");
@@ -18,17 +17,15 @@ const Tasks = () => {
   const [filters, setFilters] = useState([]);
   const [currentPage, setCurrentPage] = useState([1]);
   const rowsPerPage = 17;
-  const [totalPages, setTotalPages] = useState(
-    Math.ceil(sortedTasks.length / rowsPerPage)
-  );
+  let totalPages = Math.ceil(sortedTasks.length / rowsPerPage);
 
-  // RESET FILTERS ON LOGOUT
+  // RESET FILTERS ON LOGIN/LOGOUT (because available filters change)
   useEffect(() => {
-    setFilters([]);
-    setSearchInput("");
+    setFilters(() => []);
+    setSearchInput(() => "");
   }, [user]);
 
-  // SORTING 1/2 DATA SORTING
+  // SORTING 1/2 SORT DATA
   function sortTasks(value, direction) {
     value = value.toLowerCase();
     let sortedTasksCopy = [...sortedTasks];
@@ -52,7 +49,7 @@ const Tasks = () => {
     setSortedTasks(sortedTasksCopy);
   }
 
-  // SORTING 2/2 SETTING TABLE HEADER ARROWS
+  // SORTING 2/2 SET TABLE HEADER ARROWS
   const sortHandler = (e) => {
     const text = e.currentTarget.innerText;
     const arrow = text[text.length - 1];
@@ -74,7 +71,7 @@ const Tasks = () => {
   };
 
   // FILTERING
-  // Task Filtering & Searching
+  // Filter Tasks
   function filterClickHandler(e) {
     const name = e.currentTarget.innerText;
     if (filters.includes(name)) {
@@ -84,11 +81,32 @@ const Tasks = () => {
     }
   }
 
-  const filterTasks = () =>
-    sortedTasks.filter(
-      (task) => filters.includes(task.status) || filters.includes(task.group)
-    );
+  // this filter works by separating out groups + statuses so they can both apply at once
+  // could make them separate filter states from the start if the separation also becomes needed elsewhere
+  const filterTasks = () => {
+    const groups = [];
+    const statuses = [];
+    sortedTasks.forEach((task) => {
+      if (filters.includes(task.status)) {
+        statuses.push(task.status);
+      } else if (filters.includes(task.group)) {
+        groups.push(task.group);
+      }
+    });
+    if (groups.length > 0 && statuses.length > 0) {
+      return sortedTasks.filter(
+        (task) => groups.includes(task.group) && statuses.includes(task.status)
+      );
+    } else if (groups.length > 0) {
+      return sortedTasks.filter((task) => groups.includes(task.group));
+    } else if (statuses.length > 0) {
+      return sortedTasks.filter((task) => statuses.includes(task.status));
+    } else {
+      return sortedTasks;
+    }
+  };
 
+  // Search Tasks
   function searchTasks(data) {
     return data.filter((task) => {
       return Object.values(task)
@@ -98,7 +116,7 @@ const Tasks = () => {
     });
   }
 
-  // Adding/Removing Filter Semi-Buttons
+  // Add/Remove Filter "Buttons"
   const filterScraps = filters.map((name) => {
     return (
       <span
@@ -111,12 +129,12 @@ const Tasks = () => {
     );
   });
 
-  // TABLE MAPPING BY PAGE
+  // MAP TABLE BY PAGE
   const DummyDataMapper = () => {
     let sortedTasksCopy = [...sortedTasks];
     if (filters.length > 0) sortedTasksCopy = filterTasks();
     if (searchInput) sortedTasksCopy = searchTasks(sortedTasksCopy);
-    setTotalPages(Math.ceil(sortedTasksCopy.length / rowsPerPage));
+    totalPages = Math.ceil(sortedTasksCopy.length / rowsPerPage);
     const pageSlice = sortedTasksCopy.slice(
       (currentPage - 1) * rowsPerPage,
       currentPage * rowsPerPage
@@ -404,6 +422,7 @@ const Tasks = () => {
               id="site-search"
               name="search"
               placeholder="search"
+              value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
             />
           </div>
