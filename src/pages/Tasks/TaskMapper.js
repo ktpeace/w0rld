@@ -37,7 +37,6 @@ const TaskMapper = ({
       currentPage * rowsPerPage
     );
     return pageSlice.map((task) => {
-      console.log("DummyDataMapper");
       return (
         <tr
           key={task.id}

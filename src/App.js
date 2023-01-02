@@ -17,11 +17,11 @@ import Players from "./pages/Players";
 import Praxis from "./pages/Praxis";
 import Profile from "./pages/Profile";
 import Register from "./pages/Register";
-// import Task from "./pages/Task";
+import Task from "./pages/Task";
 import Tasks from "./pages/Tasks/Tasks";
 import Terms from "./pages/Terms";
 import Territory from "./pages/Territory";
-// import Preview from "./pages/Preview";
+import Preview from "./pages/Preview";
 import Updates from "./pages/Updates";
 
 // 1. create context in separate file
@@ -104,6 +104,10 @@ const router = createBrowserRouter([
         element: <Praxis />,
       },
       {
+        path: "/preview/:id",
+        element: <Preview />,
+      },
+      {
         path: "/profile",
         element: <Profile />,
       },
@@ -114,6 +118,10 @@ const router = createBrowserRouter([
       {
         path: "/tasks",
         element: <Tasks />,
+      },
+      {
+        path: "/tasks/:id",
+        element: <Task />,
       },
       {
         path: "/terms",
