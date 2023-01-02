@@ -6,21 +6,21 @@ import { UserContext } from "./components/UserContext";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
-// import About from "./pages/About";
-// import Badges from "./pages/Badges";
-// import Contact from "./pages/Contact";
-// import Disclaimer from "./pages/Disclaimer";
-// import Donate from "./pages/Donate";
-// import Events from "./pages/Events";
-// import Groups from "./pages/Groups";
-// import Players from "./pages/Players";
-// import Praxis from "./pages/Praxis";
-// import Profile from "./pages/Profile";
-// import Register from "./pages/Register";
+import About from "./pages/About";
+import Badges from "./pages/Badges";
+import Contact from "./pages/Contact";
+import Disclaimer from "./pages/Disclaimer";
+import Donate from "./pages/Donate";
+import Events from "./pages/Events";
+import Groups from "./pages/Groups";
+import Players from "./pages/Players";
+import Praxis from "./pages/Praxis";
+import Profile from "./pages/Profile";
+import Register from "./pages/Register";
 // import Task from "./pages/Task";
 import Tasks from "./pages/Tasks/Tasks";
-// import Terms from "./pages/Terms";
-// import Territory from "./pages/Territory";
+import Terms from "./pages/Terms";
+import Territory from "./pages/Territory";
 // import Preview from "./pages/Preview";
 import Updates from "./pages/Updates";
 
@@ -68,8 +68,60 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/badges",
+        element: <Badges />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
+      },
+      {
+        path: "/disclaimer",
+        element: <Disclaimer />,
+      },
+      {
+        path: "/donate",
+        element: <Donate />,
+      },
+      {
+        path: "/events",
+        element: <Events />,
+      },
+      {
+        path: "/groups",
+        element: <Groups />,
+      },
+      {
+        path: "/players",
+        element: <Players />,
+      },
+      {
+        path: "/praxis",
+        element: <Praxis />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
+      },
+      {
         path: "/tasks",
         element: <Tasks />,
+      },
+      {
+        path: "/terms",
+        element: <Terms />,
+      },
+      {
+        path: "/territory",
+        element: <Territory />,
       },
       {
         path: "/updates",
