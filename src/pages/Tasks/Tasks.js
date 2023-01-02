@@ -1,21 +1,22 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { tasks } from "../../data/tasks-data";
-// import { DarkModeContext } from "../../components/DarkModeContext";
+import { DarkModeContext } from "../../components/DarkModeContext";
 import { UserContext } from "../../components/UserContext";
+import DarkSwitcher from "./DarkSwitcher";
 
-// remove/apply dark mode to all elements on toggle
-// control all the dark/light styles in one CSS thing
-// exclude pretired/active if user <3 / null
-
-const Tasks = () => {
+const Tasks1 = ({
+  user,
+  sortedTasks,
+  setSortedTasks,
+  searchInput,
+  setSearchInput,
+  filters,
+  setFilters,
+  currentPage,
+  setCurrentPage,
+}) => {
   console.log("Tasks");
-  // const { darkMode } = useContext(DarkModeContext);
-  const { user } = useContext(UserContext);
-  const [sortedTasks, setSortedTasks] = useState(tasks);
-  const [searchInput, setSearchInput] = useState("");
-  const [filters, setFilters] = useState([]);
-  const [currentPage, setCurrentPage] = useState([1]);
   const rowsPerPage = 17;
   let totalPages = Math.ceil(sortedTasks.length / rowsPerPage);
 
@@ -434,7 +435,7 @@ const Tasks = () => {
         </div>
         <table className="tx-list">
           <thead>
-            <tr className="tx-head-col">
+            <tr className="tx-head-col updates-text-light">
               <th width="150px">
                 <div onClick={sortHandler}>
                   Name{" "}
@@ -494,6 +495,37 @@ const Tasks = () => {
         </div>
       </div>
     </main>
+  );
+};
+
+const Tasks = () => {
+  const { darkMode } = useContext(DarkModeContext);
+  const { user } = useContext(UserContext);
+  const [sortedTasks, setSortedTasks] = useState(tasks);
+  const [searchInput, setSearchInput] = useState("");
+  const [filters, setFilters] = useState([]);
+  const [currentPage, setCurrentPage] = useState([1]);
+  return (
+    <div>
+      <Tasks1
+        user={user}
+        sortedTasks={sortedTasks}
+        setSortedTasks={setSortedTasks}
+        searchInput={searchInput}
+        setSearchInput={setSearchInput}
+        filters={filters}
+        setFilters={setFilters}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
+      <DarkSwitcher
+        darkMode={darkMode}
+        sortedTasks={sortedTasks}
+        searchInput={searchInput}
+        filters={filters}
+        currentPage={currentPage}
+      />
+    </div>
   );
 };
 

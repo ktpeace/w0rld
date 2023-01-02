@@ -1,5 +1,5 @@
 // todo
-// make default sort by date
+// make default sort: by date
 // selected filters with X's at top are on bg of ripped paper, maybe with typewriter-style font
 // colors beside groups to look like gems in glass buttons (use images marbled/gem stuff not colors)
 // add create task button

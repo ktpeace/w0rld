@@ -13,18 +13,16 @@ const Header = () => {
   const { darkMode, setDarkMode } = useContext(DarkModeContext);
   const { user, setUser } = useContext(UserContext);
 
-  const handleLanternClick = () => {
-    setDarkMode((prev) => !prev);
-    if (darkMode) {
-      const body = document.querySelector("body");
-      if (!body.classList.contains("dark-mode"))
-        body.classList.add("dark-mode");
-    } else {
-      const body = document.querySelector("body");
-      if (body.classList.contains("dark-mode"))
-        body.classList.remove("dark-mode");
-    }
-  };
+  const handleLanternClick = () => setDarkMode((prev) => !prev);
+
+  if (darkMode) {
+    const body = document.querySelector("body");
+    if (!body.classList.contains("dark-mode")) body.classList.add("dark-mode");
+  } else {
+    const body = document.querySelector("body");
+    if (body.classList.contains("dark-mode"))
+      body.classList.remove("dark-mode");
+  }
 
   const validateLogin = (e) => {
     e.preventDefault();
