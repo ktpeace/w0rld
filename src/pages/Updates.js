@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 // import { Link } from "react-router-dom";
 import { DarkModeContext } from "../components/DarkModeContext";
 import sloth from "../images/sloth.jpg";
@@ -60,24 +60,26 @@ const Updates = () => {
   //     </div>
   //   </li>
   // );
-  const updatesText = document.querySelectorAll(".updates-text");
 
-  if (darkMode) {
-    updatesText.forEach((div) => {
-      if (div.classList.contains("updates-text-light")) {
-        div.classList.remove("updates-text-light");
-        console.log("removed light");
-      }
-      div.classList.add("updates-text-dark");
-    });
-  } else {
-    updatesText.forEach((div) => {
-      if (div.classList.contains("updates-text-dark")) {
-        div.classList.remove("updates-text-dark");
-      }
-      div.classList.add("updates-text-light");
-    });
-  }
+  useEffect(() => {
+    const updatesText = document.querySelectorAll(".updates-text");
+    if (darkMode) {
+      updatesText.forEach((div) => {
+        if (div.classList.contains("updates-text-light")) {
+          div.classList.remove("updates-text-light");
+          console.log("removed light");
+        }
+        div.classList.add("updates-text-dark");
+      });
+    } else {
+      updatesText.forEach((div) => {
+        if (div.classList.contains("updates-text-dark")) {
+          div.classList.remove("updates-text-dark");
+        }
+        div.classList.add("updates-text-light");
+      });
+    }
+  }, [darkMode]);
 
   return (
     <main className="updates-page">
