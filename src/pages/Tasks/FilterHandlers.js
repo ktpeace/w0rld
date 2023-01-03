@@ -33,9 +33,9 @@ const FilterTasks = (taskArray, filters) => {
   const groups = [];
   const statuses = [];
   taskArray.forEach((task) => {
-    if (filters.includes(task.status)) {
+    if (filters.includes(task.status) && !statuses.includes(task.status)) {
       statuses.push(task.status);
-    } else if (filters.includes(task.group)) {
+    } else if (filters.includes(task.group) && !groups.includes(task.group)) {
       groups.push(task.group);
     }
   });

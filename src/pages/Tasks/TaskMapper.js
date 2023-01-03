@@ -27,8 +27,9 @@ const TaskMapper = ({
   const DummyDataMapper = () => {
     let sortedTasksCopy = [...sortedTasks];
     if (!user || user.level < 3)
-      sortedTasksCopy = FilterByUserStatus(sortedTasks);
-    if (filters.length > 0) sortedTasksCopy = FilterTasks(sortedTasks, filters);
+      sortedTasksCopy = FilterByUserStatus(sortedTasksCopy);
+    if (filters.length > 0)
+      sortedTasksCopy = FilterTasks(sortedTasksCopy, filters);
     if (searchInput)
       sortedTasksCopy = SearchTasks(sortedTasksCopy, searchInput);
     totalPages = Math.ceil(sortedTasksCopy.length / rowsPerPage);
