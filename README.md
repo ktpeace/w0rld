@@ -6,7 +6,7 @@ SF0 was a collaborative game played in the real world. Users could add tasks for
 
 ## Live Site
 
-The live site is currently hosted <a href="https://world-zero.vercel.app/">here</a>. There is not much to see today (3/7), but check back soon!
+The live site is currently hosted <a href="https://world-zero.vercel.app/">here</a>. I'm adding pages and updates constantly, so check back soon!
 
 Eventually, the site will have a lovely whimsical design I made in Canva, but coding it will be quite unusual and involved. For now it will look very basic to get the essentially functionality and features in place.
 
