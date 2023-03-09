@@ -22,6 +22,7 @@ Eventually, the site will have a lovely whimsical design I made in Canva, but co
 - Points will grant special privileges
 - Users can comment on tasks, task completions, and other users' profiles with rich text, including images in some cases
 - When not logged in, home starts with About info; when logged in, shows recent updates for user, such as activity by their friends/foes and comments on their tasks/profile
+- Plan to make it screen reader accessible once basic functionality is done
 
 ## Technologies
 
@@ -38,7 +39,7 @@ Eventually, the site will have a lovely whimsical design I made in Canva, but co
 ![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)
 ![Vercel](https://img.shields.io/badge/Vercel-000000.svg?style=for-the-badge&logo=Vercel&logoColor=white)
 
-## Principles & References
+## References
 
 - <a href="https://www.uxmatters.com/mt/archives/2020/07/designing-mobile-tables.php">UX Matters: Designing Mobile Tables</a>
 

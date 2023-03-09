@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons"; // &#xf002;
 import Link from "next/link";
 import SortHandler from "./SortHandler";
 import {
@@ -119,61 +119,52 @@ const TaskMapper = ({
   // MAIN JSX
   return (
     <div className="max-w-full">
-      {/* <FontAwesomeIcon
-        icon={faFilter}
-        // className="dark:text-dark fa-xl inline-block md:hidden"
-      /> */}
-      <div className="flex justify-between mb-4">
+      <div className="flex justify-between mb-4 gap-6">
         {/* Group Filter Selection */}
-
-        <div className="border-2 rounded hidden md:inline-block">
-          <h3 className="text-center">Group</h3>
-          <ul className="flex justify-between">
-            <li className="cursor-pointer">
+        <FontAwesomeIcon
+          icon={faFilter}
+          className="dark:text-dark inline-block md:hidden text-4xl"
+        />
+        <div className="hidden md:inline-block ">
+          <h3 className="text-center mb-2">GROUP</h3>
+          <ul className="flex gap-1 max-w-xl flex-wrap">
+            <li
+              className={`min-w-max cursor-pointer min-w-max border rounded px-2 py-1 dark:hover:bg-[#cbd5e0] dark:hover:text-[#1a202c]  ${
+                filters.includes("University of Aesthematics")
+                  ? "dark:bg-[#cbd5e0] dark:text-[#1a202c]"
+                  : ""
+              }`}
+            >
               <div
                 onClick={(event) =>
                   FilterClickHandler(event, filters, setFilters)
                 }
               >
-                <div style={{ backgroundColor: "#000" }}></div>
-                <span
-                  style={{
-                    textDecoration: filters.includes(
-                      "University of Aesthematics"
-                    )
-                      ? "underline"
-                      : "none",
-                  }}
-                >
-                  University of Aesthematics
-                </span>
+                <span>University of Aesthematics</span>
               </div>
             </li>
-            <li className="cursor-pointer">
+            <li
+              className={`min-w-max cursor-pointer min-w-max border rounded px-2 py-1 dark:hover:bg-[#cbd5e0] dark:hover:text-[#1a202c]  ${
+                filters.includes("U.A. Masters Course")
+                  ? "dark:bg-[#cbd5e0] dark:text-[#1a202c]"
+                  : ""
+              }`}
+            >
               <div
                 onClick={(event) =>
                   FilterClickHandler(event, filters, setFilters)
                 }
               >
-                {/* <div
-                  className="filter-color"
-                  style={{
-                    backgroundColor: "#000",
-                    border: "3px solid #BA4C00",
-                  }}
-                ></div> */}
-                <span
-                  style={{
-                    textDecoration: filters.includes("U.A. Masters Course")
-                      ? "underline"
-                      : "none",
-                  }}
-                >
-                  U.A. Masters Course
-                </span>
+                U.A. Masters Course
               </div>
             </li>
-            <li className="cursor-pointer">
+            <li
+              className={`min-w-max cursor-pointer min-w-max border rounded px-2 py-1 dark:hover:bg-[#cbd5e0] dark:hover:text-[#1a202c]  ${
+                filters.includes("S.N.I.D.E.")
+                  ? "dark:bg-[#cbd5e0] dark:text-[#1a202c]"
+                  : ""
+              }`}
+            >
               <div
                 onClick={(event) =>
                   FilterClickHandler(event, filters, setFilters)
@@ -183,179 +174,143 @@ const TaskMapper = ({
                   className="filter-color"
                   style={{ backgroundColor: "#660B09" }}
                 ></div>
-                <span
-                  style={{
-                    textDecoration: filters.includes("S.N.I.D.E.")
-                      ? "underline"
-                      : "none",
-                  }}
-                >
-                  S.N.I.D.E.
-                </span>
+                S.N.I.D.E.
               </div>
             </li>
-            <li className="cursor-pointer">
+            <li
+              className={`min-w-max cursor-pointer min-w-max border rounded px-2 py-1 dark:hover:bg-[#cbd5e0] dark:hover:text-[#1a202c]  ${
+                filters.includes("Journeymen")
+                  ? "dark:bg-[#cbd5e0] dark:text-[#1a202c]"
+                  : ""
+              }`}
+            >
               <div
                 onClick={(event) =>
                   FilterClickHandler(event, filters, setFilters)
                 }
               >
-                <div
-                  className="filter-color"
-                  style={{ backgroundColor: "#EAB547" }}
-                ></div>
-                <span
-                  style={{
-                    textDecoration: filters.includes("Journeymen")
-                      ? "underline"
-                      : "none",
-                  }}
-                >
-                  Journeymen
-                </span>
+                Journeymen
               </div>
             </li>
-            <li className="cursor-pointer">
+            <li
+              className={`min-w-max cursor-pointer min-w-max border rounded px-2 py-1 dark:hover:bg-[#cbd5e0] dark:hover:text-[#1a202c]  ${
+                filters.includes("Analog")
+                  ? "dark:bg-[#cbd5e0] dark:text-[#1a202c]"
+                  : ""
+              }`}
+            >
               <div
                 onClick={(event) =>
                   FilterClickHandler(event, filters, setFilters)
                 }
               >
-                <div
-                  className="filter-color"
-                  style={{ backgroundColor: "#007549" }}
-                ></div>
-                <span
-                  style={{
-                    textDecoration: filters.includes("Analog")
-                      ? "underline"
-                      : "none",
-                  }}
-                >
-                  Analog
-                </span>
+                Analog
               </div>
             </li>
-            <li className="cursor-pointer">
+            <li
+              className={`min-w-max cursor-pointer min-w-max border rounded px-2 py-1 dark:hover:bg-[#cbd5e0] dark:hover:text-[#1a202c]  ${
+                filters.includes("Gestalt")
+                  ? "dark:bg-[#cbd5e0] dark:text-[#1a202c]"
+                  : ""
+              }`}
+            >
               <div
                 onClick={(event) =>
                   FilterClickHandler(event, filters, setFilters)
                 }
               >
-                <div
-                  className="filter-color"
-                  style={{ backgroundColor: "#4D1568" }}
-                ></div>
-                <span
-                  style={{
-                    textDecoration: filters.includes("Gestalt")
-                      ? "underline"
-                      : "none",
-                  }}
-                >
-                  Gestalt
-                </span>
+                Gestalt
               </div>
             </li>
           </ul>
         </div>
         {/* Status Filter Selection */}
-        <div className="border-2 rounded hidden md:inline-block">
-          <h3 className="text-center">Status</h3>
-          <ul className="flex">
-            <li className="cursor-pointer">
+        <div className="hidden md:inline-block">
+          <h3 className="text-center mb-2">STATUS</h3>
+          <ul className="flex gap-1 max-w-xl flex-wrap">
+            <li
+              className={`min-w-max cursor-pointer min-w-max border rounded px-2 py-1 dark:hover:bg-[#cbd5e0] dark:hover:text-[#1a202c]  ${
+                filters.includes("Active")
+                  ? "dark:bg-[#cbd5e0] dark:text-[#1a202c]"
+                  : ""
+              }`}
+            >
               <div
                 onClick={(event) =>
                   FilterClickHandler(event, filters, setFilters)
                 }
               >
-                <div className="filter-color status-filter-color"></div>
-                <span
-                  style={{
-                    textDecoration: filters.includes("Active")
-                      ? "underline"
-                      : "none",
-                  }}
-                >
-                  Active
-                </span>
+                Active
               </div>
             </li>
-            <li className="cursor-pointer">
+            <li
+              className={`min-w-max cursor-pointer min-w-max border rounded px-2 py-1 dark:hover:bg-[#cbd5e0] dark:hover:text-[#1a202c]  ${
+                filters.includes("Retired")
+                  ? "dark:bg-[#cbd5e0] dark:text-[#1a202c]"
+                  : ""
+              }`}
+            >
               <div
                 onClick={(event) =>
                   FilterClickHandler(event, filters, setFilters)
                 }
               >
-                <div className="filter-color status-filter-color"></div>
-                <span
-                  style={{
-                    textDecoration: filters.includes("Retired")
-                      ? "underline"
-                      : "none",
-                  }}
-                >
-                  Retired
-                </span>
+                Retired
               </div>
             </li>
             {user && user.level >= 3 ? (
-              <li className="cursor-pointer">
+              <li
+                className={`min-w-max cursor-pointer min-w-max border rounded px-2 py-1 dark:hover:bg-[#cbd5e0] dark:hover:text-[#1a202c]  ${
+                  filters.includes("Pretired")
+                    ? "dark:bg-[#cbd5e0] dark:text-[#1a202c]"
+                    : ""
+                }`}
+              >
                 <div
                   onClick={(event) =>
                     FilterClickHandler(event, filters, setFilters)
                   }
                 >
-                  <div className="filter-color status-filter-color"></div>
-                  <span
-                    style={{
-                      textDecoration: filters.includes("Pretired")
-                        ? "underline"
-                        : "none",
-                    }}
-                  >
-                    Pretired
-                  </span>
+                  Pretired
                 </div>
               </li>
             ) : null}
             {user ? (
-              <li className="cursor-pointer">
+              <li
+                className={`min-w-max cursor-pointer min-w-max border rounded px-2 py-1 dark:hover:bg-[#cbd5e0] dark:hover:text-[#1a202c]  ${
+                  filters.includes("Accepted")
+                    ? "dark:bg-[#cbd5e0] dark:text-[#1a202c]"
+                    : ""
+                }`}
+              >
                 <div
                   onClick={(event) =>
                     FilterClickHandler(event, filters, setFilters)
                   }
                 >
-                  <div className="filter-color status-filter-color"></div>
-                  <span
-                    style={{
-                      textDecoration: filters.includes("Accepted")
-                        ? "underline"
-                        : "none",
-                    }}
-                  >
-                    Accepted
-                  </span>
+                  Accepted
                 </div>
               </li>
             ) : null}
           </ul>
         </div>
         {/* Search Table */}
-        <div>
+        <div className="self-center">
           <input
             type="search"
             id="site-search"
             name="search"
             placeholder="search"
-            className="rounded"
+            className="rounded w-[10rem] sm:w-full mx-4 p-2 text-[#1a202c]"
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
           />
         </div>
         {/* Add A Task */}
-        <Link href="/tasks/new">
-          <button className="border rounded">New Task</button>
+        <Link href="/tasks/new" className="self-center">
+          <button className="border rounded p-2 font-bold dark:hover:bg-[#cbd5e0] dark:hover:text-[#1a202c]">
+            NEW TASK
+          </button>
         </Link>
       </div>
 
@@ -411,7 +366,7 @@ const TaskMapper = ({
                   </span>
                 </div>
               </th>
-              <th className="hidden sm:table-cell cursor-pointer">
+              <th className="hidden md:table-cell cursor-pointer">
                 <div
                   onClick={(event) => {
                     SortHandler(event, sortedTasks, setSortedTasks);
@@ -423,7 +378,7 @@ const TaskMapper = ({
                   </span>
                 </div>
               </th>
-              <th className="hidden sm:table-cell cursor-pointer">
+              <th className="hidden md:table-cell cursor-pointer">
                 <div
                   onClick={(event) => {
                     SortHandler(event, sortedTasks, setSortedTasks);

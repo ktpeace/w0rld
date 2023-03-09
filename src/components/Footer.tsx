@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="dark:bg-gray-800 dark:text-dark py-4">
+    <footer className="py-4 bg-slate-50 border-t-2 border-slate-100 dark:border-0 dark:bg-gray-800 dark:text-dark">
       <ul className="flex justify-around">
         <Link href="/about">
           <li>About</li>

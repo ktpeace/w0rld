@@ -20,6 +20,11 @@ const Tasks = () => {
   return (
     <main className="flex flex-col items-center min-h-screen mt-20 px-6 py-8 gap-5 dark:text-dark">
       <h1 className="text-2xl">Tasks</h1>
+      <p>
+        Still some things to work out with design, responsiveness, and filter
+        logic (if you click filter when not on page 1, must click page 1 to see
+        results).
+      </p>
       <TaskMapper
         user={user}
         sortedTasks={sortedTasks}

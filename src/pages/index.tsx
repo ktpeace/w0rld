@@ -13,9 +13,6 @@ export default function Home() {
         Welcome to World Zero! This is a new work in progress. Please check back
         soon!
       </p>
-      <p>
-        Visit the profile page by clicking on the avatar to toggle dark mode.
-      </p>
     </main>
   );
 }

@@ -1,4 +1,3 @@
-"use client";
 import Image from "next/image";
 import lamp from "public/images/lamp.png";
 import lampDark from "public/images/lamp-dark.png";
@@ -43,7 +42,7 @@ const ThemeSwitcher = () => {
       src={theme === "light" ? lamp : lampDark}
       alt="lamp dark mode switcher"
       onClick={toggleTheme}
-      className="cursor-pointer w-12 sm:w-20"
+      className="cursor-pointer w-8 sm:w-16"
     ></Image>
   );
 };
