@@ -1,8 +1,27 @@
 import { tasks } from "./tasks-data";
 
-const SortHandler = (event, sortedTasks, setSortedTasks) => {
+interface Task {
+  id: number;
+  name: string;
+  group: string;
+  status: string;
+  level: number;
+  points: number;
+  desc: string;
+  inProgress: number;
+  completed: number;
+  minPlayers: number;
+  maxPlayers: number;
+  [key: string]: any;
+}
+
+const SortHandler = (
+  event: React.MouseEvent<HTMLDivElement>,
+  sortedTasks: Task[],
+  setSortedTasks: React.Dispatch<React.SetStateAction<Task[]>>
+) => {
   // SORT DATA
-  function sortTasks(value, direction) {
+  function sortTasks(value: string, direction: string) {
     value = value.toLowerCase();
     let sortedTasksCopy = [...sortedTasks];
     const isNum =
@@ -30,7 +49,7 @@ const SortHandler = (event, sortedTasks, setSortedTasks) => {
   const header = text.slice(0, text.length - 2);
   const allArrows = document.getElementsByClassName("arrow");
   for (let i = 0; i < allArrows.length; i++) {
-    allArrows[i].innerText = "↕";
+    allArrows[i].innerHTML = "↕";
   }
   if (arrow === "↕") {
     sortTasks(header, "↓");

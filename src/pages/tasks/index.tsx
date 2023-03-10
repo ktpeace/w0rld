@@ -6,8 +6,8 @@ import TaskMapper from "../../components/tasks/TaskMapper";
 const Tasks = () => {
   const [sortedTasks, setSortedTasks] = useState(tasks);
   const [searchInput, setSearchInput] = useState("");
-  const [filters, setFilters] = useState([]);
-  const [currentPage, setCurrentPage] = useState([1]);
+  const [filters, setFilters] = useState<string[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
   // const { user } = useContext(UserContext);
   const user = { username: "Pixie", level: 3 };
 

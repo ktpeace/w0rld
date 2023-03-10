@@ -22,7 +22,7 @@ interface Task {
   status: string;
   level: number;
   points: number;
-  description: string;
+  desc: string;
   inProgress: number;
   completed: number;
   minPlayers: number;
@@ -67,35 +67,40 @@ const TaskMapper = ({
       (currentPage - 1) * rowsPerPage,
       currentPage * rowsPerPage
     );
-    return pageSlice.map((task) => {
-      return (
-        <tr
-          key={task.id}
-          status={task.status}
-          name={task.name}
-          description={task.description}
-          group={task.group}
-          level={task.level}
-          points={task.points}
-          completed={task.completed}
-        >
-          <td className="max-w-0 md:max-w-sm truncate font-medium">
-            <Link href={`/tasks/${task.id}`}>{task.name}</Link>
-          </td>
-          <td className="max-w-0 md:max-w-sm truncate">{task.description}</td>
-          <td className="max-w-0 md:max-w-sm truncate">{task.group}</td>
-          <td className="max-w-0 md:max-w-sm truncate text-center">
-            {task.level}
-          </td>
-          <td className="max-w-0 md:max-w-sm truncate hidden md:table-cell text-center">
-            {task.points}
-          </td>
-          <td className="max-w-0 md:max-w-sm truncate hidden md:table-cell text-center">
-            {task.completed}
-          </td>
-        </tr>
-      );
-    });
+
+    return (
+      <>
+        {pageSlice.map((task) => {
+          return (
+            <tr
+              key={task.id} //@ts-ignore
+              status={task.status}
+              name={task.name}
+              desc={task.desc}
+              group={task.group}
+              level={task.level}
+              points={task.points}
+              completed={task.completed}
+            >
+              <td className="max-w-0 md:max-w-sm truncate font-medium">
+                <Link href={`/tasks/${task.id}`}>{task.name}</Link>
+              </td>
+              <td className="max-w-0 md:max-w-sm truncate">{task.desc}</td>
+              <td className="max-w-0 md:max-w-sm truncate">{task.group}</td>
+              <td className="max-w-0 md:max-w-sm truncate text-center">
+                {task.level}
+              </td>
+              <td className="max-w-0 md:max-w-sm truncate hidden md:table-cell text-center">
+                {task.points}
+              </td>
+              <td className="max-w-0 md:max-w-sm truncate hidden md:table-cell text-center">
+                {task.completed}
+              </td>
+            </tr>
+          );
+        })}
+      </>
+    );
   };
 
   // PAGE NUMBER BUTTONS
