@@ -124,11 +124,16 @@ const TaskMapper = ({
   // MAIN JSX
   return (
     <div className="max-w-full">
-      <div className="flex justify-between mb-4 gap-6">
+      <div className="flex justify-between mb-4 gap-0 sm:gap-6 items-center sm:items-start">
         {/* Group Filter Selection */}
         <FontAwesomeIcon
           icon={faFilter}
-          className="dark:text-dark inline-block md:hidden text-4xl"
+          className="dark:text-dark inline-block md:hidden text-5xl "
+          onClick={() =>
+            alert(
+              "I don't do anything yet! Try desktop or check back another time."
+            )
+          }
         />
         <div className="hidden md:inline-block ">
           <h3 className="text-center mb-2">GROUP</h3>
@@ -320,7 +325,7 @@ const TaskMapper = ({
       </div>
 
       <div>
-        <table className="table-auto md:table-fixed w-full border rounded border-slate-500 border-separate border-spacing-x-2 sm:border-spacing-x-6 border-spacing-y-4 mb-4 w-full sm:max-w-screen-xl ">
+        <table className="table-auto md:table-fixed w-full border-b border-slate-500 border-separate border-spacing-x-2 sm:border-spacing-x-6 border-spacing-y-4 mb-4 w-full sm:max-w-screen-xl ">
           <thead className="dark:bg-gray-800">
             <tr>
               <th className="md:w-1/5">
