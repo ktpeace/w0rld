@@ -10,8 +10,16 @@ export default function Home() {
     <main className="flex flex-col items-center min-h-screen mt-20 px-6 py-8 gap-5 dark:text-dark">
       <h1 className="text-2xl">World Zero</h1>
       <p>
-        Welcome to World Zero! This is a new work in progress. Please check back
-        soon!
+        Welcome to World Zero! This is a new work in progress, updated multiple
+        times a week.
+      </p>
+      <p>
+        Currently, the footer links, Praxis, & Groups are empty, so don&apos;t
+        bother clicking &apos;em.
+      </p>
+      <p>
+        Check back soon for improvements in pages that have some stuff, and
+        stuff going into empty pages!
       </p>
     </main>
   );

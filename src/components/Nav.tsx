@@ -55,7 +55,7 @@ const Nav = () => {
           </div>
           <div className="justify-self-end flex items-center space-x-2 md:space-x-4">
             <ThemeSwitcher />
-            <Link href="/profile">
+            <Link href="/players/1">
               <Image
                 src={pixie}
                 alt="my avatar"
