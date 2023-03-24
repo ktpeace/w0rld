@@ -14,10 +14,6 @@ export default function Home() {
         times a week.
       </p>
       <p>
-        Currently, the footer links, Praxis, & Groups are empty, so don&apos;t
-        bother clicking &apos;em.
-      </p>
-      <p>
         Check back soon for improvements in pages that have some stuff, and
         stuff going into empty pages!
       </p>

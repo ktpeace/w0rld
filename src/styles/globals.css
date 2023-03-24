@@ -22,3 +22,12 @@ a {
 .parent-hover\:child-bg-slate-600:hover .child-bg-slate-600 {
   @apply bg-slate-600;
 }
+
+.hover-border-color:hover {
+  border: 1.6px solid var(--groupColor);
+  border-radius: 0.25rem;
+}
+
+.hover-border-color {
+  border: 1.6px solid #334155;
+}
