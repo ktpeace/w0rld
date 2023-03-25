@@ -19,7 +19,6 @@
 .DS_Store
 *.pem
 /notes
-/backend
 
 # debug
 npm-debug.log*

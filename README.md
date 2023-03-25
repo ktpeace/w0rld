@@ -49,15 +49,11 @@ Eventually, the site will have a lovely whimsical design I made in Canva, but co
 
 ## To-Do List
 
-1. Finish designing users table in DrawSQL
-2. Connect to RDS with MySQL Workbench
-3. Add just users to RDS for now
-
-4. Add RDS info to project .env and check tables access
-5. Write frontend queries & backend responses to frontend queries
-6. Deploy backend on AWS Elastic Beanstalk
-7. Connect Vercel frontend to Beanstalk backend
-8. Test user creation
-9. Add Jest testing for user account creation, login, & logout
-10. Add remaining tables to RDS, relevant queries, & test
-11. Continue designing frontend
+1. Add validation & security measures for user account creation
+2. Add queries for user logins
+3. Deploy backend on AWS Elastic Beanstalk
+4. Connect Vercel frontend to Beanstalk backend
+5. Test user creation
+6. Add Jest testing for user account creation, login, & logout
+7. Add remaining tables to RDS, relevant queries, & test
+8. Continue designing frontend

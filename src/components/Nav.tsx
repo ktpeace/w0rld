@@ -1,15 +1,39 @@
 import Link from "next/link";
 import Image from "next/image";
 import ThemeSwitcher from "./ThemeSwitcher";
+import { useEffect, useContext, useState } from "react";
+import UserContext from "./userContext";
+import axios from "axios";
+import pixie from "../../public/images/pixie-avatar.jpeg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouseChimney } from "@fortawesome/free-solid-svg-icons";
 import { faTableList } from "@fortawesome/free-solid-svg-icons";
 import { faFireFlameCurved } from "@fortawesome/free-solid-svg-icons";
 import { faHandshakeAngle } from "@fortawesome/free-solid-svg-icons";
 import { faChildReaching } from "@fortawesome/free-solid-svg-icons";
-import pixie from "../../public/images/pixie-avatar.jpeg";
 
 const Nav = () => {
+  const { user, setUser } = useContext(UserContext);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const userDeets = { username, password };
+    console.log("submitted");
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/create-account",
+        userDeets
+      );
+      console.log(response.data);
+      setUser(username);
+      localStorage.setItem("user", username);
+    } catch (error) {
+      console.error("Error fetching column names: ", error);
+    }
+  };
+
   return (
     <nav className="bg-white border-b-2 border-slate-100 dark:border-0 dark:bg-gray-800 dark:text-dark p-2 fixed w-full z-10 top-0 text-base">
       <div className="max-w-7xl mx-auto px-2">
@@ -55,13 +79,28 @@ const Nav = () => {
           </div>
           <div className="justify-self-end flex items-center space-x-2 md:space-x-4">
             <ThemeSwitcher />
-            <Link href="/players/1">
-              <Image
-                src={pixie}
-                alt="my avatar"
-                className="rounded-full object-cover w-8 sm:w-16"
-              ></Image>
-            </Link>
+            {user.length ? (
+              <Link href="/players/1">
+                <Image
+                  src={pixie}
+                  alt="my avatar"
+                  className="rounded-full object-cover w-8 sm:w-16"
+                ></Image>
+              </Link>
+            ) : (
+              <div className="flex flex-col justify-center items-center gap-2">
+                <Link href="login">
+                  <button className="border rounded p-1 uppercase font-bold text-xs dark:border-slate-600 dark:bg-slate-800 dark:hover:border-slate-500 dark:hover:bg-slate-700">
+                    Log In
+                  </button>
+                </Link>
+                <Link href="/create-account">
+                  <button className="border rounded p-1 uppercase font-bold text-xs dark:border-slate-600 dark:bg-slate-800 dark:hover:border-slate-500 dark:hover:bg-slate-700">
+                    Sign Up
+                  </button>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>
