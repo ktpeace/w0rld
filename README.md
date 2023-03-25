@@ -10,8 +10,9 @@ The live site is currently hosted <a href="https://world-zero.vercel.app/">here<
 
 Eventually, the site will have a lovely whimsical design I made in Canva, but coding it will be quite unusual and involved. For now it will look very basic to get the essentially functionality and features in place.
 
-## Features
+## Planned Features
 
+- Fully responsive
 - Light/dark mode
 - Secure signup + login for users
 - Users can join groups

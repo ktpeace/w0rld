@@ -30,7 +30,7 @@ export default function Player() {
         className="rounded"
       ></Image>
       <p>{player?.description}</p>
-      <p className="flex gap-2">
+      <p className="flex flex-wrap gap-2">
         Terms: <TermsMapper />
       </p>
       <p>Points: {player?.points}</p>
