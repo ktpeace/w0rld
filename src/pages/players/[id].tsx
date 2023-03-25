@@ -19,7 +19,7 @@ export default function Player() {
   };
 
   return (
-    <main className="flex flex-col items-center min-h-screen mt-20 md:mx-20 lg:mx-48 xl:mx-56 px-6 py-8 gap-2 dark:text-dark">
+    <main className="flex flex-col items-center mt-20 md:mx-20 lg:mx-48 xl:mx-56 px-6 py-8 gap-2 dark:text-dark">
       <h1 className="text-2xl">{player ? player.name : "Player not found"}</h1>
       <p>Group: {player?.group}</p>
       <p>Level: {player?.level}</p>

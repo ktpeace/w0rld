@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   return (
-    <main className="flex flex-col items-center min-h-screen mt-20 px-6 py-8 gap-5 dark:text-dark">
+    <main className="flex flex-col items-center mt-20 px-6 py-8 gap-5 dark:text-dark">
       <h1 className="text-2xl">World Zero</h1>
       <p>
         Welcome to World Zero! This is a new work in progress, updated multiple

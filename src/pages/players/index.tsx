@@ -38,7 +38,7 @@ const PlayerMapper = () => {
 
 const Players = () => {
   return (
-    <main className="flex flex-col items-center min-h-screen mt-20 md:mx-20 lg:mx-48 xl:mx-56 px-6 py-8 gap-5 dark:text-dark">
+    <main className="flex flex-col items-center mt-20 md:mx-20 lg:mx-48 xl:mx-56 px-6 py-8 gap-5 dark:text-dark">
       <h1 className="text-2xl">Players</h1>
       <p>View other players.</p>
       <div className="flex flex-wrap justify-center gap-4 sm:gap-12">

@@ -30,7 +30,7 @@ const Groups = () => {
 
   return (
     <div>
-      <main className="flex flex-col items-center min-h-screen mt-20 px-32 py-8 gap-5 dark:text-dark">
+      <main className="flex flex-col items-center mt-20 px-8 md:px-32 py-8 gap-5 dark:text-dark">
         <h2 className="text-2xl">Groups</h2>
         <p>Explore the available groups to join or gently belittle.</p>
         <div className="flex flex-col gap-4">
