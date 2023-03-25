@@ -14,8 +14,12 @@ export default function Home() {
         times a week.
       </p>
       <p>
-        Check back soon for improvements in pages that have some stuff, and
-        stuff going into empty pages!
+        {" "}
+        It is a revamping/revival of the old site{" "}
+        <a href="http://sf0.org/" className="underline hover:font-bold">
+          SF0
+        </a>
+        .
       </p>
     </main>
   );
