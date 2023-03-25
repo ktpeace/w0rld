@@ -52,6 +52,7 @@ Eventually, the site will have a lovely whimsical design I made in Canva, but co
 1. Finish designing users table in DrawSQL
 2. Connect to RDS with MySQL Workbench
 3. Add just users to RDS for now
+
 4. Add RDS info to project .env and check tables access
 5. Write frontend queries & backend responses to frontend queries
 6. Deploy backend on AWS Elastic Beanstalk
