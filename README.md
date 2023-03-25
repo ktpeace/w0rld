@@ -47,7 +47,7 @@ Eventually, the site will have a lovely whimsical design I made in Canva, but co
 - <a href="https://www.uxmatters.com/mt/archives/2020/07/designing-mobile-tables.php">UX Matters: Designing Mobile Tables</a>
 - <a href="https://www.softwaretestinghelp.com/login-page-test-cases/">Login Page Test Cases</a>
 
-## Immediate To-Do List
+## To-Do List
 
 1. Finish designing users table in DrawSQL
 2. Connect to RDS with MySQL Workbench
@@ -59,3 +59,4 @@ Eventually, the site will have a lovely whimsical design I made in Canva, but co
 8. Test user creation
 9. Add Jest testing for user account creation, login, & logout
 10. Add remaining tables to RDS, relevant queries, & test
+11. Continue designing frontend
