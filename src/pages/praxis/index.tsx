@@ -16,7 +16,7 @@ const Praxis = () => {
               className="flex items-center gap-4 p-4 rounded border-2 dark:border-slate-700 dark:bg-slate-800 dark:hover:border-slate-500 dark:hover:bg-slate-700 parent-hover:child-bg-slate-600"
             >
               {/* Mobile Layout */}
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2 lg:hidden">
                 <div className="flex gap-2 pb-4 border-b">
                   <div className="mr-4 2xl:mr-0">
                     <h4 className="font-bold text-lg mt-0">{task.name}</h4>
@@ -72,59 +72,61 @@ const Praxis = () => {
                 </div>
               </div>
               {/* Desktop Layout */}
-              {/* <Image
-                src={sloth}
-                alt="sloth"
-                className="hidden md-block w-[175px] h-[175px] rounded object-cover"
-              />
-              <div className="flex flex-col gap-2">
-                <div className="flex justify-between">
-                  <div className="mr-4 2xl:mr-0">
-                    <h4 className="font-bold">{task.name}</h4>
-                    <p>{task.desc}</p>
+              <div className="hidden lg:flex gap-4">
+                <Image
+                  src={sloth}
+                  alt="sloth"
+                  className="w-[175px] h-[175px] rounded object-cover"
+                />
+                <div className="flex flex-col gap-2">
+                  <div className="flex justify-between">
+                    <div className="mr-4 2xl:mr-0">
+                      <h4 className="font-bold">{task.name}</h4>
+                      <p>{task.desc}</p>
+                    </div>
+                    <div className="flex gap-2">
+                      <p>
+                        <span className="font-bold">Group:</span> {task.group}
+                      </p>
+                      <p>
+                        <span className="font-bold">Level:</span> {task.level}
+                      </p>
+                      <p>
+                        <span className="font-bold">Points:</span> {task.points}
+                      </p>
+                      <p>
+                        <span className="font-bold">Completed:</span>{" "}
+                        {task.completed}
+                      </p>
+                    </div>
                   </div>
-                  <div className="flex gap-2">
-                    <p>
-                      <span className="font-bold">Group:</span> {task.group}
-                    </p>
-                    <p>
-                      <span className="font-bold">Level:</span> {task.level}
-                    </p>
-                    <p>
-                      <span className="font-bold">Points:</span> {task.points}
-                    </p>
-                    <p>
-                      <span className="font-bold">Completed:</span>{" "}
-                      {task.completed}
-                    </p>
+                  <div className="flex p-2 gap-4 items-center justify-center rounded dark:bg-slate-700 dark:hover:bg-slate-600 child-bg-slate-600">
+                    <div className="flex flex-col flex-shrink-0 items-center justify-center">
+                      <Image
+                        src={pixie}
+                        alt="avatar"
+                        className="w-20 h-20 rounded-full object-cover"
+                      />
+                      <h4 className="font-bold">Pixie</h4>
+                    </div>
+                    <div className="flex-grow">
+                      <p>
+                        <span className="font-bold">Completed:</span> January
+                        15, 2023{" "}
+                      </p>
+                      <p>Some other info</p>
+                    </div>
+                    <div className="flex-shrink-0 w-2/3">
+                      <p>
+                        &quot;Wowee I can&apos;t believe I completed this thing.
+                        Just think about it. There I was, a loser. And now here
+                        I am, a winner. Take it from me, snoozers, livin&apos;
+                        high is the only way to fly ✈️&quot;
+                      </p>
+                    </div>
                   </div>
                 </div>
-                <div className="flex p-2 gap-4 items-center justify-center rounded dark:bg-slate-700 dark:hover:bg-slate-600 child-bg-slate-600">
-                  <div className="flex flex-col flex-shrink-0 items-center justify-center">
-                    <Image
-                      src={pixie}
-                      alt="avatar"
-                      className="w-20 h-20 rounded-full object-cover"
-                    />
-                    <h4 className="font-bold">Pixie</h4>
-                  </div>
-                  <div className="flex-grow">
-                    <p>
-                      <span className="font-bold">Completed:</span> January 15,
-                      2023{" "}
-                    </p>
-                    <p>Some other info</p>
-                  </div>
-                  <div className="flex-shrink-0 w-2/3">
-                    <p>
-                      &quot;Wowee I can&apos;t believe I completed this thing.
-                      Just think about it. There I was, a loser. And now here I
-                      am, a winner. Take it from me, snoozers, livin&apos; high
-                      is the only way to fly ✈️&quot;
-                    </p>
-                  </div>
-                </div>
-              </div> */}
+              </div>
             </Link>
           );
         })}
