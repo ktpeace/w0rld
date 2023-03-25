@@ -136,7 +136,7 @@ const Praxis = () => {
 
   return (
     <div>
-      <main className="flex flex-col items-center mt-20 px-32 py-8 gap-5 dark:text-dark">
+      <main className="flex flex-col items-center mt-20 px-12 sm:px-32 py-8 gap-5 dark:text-dark">
         <h1 className="text-2xl">Praxis</h1>
         <p>View completed tasks.</p>
         <div className="flex flex-col gap-4">

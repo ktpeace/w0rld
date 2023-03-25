@@ -15,8 +15,8 @@ export default function Group() {
   ));
 
   return (
-    <main className="flex flex-col items-center mt-20 px-32 py-8 gap-5 dark:text-dark">
-      <h2 className="text-2xl">{name}</h2>
+    <main className="flex flex-col items-center mt-20 px-12 md:px-32 py-8 gap-5 dark:text-dark">
+      <h2 className="text-2xl text-center">{name}</h2>
       <p>{formattedDescription}</p>
     </main>
   );
