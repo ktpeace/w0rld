@@ -50,11 +50,10 @@ Eventually, the site will have a lovely whimsical design I made in Canva, but co
 
 ## To-Do List
 
-1. Add validation & security measures for user account creation
-2. Add queries for user logins
-3. Deploy backend on AWS Elastic Beanstalk
-4. Connect Vercel frontend to Beanstalk backend
-5. Test user creation
-6. Add Jest testing for user account creation, login, & logout
-7. Add remaining tables to RDS, relevant queries, & test
-8. Continue designing frontend
+1. Add queries/securities/validation for user logins
+2. Deploy backend on AWS Elastic Beanstalk
+3. Connect Vercel frontend to Beanstalk backend
+4. Test user creation
+5. Add Jest testing for user account creation, login, & logout
+6. Add remaining tables to RDS, relevant queries, & test
+7. Continue designing frontend
