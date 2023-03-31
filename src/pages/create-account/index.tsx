@@ -79,38 +79,38 @@ const CreateAccount = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setUserExists("");
-    setInvalidInputs("");
-    // const isValidPassword = await validatePassword();
-    // if (!isValidPassword || !validateEmail() || !validateUsername()) return;
-    const userDeets = { username, password, password2, email };
-    console.log(userDeets);
-    try {
-      const response = await axios.post(
-        "http://localhost:5000/api/create-account",
-        userDeets
-      );
-      console.log(response.data);
-      if (response.data.emailExists) {
-        setUserExists("An account exists with this email.");
-      } else if (response.data.usernameExists) {
-        setUserExists("This username is taken.");
-      } else {
-        localStorage.setItem("user", username);
-        setUser(username);
-        setUsername("");
-        setPassword("");
-        setEmail("");
-        // redirect to home/updates or login
-      }
-    } catch (error) {
-      if (axios.isAxiosError(error) && error.response?.data.message) {
-        setInvalidInputs(error.response.data.message);
-      } else {
-        console.error("Error creating account: ", error);
-      }
-    }
-    // alert("Waiting on a beanstalk. 🌱 Try again soon.");
+    // setUserExists("");
+    // setInvalidInputs("");
+    // // const isValidPassword = await validatePassword();
+    // // if (!isValidPassword || !validateEmail() || !validateUsername()) return;
+    // const userDeets = { username, password, password2, email };
+    // console.log(userDeets);
+    // try {
+    //   const response = await axios.post(
+    //     "http://localhost:5000/api/create-account",
+    //     userDeets
+    //   );
+    //   console.log(response.data);
+    //   if (response.data.emailExists) {
+    //     setUserExists("An account exists with this email.");
+    //   } else if (response.data.usernameExists) {
+    //     setUserExists("This username is taken.");
+    //   } else {
+    //     localStorage.setItem("user", username);
+    //     setUser(username);
+    //     setUsername("");
+    //     setPassword("");
+    //     setEmail("");
+    //     // redirect to home/updates or login
+    //   }
+    // } catch (error) {
+    //   if (axios.isAxiosError(error) && error.response?.data.message) {
+    //     setInvalidInputs(error.response.data.message);
+    //   } else {
+    //     console.error("Error creating account: ", error);
+    //   }
+    // }
+    alert("Waiting on a beanstalk. 🌱 Try again soon.");
   };
 
   useEffect(() => {
