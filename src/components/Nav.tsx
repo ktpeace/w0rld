@@ -14,25 +14,40 @@ import { faChildReaching } from "@fortawesome/free-solid-svg-icons";
 
 const Nav = () => {
   const { user, setUser } = useContext(UserContext);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [userId, setUserId] = useState(null);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const userDeets = { username, password };
-    console.log("submitted");
-    try {
-      const response = await axios.post(
-        "http://localhost:5000/api/create-account",
-        userDeets
-      );
-      console.log(response.data);
-      setUser(username);
-      localStorage.setItem("user", username);
-    } catch (error) {
-      console.error("Error fetching column names: ", error);
+  // need to display avatar of current user
+  const getUserId = async () => {
+    if (user) {
+      try {
+        const response = await axios.get("http://localhost:5000/api/user-id", {
+          params: { username: user },
+        });
+        const userId = response?.data.message;
+        userId && setUserId(userId);
+      } catch (error) {
+        if (axios.isAxiosError(error) && error.response?.data.error) {
+          console.log(error.response.data.error);
+        } else {
+          console.log(`Error: ${error}`);
+        }
+      }
     }
   };
+
+  useEffect(() => {
+    getUserId();
+  }, [user]);
+
+  // If logged in, set user context from localStorage if not already in context
+  useEffect(() => {
+    if (!user) {
+      const localUser = localStorage.getItem("user");
+      if (localUser) {
+        setUser(localUser);
+      }
+    }
+  }, []);
 
   return (
     <nav className="bg-white border-b-2 border-slate-100 dark:border-0 dark:bg-gray-800 dark:text-dark p-2 fixed w-full z-10 top-0 text-base">
@@ -80,7 +95,7 @@ const Nav = () => {
           <div className="justify-self-end flex items-center space-x-2 md:space-x-4">
             <ThemeSwitcher />
             {user.length ? (
-              <Link href="/players/1">
+              <Link href={`/players/${userId}`}>
                 <Image
                   src={pixie}
                   alt="my avatar"
@@ -89,7 +104,7 @@ const Nav = () => {
               </Link>
             ) : (
               <div className="flex flex-col justify-center items-center gap-2">
-                <Link href="login">
+                <Link href="/login">
                   <button className="border rounded p-1 uppercase font-bold text-xs dark:border-slate-600 dark:bg-slate-800 dark:hover:border-slate-500 dark:hover:bg-slate-700">
                     Log In
                   </button>

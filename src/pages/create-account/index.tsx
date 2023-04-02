@@ -1,10 +1,11 @@
 import { useState, useEffect, useContext } from "react";
+import { useRouter } from "next/router";
 import UserContext from "@/components/userContext";
 import axios from "axios";
-import { AxiosError } from "axios";
 import { pwnedPassword } from "hibp";
 
 const CreateAccount = () => {
+  const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
@@ -17,6 +18,7 @@ const CreateAccount = () => {
     setUser("");
     setUsername("");
     setPassword("");
+    setPassword2("");
     setEmail("");
     localStorage.clear();
   };
@@ -83,48 +85,44 @@ const CreateAccount = () => {
     setInvalidInputs("");
     const isValidPassword = await validatePassword();
     if (!isValidPassword || !validateEmail() || !validateUsername()) return;
-    // const userDeets = { username, password, password2, email };
-    // console.log(userDeets);
-    // try {
-    //   const response = await axios.post(
-    //     "http://localhost:5000/api/create-account",
-    //     userDeets
-    //   );
-    //   console.log(response.data);
-    //   if (response.data.emailExists) {
-    //     setUserExists("An account exists with this email.");
-    //   } else if (response.data.usernameExists) {
-    //     setUserExists("This username is taken.");
-    //   } else {
-    //     localStorage.setItem("user", username);
-    //     setUser(username);
-    //     setUsername("");
-    //     setPassword("");
-    //     setEmail("");
-    //     // redirect to home/updates or login
-    //   }
-    // } catch (error) {
-    //   if (axios.isAxiosError(error) && error.response?.data.message) {
-    //     setInvalidInputs(error.response.data.message);
-    //   } else {
-    //     console.error("Error creating account: ", error);
-    //   }
-    // }
-    alert("Waiting on a beanstalk. 🌱 Try again soon.");
+    const userDeets = { username, password, password2, email };
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/create-account",
+        userDeets
+      );
+      if (response.data.emailExists) {
+        setUserExists("An account exists with this email.");
+      } else if (response.data.usernameExists) {
+        setUserExists("This username is taken.");
+      } else {
+        setUsername("");
+        setPassword("");
+        setEmail("");
+        router.push("/login");
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response?.data.message) {
+        setInvalidInputs(error.response.data.message);
+      } else {
+        setInvalidInputs(`Error: ${error}`);
+      }
+    }
   };
 
   useEffect(() => {
     const loggedInUser = localStorage.getItem("user");
     if (loggedInUser) {
-      setUser(loggedInUser);
-      console.log("logged in", loggedInUser);
+      const foundUser = loggedInUser;
+      setUser(foundUser);
+      setUsername(foundUser);
     }
   }, []);
 
   // if there's a user show the message below
-  if (user.length > 0) {
+  if (user) {
     return (
-      <main className="flex flex-col items-center mt-20 px-6 py-8 gap-5 dark:text-dark">
+      <main className="flex-grow flex flex-col items-center justify-center px-6 py-8 gap-5 dark:text-dark">
         <div>{user} is logged in</div>
         <button onClick={handleLogout} className="border rounded p-2">
           Log Out
@@ -135,7 +133,7 @@ const CreateAccount = () => {
 
   // if there's no user, show CreateAccount form
   return (
-    <main className="flex flex-col items-center mt-20 px-6 py-8 gap-5 dark:text-dark">
+    <main className="flex-grow flex flex-col items-center justify-center px-6 py-8 gap-5 dark:text-dark">
       <h1 className="text-2xl">Create Account</h1>
       {userExists.length > 1 && <p className="text-red-500">{userExists}</p>}
       {invalidInputs.length > 1 && (
@@ -200,7 +198,7 @@ const CreateAccount = () => {
             className="rounded p-1 text-slate-900"
             onChange={({ target }) => setPassword2(target.value)}
             required
-            minLength={6}
+            minLength={8}
             maxLength={65}
             autoComplete="new-password"
           />
