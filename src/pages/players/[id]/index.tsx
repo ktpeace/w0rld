@@ -30,7 +30,7 @@ export default function Player() {
       try {
         // const response = await axios.get("http://localhost:5000/api/user", {
         const response = await axios.get(
-          "http://w0rld-env.eba-3pb2ubqj.us-east-2.elasticbeanstalk.com/api/user",
+          "https://w0rld-env.eba-3pb2ubqj.us-east-2.elasticbeanstalk.com/api/user",
           {
             params: { userId: id },
           }

@@ -36,7 +36,7 @@ const Login = () => {
     try {
       const response = await axios.post(
         // "http://localhost:5000/api/login",
-        "http://w0rld-env.eba-3pb2ubqj.us-east-2.elasticbeanstalk.com/api/login",
+        "https://w0rld-env.eba-3pb2ubqj.us-east-2.elasticbeanstalk.com/api/login",
         user,
         { withCredentials: true }
       );
