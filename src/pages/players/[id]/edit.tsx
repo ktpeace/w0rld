@@ -13,7 +13,8 @@ const Edit = () => {
     if (id !== undefined) {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/user-auth",
+          // "http://localhost:5000/api/user-auth",
+          "http://w0rld-env.eba-3pb2ubqj.us-east-2.elasticbeanstalk.com/api/user-auth",
           {
             params: { id, username },
             withCredentials: true,

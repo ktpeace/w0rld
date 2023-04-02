@@ -49,6 +49,11 @@ const Players = () => {
     <main className="flex flex-col items-center mt-20 md:mx-20 lg:mx-48 px-6 py-8 gap-5 dark:text-dark">
       <h1 className="text-2xl">Players</h1>
       <p>View other players.</p>
+      <p>
+        Note: These links will mostly lead to nonexistent players, as this was
+        built using fake user data, but I just updated the links to check the
+        real database. Soon I will fix it to map REAL PLAYERS like you!
+      </p>
       <div className="flex flex-wrap justify-center gap-4 sm:gap-12">
         <PlayerMapper />
       </div>

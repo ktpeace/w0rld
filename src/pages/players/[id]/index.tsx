@@ -28,9 +28,13 @@ export default function Player() {
   const getPlayer = async () => {
     if (id) {
       try {
-        const response = await axios.get("http://localhost:5000/api/user", {
-          params: { userId: id },
-        });
+        // const response = await axios.get("http://localhost:5000/api/user", {
+        const response = await axios.get(
+          "http://w0rld-env.eba-3pb2ubqj.us-east-2.elasticbeanstalk.com/api/user",
+          {
+            params: { userId: id },
+          }
+        );
         const player = response?.data.message;
         player && setPlayer(player);
       } catch (error) {
@@ -104,7 +108,6 @@ export default function Player() {
         alt={`${player?.username}'s avatar'`}
         className="rounded"
       ></Image>
-      {/* conditionally show button if id retrieved for username matches param */}
       {user && player && player.username === user && (
         <>
           <button className="border rounded p-1" onClick={handleEditProfile}>
