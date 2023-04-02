@@ -60,9 +60,13 @@ export default function Player() {
     localStorage.clear();
     if (id) {
       try {
-        const response = await axios.post("http://localhost:5000/api/logout", {
-          userId: id,
-        });
+        // const response = await axios.post("http://localhost:5000/api/logout", {
+        const response = await axios.post(
+          "https://w0rld-env.eba-3pb2ubqj.us-east-2.elasticbeanstalk.com/api/logout",
+          {
+            userId: id,
+          }
+        );
         if (response.status === 200) {
           router.push("/");
         }
