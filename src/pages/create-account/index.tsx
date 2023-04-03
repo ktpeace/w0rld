@@ -88,8 +88,8 @@ const CreateAccount = () => {
     const userDeets = { username, password, password2, email };
     try {
       const response = await axios.post(
-        // "http://localhost:5000/api/create-account",
-        "https://w0rld-zero-api.com/api/create-account",
+        "http://localhost:8080/api/create-account",
+        // "https://w0rld-zero-api.com/api/create-account",
         userDeets
       );
       if (response.data.emailExists) {
