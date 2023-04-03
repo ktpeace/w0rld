@@ -28,12 +28,12 @@ export default function Player() {
   const getPlayer = async () => {
     if (id) {
       try {
-        const response = await axios.get("http://localhost:8080/api/user", {
-          // const response = await axios.get(
-          //   "https://w0rld-zero-api.com/api/user",
-          //   {
-          params: { userId: id },
-        });
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/user`,
+          {
+            params: { userId: id },
+          }
+        );
         const player = response?.data.message;
         player && setPlayer(player);
       } catch (error) {
@@ -55,18 +55,17 @@ export default function Player() {
   };
 
   const handleLogout = async () => {
-    setUser("");
-    localStorage.clear();
     if (id) {
       try {
-        const response = await axios.post("http://localhost:8080/api/logout", {
-          // const response = await axios.post(
-          //   "https://w0rld-zero-api.com/api/logout",
-          //   {
-          userId: id,
-        });
+        const response = await axios.post(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/logout`,
+          { userId: id },
+          { withCredentials: true }
+        );
         if (response.status === 200) {
           router.push("/");
+          setUser("");
+          localStorage.clear();
         }
       } catch (error) {
         if (axios.isAxiosError(error) && error.response?.data.error) {

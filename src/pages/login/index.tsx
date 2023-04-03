@@ -34,9 +34,9 @@ const Login = () => {
       return;
     }
     try {
+      console.log(process.env.NEXT_PUBLIC_API_URL);
       const response = await axios.post(
-        "http://localhost:8080/api/login",
-        // "https://w0rld-zero-api.com/api/login",
+        `${process.env.NEXT_PUBLIC_API_URL}/api/login`,
         user,
         { withCredentials: true }
       );

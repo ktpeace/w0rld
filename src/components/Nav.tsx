@@ -20,12 +20,12 @@ const Nav = () => {
   const getUserId = async () => {
     if (user) {
       try {
-        const response = await axios.get("http://localhost:8080/api/user-id", {
-          // const response = await axios.get(
-          //   "https://w0rld-zero-api.com/api/user-id",
-          //   {
-          params: { username: user },
-        });
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/user-id`,
+          {
+            params: { username: user },
+          }
+        );
         const userId = response?.data.message;
         userId && setUserId(userId);
       } catch (error) {
