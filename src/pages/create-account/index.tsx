@@ -89,7 +89,7 @@ const CreateAccount = () => {
     try {
       const response = await axios.post(
         // "http://localhost:5000/api/create-account",
-        "http://w0rld-v2.eba-r5cynqqv.us-east-1.elasticbeanstalk.com/api/create-account",
+        "https://w0rld-zero-api.com/api/create-account",
         userDeets
       );
       if (response.data.emailExists) {

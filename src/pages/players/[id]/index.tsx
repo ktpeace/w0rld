@@ -30,7 +30,7 @@ export default function Player() {
       try {
         // const response = await axios.get("http://localhost:5000/api/user", {
         const response = await axios.get(
-          "https://w0rld-env.eba-3pb2ubqj.us-east-2.elasticbeanstalk.com/api/user",
+          "https://w0rld-zero-api.com/api/user",
           {
             params: { userId: id },
           }
@@ -62,7 +62,7 @@ export default function Player() {
       try {
         // const response = await axios.post("http://localhost:5000/api/logout", {
         const response = await axios.post(
-          "https://w0rld-env.eba-3pb2ubqj.us-east-2.elasticbeanstalk.com/api/logout",
+          "https://w0rld-zero-api.com/api/logout",
           {
             userId: id,
           }
