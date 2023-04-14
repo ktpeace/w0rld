@@ -34,21 +34,6 @@ const Login = () => {
       return;
     }
     try {
-      // @ts-ignore
-      function setCookie(name, value, days) {
-        let expires = "";
-        if (days) {
-          const date = new Date();
-          date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-          expires = "; expires=" + date.toUTCString();
-        }
-        document.cookie =
-          name +
-          "=" +
-          (value || "") +
-          expires +
-          "; path=/; Secure; SameSite=None";
-      }
       console.log(process.env.NEXT_PUBLIC_API_URL);
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/api/login`,
@@ -56,7 +41,6 @@ const Login = () => {
         { withCredentials: true }
       );
       if (response.status === 200) {
-        setCookie("testCookie", "testValue", 1);
         localStorage.setItem("user", username);
         setUser(username);
         setUsername("");
