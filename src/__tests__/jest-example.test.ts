@@ -1,4 +1,4 @@
-const sum = require("./jest-example");
+import sum from "../../jest-example";
 
 test("adds 1 + 2 to equal 3", () => {
   expect(sum(1, 2)).toBe(3);

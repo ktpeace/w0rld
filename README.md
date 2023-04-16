@@ -46,6 +46,8 @@ Eventually, the site will have a lovely whimsical design I made in Canva, but co
 
 - <a href="https://www.uxmatters.com/mt/archives/2020/07/designing-mobile-tables.php">UX Matters: Designing Mobile Tables</a>
 - <a href="https://www.softwaretestinghelp.com/login-page-test-cases/">Login Page Test Cases</a>
+- <a href="https://www.testim.io/blog/jest-testing-a-helpful-introductory-tutorial/">Jest Testing: A Helpful, Introductory Tutorial</a>
+- <a href="https://testing-library.com/">The Testing Library</a>
 - <a href="https://blog.netwrix.com/2022/11/14/nist-password-guidelines/#:~:text=NIST%20now%20recommends%20a%20password,characters%20as%20a%20maximum%20length.">NIST Password Guidelines</a>
 
 ## To-Do List

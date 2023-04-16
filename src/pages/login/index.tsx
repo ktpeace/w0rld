@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
-import UserContext from "@/components/userContext";
+import UserContext from "../../components/userContext";
 import axios from "axios";
 
 const Login = () => {
@@ -95,6 +95,7 @@ const Login = () => {
         <div className="flex justify-between gap-2">
           <label htmlFor="username">Username: </label>
           <input
+            id="username"
             type="text"
             name="username"
             value={username}
@@ -106,6 +107,7 @@ const Login = () => {
         <div className="flex justify-between gap-2">
           <label htmlFor="password">Password: </label>
           <input
+            id="password"
             type="password"
             name="password"
             value={password}
@@ -125,6 +127,7 @@ const Login = () => {
         <div className="flex justify-center">
           <button
             type="submit"
+            data-testid="login-submit"
             className="border rounded py-1 px-2 font-bold dark:bg-slate-800 dark:hover:border-slate-500 dark:hover:bg-slate-700"
           >
             Log In
