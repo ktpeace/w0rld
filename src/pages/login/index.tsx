@@ -10,13 +10,12 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [invalidInputs, setInvalidInputs] = useState("");
   const { user, setUser } = useContext(UserContext);
-  console.log("in login");
+
   const handleForgotPassword = () => {
     alert("Well that's tooooo durn bad!");
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    console.log("submit");
     e.preventDefault();
     const user = { username, password };
     if (username.length === 0 || password.length === 0) {
@@ -36,15 +35,8 @@ const Login = () => {
       return;
     }
     try {
-      let url = "http://localhost:8080";
-      // console.log(process.env.NEXT_PUBLIC_API_URL);
-      console.log(url);
-      const response = await axios.post(
-        // `${process.env.NEXT_PUBLIC_API_URL}/api/login`,
-        url,
-        user,
-        { withCredentials: true }
-      );
+      const url = `${process.env.NEXT_PUBLIC_API_URL}/api/login`;
+      const response = await axios.post(url, user, { withCredentials: true });
       if (response.status === 200) {
         localStorage.setItem("user", username);
         setUser(username);

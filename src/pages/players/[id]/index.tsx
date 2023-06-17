@@ -32,6 +32,7 @@ export default function Player() {
           `${process.env.NEXT_PUBLIC_API_URL}/api/user`,
           {
             params: { userId: id },
+            withCredentials: true,
           }
         );
         const player = response?.data.message;

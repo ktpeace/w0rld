@@ -52,10 +52,8 @@ Eventually, the site will have a lovely whimsical design I made in Canva, but co
 
 ## To-Do List
 
-1. Make backend files Typescript instead of JS
-2. Add Jest testing for user account creation, login, & logout
-3. Add other SQL tables to RDS (will need to plan them all to do this)
-4. Add pulling complex data for profiles (completed tasks, etc.)
-5. Add players data and mapping to Players & individual Player/Profile pages
-6. Same for Praxis, Tasks, Groups
-7. Fix up frontend
+1. Fix existing DB API calls to match changes to DB tables
+2. Add API calls for all scenarios in current app & showing in frontend
+3. Add more Jest testing for user account creation, login, & logout
+4. Fix up frontend
+5. API is not 100% RESTful, lacks caching
