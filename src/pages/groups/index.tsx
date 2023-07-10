@@ -1,7 +1,37 @@
 import Link from "next/link";
-import { groups } from "@/components/groups/groups-data";
+import axios from "axios";
+import { useEffect, useState } from "react";
+// import { groups } from "@/components/groups/groups-data";
+
+interface Group {
+  id: number;
+  name: string;
+  description: string;
+  color_primary: string;
+  color_secondary: string;
+}
 
 const Groups = () => {
+  const [groups, setGroups] = useState<Group[]>([]);
+
+  async function getAllGroups() {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/groups`,
+        { withCredentials: false }
+      );
+      setGroups(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    getAllGroups();
+  }, []);
+
+  if (groups === null) return <>Loading...</>;
+
   const GroupMapper = () => {
     return (
       <>
@@ -16,7 +46,9 @@ const Groups = () => {
               key={group.id}
               className="flex flex-col items-center gap-2 p-4 border-2 rounded hover-border-color dark:hover:bg-slate-700 dark:text-dark dark:bg-slate-800"
               style={
-                { "--groupColor": `#${group.color}` } as React.CSSProperties
+                {
+                  "--groupColor": `#${group.color_primary}`,
+                } as React.CSSProperties
               }
             >
               <h3 className="font-bold text-lg">{group.name}</h3>

@@ -26,9 +26,9 @@
     "eslint-config-next": "13.2.3",
     "hibp": "^12.0.1",
     "jest-environment-jsdom": "^29.5.0",
-    "next": "^13.2.3",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "next": "^13.4.9",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "typescript": "4.9.5"
   },
   "devDependencies": {

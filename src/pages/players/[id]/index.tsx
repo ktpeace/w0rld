@@ -14,13 +14,14 @@ export default function Player() {
     created_at: string;
     description: string;
     email: string;
-    group_id: number;
     image_path: string;
     last_login: string;
     level: number;
     points: number;
     terms: string[];
     username: string;
+    group_id: number;
+    group_name: string;
   }
 
   const [player, setPlayer] = useState<Player | null>(null);
@@ -29,9 +30,8 @@ export default function Player() {
     if (id) {
       try {
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/user`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/user?user_id=${id}`,
           {
-            params: { userId: id },
             withCredentials: true,
           }
         );
@@ -102,7 +102,7 @@ export default function Player() {
       <h1 className="text-2xl">
         {player ? player.username : "Player not found"}
       </h1>
-      <p>Group: {player?.group_id}</p>
+      <p>Group: {player?.group_name}</p>
       <p>Level: {player?.level}</p>
       <p>Last Login: {player?.last_login}</p>
       <Image

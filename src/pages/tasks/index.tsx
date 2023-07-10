@@ -7,7 +7,13 @@ interface Task {
   description: string;
   level: number;
   points: number;
-  group_id: number;
+  min_players: number;
+  max_players: number;
+  creator: string;
+  created_at: string;
+  group_name: string | null;
+  color_primary: string | null;
+  color_secondary: string | null;
 }
 
 const Tasks = () => {
@@ -17,12 +23,16 @@ const Tasks = () => {
   const [totalPages, setTotalPages] = useState(0);
 
   async function getAllTasks(page: number, pageSize: number) {
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/tasks?page=${page}&pageSize=${pageSize}`,
-      { withCredentials: true }
-    );
-    setTasks(response.data.tasks);
-    setTotalPages(response.data.totalPages);
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/tasks?page=${page}&pageSize=${pageSize}`,
+        { withCredentials: true }
+      );
+      setTasks(response.data.tasks);
+      setTotalPages(response.data.totalPages);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   useEffect(() => {
@@ -45,7 +55,6 @@ const Tasks = () => {
     <main className="flex flex-col items-center mt-20 px-6 py-8 gap-5 dark:text-dark">
       <h1 className="text-2xl">Tasks</h1>
       <div>
-        <h1>Tasks</h1>
         <table>
           <thead>
             <tr>
@@ -53,7 +62,7 @@ const Tasks = () => {
               <th>Description</th>
               <th>Level</th>
               <th>Points</th>
-              <th>Group ID</th>
+              <th>Group</th>
             </tr>
           </thead>
           <tbody>
@@ -63,7 +72,7 @@ const Tasks = () => {
                 <td>{task.description}</td>
                 <td>{task.level}</td>
                 <td>{task.points}</td>
-                <td>{task.group_id}</td>
+                <td>{task.group_name}</td>
               </tr>
             ))}
           </tbody>
