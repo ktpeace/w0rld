@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* :root {
+  --foreground-light: 0, 0, 0;
+  --background-light: 255, 255, 255;
+} */
+
+/* Light Mode Styles */
+body {
+  @apply bg-parchment-50 text-stone-800;
+}
+
+/* Dark Mode Styles */
+.dark body {
+  @apply bg-smoke-50 text-parchment-100;
+}
