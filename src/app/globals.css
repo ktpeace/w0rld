@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Special+Elite&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,6 +7,10 @@
   --foreground-light: 0, 0, 0;
   --background-light: 255, 255, 255;
 } */
+
+nav {
+  font-family: "Special Elite", system-ui;
+}
 
 /* Light Mode Styles */
 body {
