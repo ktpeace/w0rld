@@ -14,6 +14,11 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      rotate: {
+        "60": "60deg",
+        "200": "200deg",
+        "240": "240deg",
+      },
       colors: {
         parchment: {
           50: "#FFF9F6", // lighter (bg)
@@ -33,6 +38,10 @@ const config: Config = {
         },
         lime: {
           920: "#25380d",
+        },
+        teal: {
+          100: "#00687B",
+          200: "#154952",
         },
         dusk: {
           600: "#3E4650",

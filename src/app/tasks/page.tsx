@@ -19,7 +19,7 @@ const Card = ({ task }: CardProps) => {
       href={`/tasks/${task.id}`}
       className="w-full p-4 flex justify-between gap-4 cursor-pointer rounded-lg border border-transparent dark:text-parchment-100 bg-white dark:bg-perse-100 hover:border-gray-400 dark:border-perse-50 dark:hover:bg-perse-400"
     >
-      {/* Image */}
+      {/* Image Desktop */}
       <div className="mx-auto max-w-48 hidden md:block">
         <Image
           src={task.image_path || ""}
@@ -35,7 +35,7 @@ const Card = ({ task }: CardProps) => {
         <div className="w-full flex flex-col">
           <div className="w-full flex justify-between items-center mb-4">
             <div className="w-full flex items-center gap-2">
-              {/* Image */}
+              {/* Image Mobile */}
               <div className="max-w-12 block md:hidden">
                 <Image
                   src={task.image_path || ""}
