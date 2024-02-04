@@ -11,7 +11,6 @@ import {
 } from "@heroicons/react/24/solid";
 import { Task } from "@/types";
 import TaskCard from "@/components/TaskCard";
-// import dummyTasks from "@/api/dummyTasks";
 
 export default function TasksPage() {
   const [loading, setLoading] = useState(false);
@@ -20,10 +19,9 @@ export default function TasksPage() {
   const [sortOrder, setSortOrder] = useState("asc");
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  const observer = useRef<IntersectionObserver | null>(null);
 
-  const observer = useRef<IntersectionObserver>();
-
-  const fetchTasks = async (pageNum, isInitialSearch = false) => {
+  const fetchTasks = async (pageNum: Number, isInitialSearch = false) => {
     if (!hasMore && !isInitialSearch) return;
     try {
       setLoading(true);
@@ -66,17 +64,22 @@ export default function TasksPage() {
 
   // Last task ref setup for infinite scroll
   const lastTaskRef = useCallback(
-    (node) => {
+    (node: Element | null) => {
       if (loading) return;
       if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && hasMore) {
-          fetchTasks(page);
-        }
-      });
+
+      observer.current = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting && hasMore) {
+            fetchTasks(page);
+          }
+        },
+        { rootMargin: "100px" }
+      );
+
       if (node) observer.current.observe(node);
     },
-    [loading, hasMore, page]
+    [loading, hasMore, page, fetchTasks]
   );
 
   return (
@@ -152,14 +155,27 @@ export default function TasksPage() {
             <div
               key={task.id}
               ref={index === tasks.length - 1 ? lastTaskRef : null}
-              className="task-card"
+              className="w-full task-card"
             >
               <TaskCard task={task} />
             </div>
           ))}
         </section>
       )}
-      {/* )} */}
+      {loading && (
+        <div
+          className="mt-36 inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-perse-50 border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+          role="status"
+        >
+          <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+            Loading...
+          </span>
+        </div>
+      )}
+      {!loading && tasks.length === 0 && searchTerm && (
+        <p className="mt-36">No results...</p>
+      )}
+      {!hasMore && <p className="mt-20">End of the line! 🚂</p>}
     </main>
   );
 }
