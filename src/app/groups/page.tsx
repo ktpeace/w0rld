@@ -1,13 +1,18 @@
+"use client";
 import dummyGroups from "@/api/dummyGroups";
 import Image from "next/image";
 import Link from "next/link";
 import acorns from "../../../public/acorns.png";
 import mushrooms from "../../../public/mushrooms-ghost.png";
 import barnOwl from "../../../public/barnowl-trans.png";
+import goldenEagle from "../../../public/eagle.png";
 import groupsBg from "../../../public/gptgroups.webp";
 import { AcademicCapIcon } from "@heroicons/react/24/solid";
+import { useTheme } from "@/context/ThemeContext";
 
 export default function GroupsPage() {
+  const { theme, setTheme } = useTheme();
+
   return (
     <main className="flex flex-col items-center mt-24 mx-6 md:mx-24 xl:mx-64">
       {/* Side images */}
@@ -21,7 +26,7 @@ export default function GroupsPage() {
         />
       </div>
       {/* Background image */}
-      <div className="absolute inset-0 z-[-1] overflow-hidden">
+      <div className="absolute inset-0 z-[-5] overflow-hidden">
         <Image
           src={groupsBg}
           alt="Background image of fantasy-style characters"
@@ -35,13 +40,13 @@ export default function GroupsPage() {
       <div className="flex mb-10">
         <div className="relative w-36 mr-2">
           <Image
-            src={barnOwl}
+            src={theme === "dark" ? barnOwl : goldenEagle}
             alt="watercolor barn owl"
             fill
-            objectFit="contain"
+            className="object-contain"
           />
         </div>
-        <div className="flex p-4 text-lg border-2 rounded-md bg-parchment-50 dark:bg-teal-200 dark:bg-opacity-50 bg-opacity-50 border-parchment-100 dark:border-teal-100 ">
+        <div className="flex p-4 text-lg border-2 rounded-md bg-parchment-50 dark:bg-gray-700 dark:bg-opacity-50 bg-opacity-50 border-parchment-100 dark:border-gray-500">
           <p>
             “Groups represent certain ideologies and confer different benefits.
             Consider your group carefully, but know that you can always change

@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 
 function RegistrationForm() {
@@ -23,14 +24,21 @@ function RegistrationForm() {
   };
 
   return (
-    <div className="max-w-md mx-auto my-10 bg-white p-8 rounded-lg shadow-lg">
-      <p className="text-center mb-2">
-        W0RLD ZER0 is a game played worldwide by doing tasks in real life and
-        sharing them with fellow players for points and glory. Begin your
-        journey?
-      </p>
-      <p className="text-center mb-8">Begin your journey?</p>
-      <form onSubmit={handleSubmit} className="space-y-6">
+    <div className="flex p-6 justify-between bg-gradient-to-r from-teal-100 to-[#528C41] dark:bg-opacity-50">
+      {/* Intro text */}
+      <div className="w-1/2 text-white text-lg font-medium">
+        <p className="mb-4">
+          <strong>
+            W<span className="text-xl">O</span>RLD ZER
+            <span className="text-xl">O</span>
+          </strong>{" "}
+          is a free game played worldwide by doing tasks in real life and
+          sharing them with fellow players for points and glory.
+        </p>
+        <p className="text-xl">Begin your journey?</p>
+      </div>
+      {/* Form */}
+      <form onSubmit={handleSubmit} className="w-1/4 space-y-6">
         <div>
           <label
             htmlFor="email"
@@ -62,7 +70,7 @@ function RegistrationForm() {
             name="username"
             value={formData.username}
             onChange={handleChange}
-            placeholder="Your Username"
+            placeholder="Username"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
@@ -105,7 +113,7 @@ function RegistrationForm() {
         </div>
         <button
           type="submit"
-          className="w-full text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+          className="w-full text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center uppercase"
         >
           Sign Up
         </button>

@@ -6,9 +6,9 @@ export type Task = {
   points: number;
   created_at?: string;
   creator: string;
-  creator_user_id?: number;
-  image_path?: string;
+  creatorUserId?: number;
+  imagePath?: string;
   status: string;
   groups?: string[];
-  participants?: number;
+  participantsCount?: number;
 };

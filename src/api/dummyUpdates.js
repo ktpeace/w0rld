@@ -1,3 +1,5 @@
+// *Notifications can be marked as seen. Updates are for all
+// Notifications: comment on your praxis/comment/task, friend/foe activity, friend/foe requests, maybe your group activity
 // Updates: site announcements, random events, praxis posts, new tasks, new era, maybe level ups
 const dummyUpdates = [
   {

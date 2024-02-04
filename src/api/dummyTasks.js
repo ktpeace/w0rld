@@ -21,7 +21,7 @@ const dummyTasks = [
       "https://images.pexels.com/photos/47367/full-moon-moon-bright-sky-47367.jpeg",
     status: "active",
     groups: ["University of Aesthematics"],
-    participants: 123,
+    participantCount: 123,
   },
   {
     id: 577,
@@ -36,7 +36,7 @@ const dummyTasks = [
       "https://images.pexels.com/photos/47367/full-moon-moon-bright-sky-47367.jpeg",
     status: "active",
     groups: ["University of Aesthematics"],
-    participants: 10000,
+    participantCount: 10000,
   },
   {
     id: 578,
@@ -51,7 +51,7 @@ const dummyTasks = [
       "https://images.pexels.com/photos/47367/full-moon-moon-bright-sky-47367.jpeg",
     status: "active",
     groups: ["University of Aesthematics"],
-    participants: 2,
+    participantCount: 2,
   },
   {
     id: 579,
@@ -66,7 +66,7 @@ const dummyTasks = [
       "https://images.pexels.com/photos/47367/full-moon-moon-bright-sky-47367.jpeg",
     status: "active",
     groups: ["University of Aesthematics"],
-    participants: 0,
+    participantCount: 0,
   },
   {
     id: 580,
@@ -81,7 +81,7 @@ const dummyTasks = [
       "https://images.pexels.com/photos/47367/full-moon-moon-bright-sky-47367.jpeg",
     status: "active",
     groups: ["University of Aesthematics"],
-    participants: 90,
+    participantCount: 90,
   },
   {
     id: 581,
@@ -96,7 +96,7 @@ const dummyTasks = [
       "https://images.pexels.com/photos/47367/full-moon-moon-bright-sky-47367.jpeg",
     status: "active",
     groups: ["University of Aesthematics"],
-    participants: 45,
+    participantCount: 45,
   },
   {
     id: 582,
@@ -112,7 +112,7 @@ const dummyTasks = [
       "https://images.pexels.com/photos/47367/full-moon-moon-bright-sky-47367.jpeg",
     status: "pretired",
     groups: ["University of Aesthematics"],
-    participants: 100000,
+    participantCount: 100000,
   },
   {
     id: 583,
@@ -127,7 +127,7 @@ const dummyTasks = [
       "https://images.pexels.com/photos/47367/full-moon-moon-bright-sky-47367.jpeg",
     status: "active",
     groups: ["University of Aesthematics"],
-    participants: 23,
+    participantCount: 23,
   },
   {
     id: 584,
@@ -142,7 +142,7 @@ const dummyTasks = [
       "https://images.pexels.com/photos/47367/full-moon-moon-bright-sky-47367.jpeg",
     status: "active",
     groups: ["University of Aesthematics"],
-    participants: 12,
+    participantCount: 12,
   },
   {
     id: 585,
