@@ -1,18 +1,11 @@
 "use client";
-import { ReactElement, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
 import { useTheme } from "@/context/ThemeContext";
-import {
-  AcademicCapIcon,
-  MapIcon,
-  PaintBrushIcon,
-  PaperAirplaneIcon,
-  PhotoIcon,
-  ScaleIcon,
-} from "@heroicons/react/24/solid";
 import { Group } from "@/types";
+import groupIconMapper from "@/components/GroupIcons";
 import acorns from "../../../public/acorns.png";
 import mushrooms from "../../../public/mushrooms-ghost.png";
 import barnOwl from "../../../public/barnowl-trans.png";
@@ -20,41 +13,17 @@ import goldenEagle from "../../../public/eagle.png";
 import groupsBg from "../../../public/gptgroups.webp";
 import Error from "@/components/Error";
 
-// Map icons to group IDs
-interface IconMapper {
-  [key: number]: ReactElement | undefined;
-}
-
-const iconClass = "h-8 w-8 mr-3 text-gray-500 dark:text-parchment-300";
-
-const iconMapper: IconMapper = {
-  1: <PaintBrushIcon key="1" className={iconClass} />, // University of Aesthematics
-  2: <AcademicCapIcon key="2" className={iconClass} />, // UA Masters Course
-  3: <PaperAirplaneIcon key="3" className={iconClass} />, // S.N.I.D.E.
-  4: <MapIcon key="4" className={iconClass} />, // Journeymen
-  5: <PhotoIcon key="5" className={iconClass} />, // Analog
-  6: <ScaleIcon key="6" className={iconClass} />, // Gestalt
-};
-
-// When rendering
-// {groups.map((group) => (
-//   <div key={group.id}>
-//     {iconMapping[group.id]}
-//     <p>{group.name}</p>
-//   </div>
-// ))}
-
 export default function GroupsPage() {
   const { theme, setTheme } = useTheme();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [groups, setGroups] = useState<Group[]>([]);
 
+  // Fetch & set groups
   useEffect(() => {
     fetchGroups();
   }, []);
 
-  // Fetch & set groups
   const fetchGroups = async () => {
     setError("");
     try {
@@ -136,8 +105,7 @@ export default function GroupsPage() {
             >
               {/* Icon & Name */}
               <div className="flex">
-                {iconMapper[group.id]}
-                {/* <AcademicCapIcon className="h-8 w-8 mr-3 text-gray-500 dark:text-parchment-300" /> */}
+                {groupIconMapper[group.id]}
                 <p className="font-bold text-lg">{group.name}</p>
               </div>
               {/* Stats */}

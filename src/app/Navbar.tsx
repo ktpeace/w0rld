@@ -20,7 +20,7 @@ export default function Navbar() {
           className="bottom-0 left-0 right-0 object-cover object-bottom"
         />
       </div> */}
-      <nav className="relative w-full z-20 flex px-2 items-center justify-between uppercase sm:text-xl dark:bg-perse-100 bg-parchment-200 gap-4">
+      <nav className="relative w-full z-20 flex px-2 items-center justify-between uppercase sm:text-xl dark:bg-perse-600 bg-parchment-200 gap-4">
         <div className="flex-1 hidden sm:block"></div>
         <ul className="p-4 flex justify-between flex-auto">
           <li>

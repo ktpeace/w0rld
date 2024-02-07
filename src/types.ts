@@ -9,7 +9,10 @@ export type Task = {
   creatorUserId?: number;
   imagePath?: string;
   status: string;
-  groups?: string[];
+  groups: {
+    id: number;
+    name: string;
+  }[];
   participantsCount?: number;
 };
 

@@ -1,17 +1,22 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Task } from "@/types";
-import { AcademicCapIcon } from "@heroicons/react/24/solid";
+import groupIconMapper from "./GroupIcons";
 
 type CardProps = {
   task: Task;
+  color: string;
 };
 
-const TaskCard = ({ task }: CardProps) => {
+const TaskCard = ({ task, color }: CardProps) => {
   return (
     <Link
       href={`/tasks/${task.id}`}
-      className="w-full p-4 flex justify-between gap-4 cursor-pointer rounded-lg border border-transparent dark:text-parchment-100 bg-white dark:bg-perse-100 hover:border-gray-400 dark:border-perse-50 dark:hover:bg-perse-400"
+      className={`w-full p-4 flex justify-between gap-4 cursor-pointer rounded-lg border border-transparent dark:text-parchment-100 bg-white ${
+        color === "teal"
+          ? "dark:bg-teal-600 dark:border-teal-400 dark:hover:bg-teal-500 dark:hover:border-teal-300"
+          : "dark:bg-perse-600 dark:border-perse-400 dark:hover:bg-perse-100 dark:hover:border-perse-300"
+      }`}
     >
       {/* Image Desktop */}
       <div className="mx-auto max-w-48 hidden md:block">
@@ -56,6 +61,7 @@ const TaskCard = ({ task }: CardProps) => {
                   ? "dark:bg-gray-900 bg-gray-400"
                   : "dark:bg-gray-700 bg-gray-200"
               } dark:text-parchment-100 px-2 py-1 text-xs font-semibold uppercase`}
+              title="Status"
             >
               {task.status}
             </span>
@@ -66,23 +72,56 @@ const TaskCard = ({ task }: CardProps) => {
               <span className="font-bold mr-2 text-sm">by {task.creator}</span>
               <span>{task.created_at}</span>
             </div>
-            {/* Icons */}
-            <div className="flex justify-between items-center w-full lg:w-1/2">
-              <span className="font-bold text-gray-500  dark:bg-perse-100 dark:text-parchment-300">
-                {task.points}P
-              </span>
-              <div className="px-2 flex items-center justify-center rounded-full border dark:border-parchment-300 dark:bg-parchment-300 dark:text-perse-100  font-bold text-sm text-white bg-gray-500">
-                <span className="">L{task.level}</span>
+            {/* Stats */}
+            <div className="flex flex-col md:flex-row justify-between items-center w-full lg:w-1/2">
+              {/* Groups */}
+              <div
+                className={`${task.groups?.length > 0 ? "border-2 " : ""}${
+                  color === "teal"
+                    ? "dark:border-teal-400"
+                    : "dark:border-perse-400"
+                } rounded p-2 md:px-2 md:py-1 w-full lg:w-1/2 flex justify-between mb-4 md:mb-0 mr-0 md:mr-3`}
+              >
+                {task.groups?.length > 0 &&
+                  task.groups.map((group) => groupIconMapper[group.id])}
               </div>
-              <AcademicCapIcon className="h-7 w-7 text-gray-500 dark:text-parchment-300" />
-              <span className="font-bold text-gray-500 dark:text-parchment-300">
-                {task.participantsCount}人
-              </span>
+              <div className="flex justify-between items-center w-full lg:w-1/2">
+                {/* Points */}
+                <span
+                  className="font-bold text-gray-500 dark:text-parchment-300"
+                  title="Points for achieving this task"
+                >
+                  {task.points}P
+                </span>
+                {/* Level */}
+                <div
+                  className={`px-2 flex items-center justify-center rounded-full border dark:border-parchment-300 dark:bg-parchment-300 ${
+                    color === "teal"
+                      ? "dark:text-teal-600"
+                      : "dark:text-perse-700"
+                  } font-bold text-sm text-white bg-gray-500`}
+                >
+                  <span title="Task level">L{task.level}</span>
+                </div>
+                {/* Participant Count */}
+                <span
+                  className="font-bold text-gray-500 dark:text-parchment-300"
+                  title="Participants"
+                >
+                  {task.participantsCount}人
+                </span>
+              </div>
             </div>
           </div>
         </div>
         {/* Description */}
-        <div className="w-full flex-grow bg-gray-100 dark:bg-perse-200 rounded-lg p-3 border border-gray-300 dark:border-perse-50">
+        <div
+          className={`w-full min-h-24 flex-grow bg-gray-100 ${
+            color === "teal"
+              ? "dark:bg-teal-400 dark:border-teal-500"
+              : "dark:bg-perse-400 dark:border-perse-400"
+          } rounded-lg p-3 border border-gray-300`}
+        >
           <p className="text-gray-700 dark:text-parchment-100 text-base line-clamp-3">
             {task.description}
           </p>

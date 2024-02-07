@@ -1,8 +1,6 @@
 import dummyTasks from "@/api/dummyTasks";
-import RegistrationForm from "@/components/RegistrationForm";
 import { Task } from "@/types";
 import {
-  AcademicCapIcon,
   AdjustmentsHorizontalIcon,
   MagnifyingGlassIcon,
   XMarkIcon,
@@ -10,6 +8,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import worldBg from "../../public/worldw0rld.webp";
+import groupIconMapper, { iconClass } from "@/components/GroupIcons";
 
 type CardProps = {
   task: Task;
@@ -33,15 +32,22 @@ const Card = ({ task }: CardProps) => {
         </div>
         {/* Icons */}
         <div className="flex justify-between items-center gap-4  w-1/4">
-          <span className="font-bold px-1 text-gray-500 dark:bg-perse-100 dark:text-parchment-300">
+          <span className="font-bold px-1 text-gray-500 dark:text-parchment-300">
             {task.points}P
           </span>
           <div className="px-2 flex items-center justify-center rounded-full border dark:border-parchment-300 dark:bg-parchment-300 dark:text-perse-100  font-bold text-sm text-white bg-gray-500">
             <span className="">{task.level}</span>
           </div>
-          <AcademicCapIcon className="h-7 w-7 text-gray-500 dark:text-parchment-300" />
+          {task.groups?.length > 0 ? (
+            task.groups.map((group) => groupIconMapper[group.id])
+          ) : (
+            <XMarkIcon
+              className={`${iconClass} opacity-20`}
+              title="Groups unfound / none associated"
+            />
+          )}
           <span className="font-bold text-gray-500 dark:text-parchment-300">
-            {task.participants}人
+            {task.participantsCount}人
           </span>
         </div>
       </div>
@@ -72,7 +78,7 @@ export default function Home() {
       </div>
       {/* Signup box if no signed in user */}
       {!isUser && (
-        <section className="mb-6 flex flex-col p-6 justify-between bg-gradient-to-r from-[rgba(0,151,178,0.6)] via-[rgba(82,140,65,0.6)] to-[rgba(82,140,65,0.6)]">
+        <section className="mb-6 flex flex-col p-6 justify-between rounded bg-gradient-to-r from-[rgba(0,151,178,0.6)] via-[rgba(82,140,65,0.6)] to-[rgba(82,140,65,0.6)]">
           <div className="text-white text-xl font-medium">
             <p className="mb-4">
               <strong>

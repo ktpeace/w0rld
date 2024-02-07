@@ -20,7 +20,7 @@ const dummyTasks = [
     image_path:
       "https://images.pexels.com/photos/47367/full-moon-moon-bright-sky-47367.jpeg",
     status: "active",
-    groups: ["University of Aesthematics"],
+    groups: [{ id: 2, name: "U.A. Masters Course" }],
     participantCount: 123,
   },
   {
@@ -35,7 +35,7 @@ const dummyTasks = [
     image_path:
       "https://images.pexels.com/photos/47367/full-moon-moon-bright-sky-47367.jpeg",
     status: "active",
-    groups: ["University of Aesthematics"],
+    groups: [{ id: 2, name: "U.A. Masters Course" }],
     participantCount: 10000,
   },
   {
@@ -50,7 +50,7 @@ const dummyTasks = [
     image_path:
       "https://images.pexels.com/photos/47367/full-moon-moon-bright-sky-47367.jpeg",
     status: "active",
-    groups: ["University of Aesthematics"],
+    groups: [{ id: 2, name: "U.A. Masters Course" }],
     participantCount: 2,
   },
   {
@@ -65,7 +65,7 @@ const dummyTasks = [
     image_path:
       "https://images.pexels.com/photos/47367/full-moon-moon-bright-sky-47367.jpeg",
     status: "active",
-    groups: ["University of Aesthematics"],
+    groups: [{ id: 1, name: "University of Aesthematics" }],
     participantCount: 0,
   },
   {
@@ -80,7 +80,7 @@ const dummyTasks = [
     image_path:
       "https://images.pexels.com/photos/47367/full-moon-moon-bright-sky-47367.jpeg",
     status: "active",
-    groups: ["University of Aesthematics"],
+    groups: [{ id: 2, name: "U.A. Masters Course" }],
     participantCount: 90,
   },
   {
@@ -95,7 +95,7 @@ const dummyTasks = [
     image_path:
       "https://images.pexels.com/photos/47367/full-moon-moon-bright-sky-47367.jpeg",
     status: "active",
-    groups: ["University of Aesthematics"],
+    groups: [{ id: 2, name: "U.A. Masters Course" }],
     participantCount: 45,
   },
   {
@@ -111,7 +111,7 @@ const dummyTasks = [
     image_path:
       "https://images.pexels.com/photos/47367/full-moon-moon-bright-sky-47367.jpeg",
     status: "pretired",
-    groups: ["University of Aesthematics"],
+    groups: [{ id: 1, name: "University of Aesthematics" }],
     participantCount: 100000,
   },
   {
@@ -126,7 +126,7 @@ const dummyTasks = [
     image_path:
       "https://images.pexels.com/photos/47367/full-moon-moon-bright-sky-47367.jpeg",
     status: "active",
-    groups: ["University of Aesthematics"],
+    groups: [{ id: 1, name: "University of Aesthematics" }],
     participantCount: 23,
   },
   {
@@ -141,7 +141,7 @@ const dummyTasks = [
     image_path:
       "https://images.pexels.com/photos/47367/full-moon-moon-bright-sky-47367.jpeg",
     status: "active",
-    groups: ["University of Aesthematics"],
+    groups: [{ id: 2, name: "U.A. Masters Course" }],
     participantCount: 12,
   },
   {
@@ -156,7 +156,7 @@ const dummyTasks = [
     image_path:
       "https://images.pexels.com/photos/47367/full-moon-moon-bright-sky-47367.jpeg",
     status: "retired",
-    groups: ["University of Aesthematics"],
+    groups: [{ id: 1, name: "University of Aesthematics" }],
   },
 ];
 

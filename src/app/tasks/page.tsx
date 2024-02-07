@@ -14,7 +14,7 @@ import TaskCard from "@/components/TaskCard";
 import Error from "@/components/Error";
 
 export default function TasksPage() {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [tasks, setTasks] = useState<Task[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -25,7 +25,10 @@ export default function TasksPage() {
 
   // Fetch & set tasks
   const fetchTasks = async (pageNum: Number, isInitialSearch = false) => {
-    if (!hasMore && !isInitialSearch) return;
+    if (!hasMore && !isInitialSearch) {
+      setLoading(false);
+      return;
+    }
     try {
       setLoading(true);
       const { data } = await axios.get(
@@ -148,12 +151,11 @@ export default function TasksPage() {
               ref={index === tasks.length - 1 ? lastTaskRef : null}
               className="w-full task-card"
             >
-              <TaskCard task={task} />
+              <TaskCard task={task} color="perse" />
             </div>
           ))}
         </section>
       )}
-      {/* padding: 50px; background-color: #1c0202; margin-top: 20px; */}
       {/* Error */}
       {error && <Error message={error} />}
       {/* Loading */}
