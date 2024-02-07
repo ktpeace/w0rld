@@ -14,6 +14,7 @@ import TaskCard from "@/components/TaskCard";
 
 export default function TasksPage() {
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const [tasks, setTasks] = useState<Task[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState("asc");
@@ -21,7 +22,9 @@ export default function TasksPage() {
   const [hasMore, setHasMore] = useState(true);
   const observer = useRef<IntersectionObserver | null>(null);
 
+  // Fetch & set tasks
   const fetchTasks = async (pageNum: Number, isInitialSearch = false) => {
+    setError("");
     if (!hasMore && !isInitialSearch) return;
     try {
       setLoading(true);
@@ -43,6 +46,7 @@ export default function TasksPage() {
       setHasMore(data.tasks.length > 0);
     } catch (error) {
       console.error("Failed to fetch tasks:", error);
+      setError("Sorry, an error occurred fetching the tasks! Please reload.");
     } finally {
       setLoading(false);
     }
@@ -135,20 +139,6 @@ export default function TasksPage() {
         </div>
       </section>
       {/* Task Cards */}
-      {/* {loading ? (
-        // Loading
-        <div
-          className="mt-36 inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-perse-50 border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-          role="status"
-        >
-          <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-            Loading...
-          </span>
-        </div>
-      ) : !loading && tasks.length === 0 && searchTerm ? (
-        <p className="mt-36">No results...</p>
-      ) : ( */}
-      {/* // Cards */}
       {tasks.length > 0 && (
         <section className="w-full flex flex-col items-center gap-6">
           {tasks.map((task, index) => (
@@ -162,6 +152,34 @@ export default function TasksPage() {
           ))}
         </section>
       )}
+      {/* padding: 50px; background-color: #1c0202; margin-top: 20px; */}
+      {/* Error */}
+      {error && (
+        <div
+          className="w-full p-16 mt-8 flex flex-col items-center gap-2 bg-red-100 bg-opacity-5 border border-red-400 text-red-700 rounded relative"
+          role="alert"
+        >
+          <strong
+            className="font-bold"
+            title="Yes, the correct term for a group of bats is a flock don't question it"
+          >
+            FLOCK OF BATS 🦇🦇🦇
+          </strong>
+          <span className="block sm:inline">{error}</span>
+          <span className="absolute top-0 bottom-0 right-0 px-4 py-3">
+            <svg
+              className="fill-current h-6 w-6 text-red-500"
+              role="button"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+            >
+              <title>Close</title>
+              <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
+            </svg>
+          </span>
+        </div>
+      )}
+      {/* Loading */}
       {loading && (
         <div
           className="mt-36 inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-perse-50 border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
@@ -172,9 +190,11 @@ export default function TasksPage() {
           </span>
         </div>
       )}
+      {/* No results */}
       {!loading && tasks.length === 0 && searchTerm && (
         <p className="mt-36">No results...</p>
       )}
+      {/* End of results */}
       {!hasMore && <p className="mt-20">End of the line! 🚂</p>}
     </main>
   );
