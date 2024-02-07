@@ -26,3 +26,19 @@ export type Group = {
   imagePath?: string;
   memberCount: number;
 };
+
+export type Praxis = {
+  id: number;
+  taskId: number;
+  userId: number;
+  completedAt: string;
+  title: string;
+  description: string;
+  User: { username: string; imagePath: string };
+  Task: {
+    name: string;
+    points: number;
+    level: number;
+  };
+  imagePath?: string;
+};

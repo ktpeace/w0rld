@@ -4,19 +4,24 @@
 const dummyUpdates = [
   {
     id: 576,
+    timestamp: "",
+    actingUserId: 2,
     elementType: "new-task",
-    name: "Punch The Moon",
-    description: "Just get out there and punch it!",
-    level: 3,
-    points: 27,
-    timestamp: "1/27/24 1:09",
-    creator: "Kitty",
-    creator_user_id: 1223,
-    image_path:
-      "https://images.pexels.com/photos/47367/full-moon-moon-bright-sky-47367.jpeg",
-    status: "active",
-    groups: ["University of Aesthematics"],
-    participants: 123,
+    elementId: "",
+    additionalInfo: {
+      id: 585,
+      name: "Culinary Artist",
+      description: "Create a unique dish and host a small tasting party.",
+      level: 3,
+      points: 28,
+      created_at: "3/5/24",
+      creator: "Kitty",
+      creator_user_id: 1232,
+      image_path:
+        "https://images.pexels.com/photos/47367/full-moon-moon-bright-sky-47367.jpeg",
+      status: "retired",
+      groups: [{ id: 1, name: "University of Aesthematics" }],
+    },
   },
 ];
 

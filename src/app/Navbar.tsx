@@ -38,10 +38,10 @@ export default function Navbar() {
           </li>
           <li>
             <Link
-              href="/praxis"
-              className={`${pathname === "/praxis" ? "underline" : ""}`}
+              href="/praxes"
+              className={`${pathname === "/praxes" ? "underline" : ""}`}
             >
-              Praxis
+              Praxes
             </Link>
           </li>
           <li>

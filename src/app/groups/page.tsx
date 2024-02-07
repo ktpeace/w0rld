@@ -101,11 +101,11 @@ export default function GroupsPage() {
             <Link
               href={`/groups/${group.id}`}
               key={group.id}
-              className="w-full md:w-12/25 p-4 self-stretch flex flex-col gap-4 cursor-pointer border border-transparent dark:text-parchment-100 bg-white dark:bg-perse-100 hover:border-gray-400 dark:border-perse-50 dark:hover:bg-perse-400"
+              className="w-full md:w-12/25 p-4 self-stretch flex flex-col gap-4 cursor-pointer border border-transparent rounded dark:text-parchment-100 bg-white dark:bg-perse-100 hover:border-gray-400 dark:border-perse-50 dark:hover:bg-perse-400"
             >
               {/* Icon & Name */}
-              <div className="flex">
-                {groupIconMapper[group.id]}
+              <div className="flex items-center">
+                <div className="mr-2">{groupIconMapper[group.id]}</div>
                 <p className="font-bold text-lg">{group.name}</p>
               </div>
               {/* Stats */}
@@ -115,7 +115,7 @@ export default function GroupsPage() {
                 </p>
               </div>
               {/* Description */}
-              <div className="w-full flex-grow bg-gray-100 dark:bg-perse-200 p-3 border border-gray-300 dark:border-perse-50">
+              <div className="w-full flex-grow bg-gray-100 dark:bg-perse-200 p-3 border rounded border-gray-300 dark:border-perse-700">
                 <p className="text-gray-700 dark:text-parchment-100 text-base line-clamp-5">
                   {group.description}
                 </p>

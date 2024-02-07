@@ -9,14 +9,14 @@ import {
   ArrowUpIcon,
   ArrowDownIcon,
 } from "@heroicons/react/24/solid";
-import { Task } from "@/types";
-import TaskCard from "@/components/TaskCard";
+import { Praxis } from "@/types";
 import Error from "@/components/Error";
+import PraxisCard from "@/components/PraxisCard";
 
-export default function TasksPage() {
+export default function PraxisPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [praxisPosts, setPraxisPosts] = useState<Praxis[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState("asc");
   const [page, setPage] = useState(1);
@@ -24,8 +24,8 @@ export default function TasksPage() {
   const observer = useRef<IntersectionObserver | null>(null);
 
   // Fetch & set tasks
-  const fetchTasks = useCallback(
-    async (pageNum: Number, isInitialSearch = false) => {
+  const fetchPraxisPosts = useCallback(
+    async (pageNum: number, isInitialSearch = false) => {
       if (!hasMore && !isInitialSearch) {
         setLoading(false);
         return;
@@ -33,7 +33,7 @@ export default function TasksPage() {
       try {
         setLoading(true);
         const { data } = await axios.get(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/tasks`,
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/praxis`,
           {
             params: {
               searchInput: searchTerm,
@@ -43,14 +43,17 @@ export default function TasksPage() {
             },
           }
         );
-        setTasks((prev) =>
-          isInitialSearch ? data.tasks : [...prev, ...data.tasks]
+        console.log("praxes:", data);
+        setPraxisPosts((prev) =>
+          isInitialSearch ? data.praxisPosts : [...prev, ...data.praxisPosts]
         );
         setPage((prev) => prev + 1);
-        setHasMore(data.tasks.length > 0);
+        setHasMore(data.praxisPosts.length > 0);
       } catch (error) {
-        console.error("Failed to fetch tasks:", error);
-        setError("Sorry, an error occurred fetching the tasks! Please reload.");
+        console.error("Failed to fetch praxis posts:", error);
+        setError(
+          "Sorry, an error occurred fetching the praxis posts! Please reload."
+        );
       } finally {
         setLoading(false);
       }
@@ -63,9 +66,9 @@ export default function TasksPage() {
     setError("");
     const debouncedFetch = debounce(() => {
       setPage(1);
-      setTasks([]);
+      setPraxisPosts([]);
       setHasMore(true);
-      fetchTasks(1, true);
+      fetchPraxisPosts(1, true);
     }, 500);
 
     debouncedFetch();
@@ -74,7 +77,7 @@ export default function TasksPage() {
   }, [searchTerm, sortOrder]);
 
   // Last task ref setup for infinite scroll
-  const lastTaskRef = useCallback(
+  const lastPraxisRef = useCallback(
     (node: Element | null) => {
       if (loading) return;
       if (observer.current) observer.current.disconnect();
@@ -82,7 +85,7 @@ export default function TasksPage() {
       observer.current = new IntersectionObserver(
         (entries) => {
           if (entries[0].isIntersecting && hasMore) {
-            fetchTasks(page);
+            fetchPraxisPosts(page);
           }
         },
         { rootMargin: "100px" }
@@ -90,14 +93,14 @@ export default function TasksPage() {
 
       if (node) observer.current.observe(node);
     },
-    [loading, hasMore, page, fetchTasks]
+    [loading, hasMore, page, fetchPraxisPosts]
   );
 
   return (
     <main className="flex flex-col items-center my-24 mx-6 md:mx-24 xl:mx-64">
       {/* Header */}
       <section className="flex w-full justify-between items-center mb-4 gap-4">
-        <h1 className="font-bold dark:text-gray-400">Tasks</h1>
+        <h1 className="font-bold dark:text-gray-400">Praxes</h1>
         <div className="w-full relative">
           {/* Search */}
           <input
@@ -146,15 +149,15 @@ export default function TasksPage() {
         </div>
       </section>
       {/* Task Cards */}
-      {tasks.length > 0 && (
+      {praxisPosts.length > 0 && (
         <section className="w-full flex flex-col items-center gap-6">
-          {tasks.map((task, index) => (
+          {praxisPosts.map((praxis, index) => (
             <div
-              key={task.id}
-              ref={index === tasks.length - 1 ? lastTaskRef : null}
-              className="w-full task-card"
+              key={praxis.id}
+              ref={index === praxisPosts.length - 1 ? lastPraxisRef : null}
+              className="w-full"
             >
-              <TaskCard task={task} color="perse" />
+              <PraxisCard praxis={praxis} />
             </div>
           ))}
         </section>
@@ -173,7 +176,7 @@ export default function TasksPage() {
         </div>
       )}
       {/* No results */}
-      {!loading && tasks.length === 0 && searchTerm && (
+      {!loading && praxisPosts.length === 0 && searchTerm && (
         <p className="mt-36">No results...</p>
       )}
       {/* End of results */}
