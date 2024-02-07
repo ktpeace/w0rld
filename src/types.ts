@@ -12,3 +12,14 @@ export type Task = {
   groups?: string[];
   participantsCount?: number;
 };
+
+export type Group = {
+  id: number;
+  name: string;
+  description: string;
+  colorPrimary: string;
+  colorSecondary: string;
+  createdAt: string;
+  imagePath?: string;
+  memberCount: number;
+};

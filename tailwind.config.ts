@@ -19,6 +19,9 @@ const config: Config = {
         "200": "200deg",
         "240": "240deg",
       },
+      width: {
+        "12/25": "48%",
+      },
       colors: {
         parchment: {
           50: "#FFF9F6", // lighter (bg)
