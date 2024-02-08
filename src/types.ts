@@ -1,11 +1,12 @@
+// Type definitions
 export type Task = {
   id: number;
   name: string;
   description?: string;
   level: number;
   points: number;
-  created_at?: string;
-  creator: string;
+  createdAt?: string;
+  creator?: string;
   creatorUserId?: number;
   imagePath?: string;
   status: string;
@@ -42,3 +43,45 @@ export type Praxis = {
   };
   imagePath?: string;
 };
+
+export type Update = {
+  id: number;
+  timestamp: string;
+  actingUserId: number;
+  elementType: "new-task" | "praxis-post";
+  elementId: string;
+  additionalInfo: Task | Praxis;
+};
+
+// Type guards
+export function isTask(info: any): info is Task {
+  return (
+    typeof info.id === "number" &&
+    typeof info.name === "string" &&
+    typeof info.level === "number" &&
+    typeof info.points === "number" &&
+    Array.isArray(info.groups) &&
+    info.groups.every(
+      (group: { id: any; name: any }) =>
+        typeof group.id === "number" && typeof group.name === "string"
+    )
+  );
+}
+
+export function isPraxis(info: any): info is Praxis {
+  return (
+    (typeof info.taskId === "number" &&
+      typeof info.userId === "number" &&
+      typeof info.completedAt === "string" &&
+      typeof info.title === "string" &&
+      typeof info.description === "string" &&
+      typeof info.User === "object" &&
+      typeof info.User.username === "string" &&
+      typeof info.User.imagePath === "string") ||
+    (info.User.imagePath === null &&
+      typeof info.Task === "object" &&
+      typeof info.Task.name === "string" &&
+      typeof info.Task.points === "number" &&
+      typeof info.Task.level === "number")
+  );
+}

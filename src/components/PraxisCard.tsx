@@ -4,21 +4,6 @@ import { Praxis } from "@/types";
 import formatISODateString from "@/utils/formatDateTime";
 // import groupIconMapper from "./GroupIcons";
 
-// {
-// "praxisPosts": [
-//     {
-//         "id": 26,
-//         "taskId": 153,
-//         "userId": 44,
-//         "completedAt": "2023-07-09T18:54:58.000Z",
-//         "title": "Mastering a Musical Instrument",
-//         "description": "I dedicated years to mastering a musical instrument, honing my skills and performing breathtaking musical compositions.",
-//         "User": {
-//             "username": "ArtisticSoul",
-//             "imagePath": null
-//         }
-//     },
-
 type CardProps = {
   praxis: Praxis;
 };
