@@ -10,6 +10,8 @@ const config: Config = {
   theme: {
     extend: {
       backgroundImage: {
+        rainbow:
+          "linear-gradient(to right, rgba(238,130,238, 0.5), rgba(75,0,130, 0.5), rgba(0,0,255, 0.5), rgba(0,128,0, 0.5), rgba(255,255,0, 0.5), rgba(255,165,0, 0.5), rgba(255,0,0, 0.5))",
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
@@ -28,6 +30,8 @@ const config: Config = {
           100: "#EADECE", // darker (text)
           200: "#E5D8C5", // darker (bg)
           300: "#C8BFB0", // dim (icons etc.)
+          500: "#9F8154",
+          700: "#45391c",
         },
         smoke: {
           50: "#171B1D",
@@ -46,7 +50,7 @@ const config: Config = {
         lime: {
           920: "#25380d",
         },
-        teal: {
+        turquoise: {
           100: "#aabdc0",
           200: "#85a0a5",
           300: "#0097B2", // using for updates cards

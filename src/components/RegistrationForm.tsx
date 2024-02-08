@@ -24,7 +24,7 @@ function RegistrationForm() {
   };
 
   return (
-    <div className="flex p-6 justify-between bg-gradient-to-r from-teal-100 to-[#528C41] dark:bg-opacity-50">
+    <div className="flex p-6 justify-between bg-gradient-to-r from-turquoise-100 to-[#528C41] dark:bg-opacity-50">
       {/* Intro text */}
       <div className="w-1/2 text-white text-lg font-medium">
         <p className="mb-4">

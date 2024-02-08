@@ -13,8 +13,8 @@ const TaskCard = ({ task, color }: CardProps) => {
     <Link
       href={`/tasks/${task.id}`}
       className={`w-full p-4 flex justify-between gap-4 cursor-pointer rounded-lg border border-transparent dark:text-parchment-100 bg-white ${
-        color === "teal"
-          ? "dark:bg-teal-600 dark:border-teal-400 dark:hover:bg-teal-500 dark:hover:border-teal-300"
+        color === "turquoise"
+          ? "dark:bg-turquoise-600 dark:border-turquoise-400 dark:hover:bg-turquoise-500 dark:hover:border-turquoise-300"
           : "dark:bg-perse-600 dark:border-perse-400 dark:hover:bg-perse-100 dark:hover:border-perse-300"
       }`}
     >
@@ -77,8 +77,8 @@ const TaskCard = ({ task, color }: CardProps) => {
               {/* Groups */}
               <div
                 className={`${task.groups?.length > 0 ? "border-2 " : ""}${
-                  color === "teal"
-                    ? "dark:border-teal-400"
+                  color === "turquoise"
+                    ? "dark:border-turquoise-400"
                     : "dark:border-perse-400"
                 } rounded p-2 md:px-2 md:py-1 w-full lg:w-1/2 flex justify-between mb-4 md:mb-0 mr-0 md:mr-3`}
               >
@@ -96,8 +96,8 @@ const TaskCard = ({ task, color }: CardProps) => {
                 {/* Level */}
                 <div
                   className={`px-2 flex items-center justify-center rounded-full border dark:border-parchment-300 dark:bg-parchment-300 ${
-                    color === "teal"
-                      ? "dark:text-teal-600"
+                    color === "turquoise"
+                      ? "dark:text-turquoise-600"
                       : "dark:text-perse-700"
                   } font-bold text-sm text-white bg-gray-500`}
                 >
@@ -117,8 +117,8 @@ const TaskCard = ({ task, color }: CardProps) => {
         {/* Description */}
         <div
           className={`w-full min-h-24 flex-grow bg-gray-100 ${
-            color === "teal"
-              ? "dark:bg-teal-400 dark:border-teal-500"
+            color === "turquoise"
+              ? "dark:bg-turquoise-400 dark:border-turquoise-500"
               : "dark:bg-perse-400 dark:border-perse-400"
           } rounded-lg p-3 border border-gray-300`}
         >

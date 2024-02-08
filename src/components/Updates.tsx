@@ -18,7 +18,7 @@ const Updates = () => {
         <div className="w-full relative">
           <input
             type="text"
-            className="w-full pl-10 pr-4 py-2 border-2 rounded-lg dark:bg-teal-600 dark:border-teal-500 dark:focus:outline-none dark:focus:border-teal-300"
+            className="w-full pl-10 pr-4 py-2 border-2 rounded-lg dark:bg-turquoise-600 dark:border-turquoise-500 dark:focus:outline-none dark:focus:border-turquoise-300"
             placeholder="Search"
           />
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center">
@@ -44,7 +44,7 @@ const Updates = () => {
               <TaskCard
                 key={update.id}
                 task={update.additionalInfo as Task}
-                color="teal"
+                color="turquoise"
               />
             );
           } else if (

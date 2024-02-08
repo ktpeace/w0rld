@@ -5,23 +5,23 @@
   --bright-purple: #7136c8; /* bright */
   --super-dark: #1b1923; /* super dark */
 
-  --purple-100: #342347; /* Lighter purple, akin to teal-100 */
-  --purple-200: #2f1e40; /* A bit darker, closer to teal-200 */
+  --purple-100: #342347; /* Lighter purple, akin to turquoise-100 */
+  --purple-200: #2f1e40; /* A bit darker, closer to turquoise-200 */
   --purple-300: #362159; /* Original bright purple, placed here to match intensity */
   --purple-400: #301b3f; /* A transition shade towards dusky */
   --purple-500: #2f2e40; /* Lighter purple, adjusted for mid-scale */
   --purple-600: #292331; /* Moving towards dusky dark, for depth */
   --purple-700: #25222f; /* Dusky dark, deep and rich */
   --purple-800: #1b1923; /* Super dark, very deep purple */
-  --purple-900: #161317; /* Even darker, for the most depth, akin to teal-900 */
+  --purple-900: #161317; /* Even darker, for the most depth, akin to turquoise-900 */
   /* Teal shades */
-  --teal-100: #aabdc0;
-  --teal-200: #85a0a5;
-  --teal-300: #0097b2;
-  --teal-400: #00515f;
-  --teal-500: #154952;
-  --teal-600: #103a41;
-  --teal-700: #0c2b31;
-  --teal-800: #081d20;
-  --teal-900: #040e10;
+  --turquoise-100: #aabdc0;
+  --turquoise-200: #85a0a5;
+  --turquoise-300: #0097b2;
+  --turquoise-400: #00515f;
+  --turquoise-500: #154952;
+  --turquoise-600: #103a41;
+  --turquoise-700: #0c2b31;
+  --turquoise-800: #081d20;
+  --turquoise-900: #040e10;
 }

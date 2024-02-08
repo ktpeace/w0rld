@@ -1,13 +1,15 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
+import { useUser } from "@/context/UserContext";
 import ThemeToggle from "@/context/ThemeToggle";
 import avatarPin from "../../public/pin-full.png";
 // import tanPaper from "../../public//torn-paper-2.png";
-import Image from "next/image";
 
 export default function Navbar() {
   const pathname = usePathname();
+  const { user, setUser } = useUser();
   console.log("pathname:", pathname);
 
   return (
@@ -59,14 +61,18 @@ export default function Navbar() {
           </li>
           <ThemeToggle />
           <li>
-            <Link href="/user">
-              <Image
-                src={avatarPin}
-                alt="Antique pin representing user avatar"
-                width="40"
-                height="40"
-              />
-            </Link>
+            {user ? (
+              <Link href="/user">
+                <Image
+                  src={avatarPin}
+                  alt="Antique pin representing user avatar"
+                  width="40"
+                  height="40"
+                />
+              </Link>
+            ) : (
+              <span className="lowercase text-sm">Login</span>
+            )}
           </li>
         </ul>
       </nav>

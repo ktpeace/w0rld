@@ -1,9 +1,16 @@
+"use client";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import worldBg from "../../public/worldw0rld.webp";
 import Updates from "@/components/Updates";
 
 export default function Home() {
-  const isUser = true;
+  const isUser = false;
+  const router = useRouter();
+
+  const handleSignUpClick = () => {
+    router.push("/signup");
+  };
 
   return (
     <div
@@ -38,8 +45,9 @@ export default function Home() {
           </div>
           <div className="flex justify-end items-end">
             <button
-              type="submit"
-              className="px-5 py-1 rounded-full bg-teal-500 hover:bg-teal-400 focus:ring-4 focus:outline-none focus:ring-teal-300 text-white text-center text-md md:text-xl font-semibold uppercase"
+              type="button"
+              onClick={handleSignUpClick}
+              className="px-5 py-1 rounded-full bg-turquoise-500 hover:bg-turquoise-400 focus:ring-4 focus:outline-none focus:ring-turquoise-300 text-white text-center text-md md:text-xl font-semibold uppercase"
             >
               Sign Up
             </button>
