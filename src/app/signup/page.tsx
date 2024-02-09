@@ -1,12 +1,12 @@
 "use client";
-import { useState, useEffect, useContext } from "react";
-import Image from "next/image";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useUser } from "@/context/UserContext";
+import Image from "next/image";
 import axios from "axios";
+import { useUser } from "@/context/UserContext";
 import { pwnedPassword } from "hibp";
-import steampunkHorsies from "../../../public/gpt-dalle-steampunk-horses.webp";
 import { ExclamationCircleIcon } from "@heroicons/react/24/solid";
+import steampunkHorsies from "../../../public/gpt-dalle-steampunk-horses.webp";
 
 const CreateAccount = () => {
   const router = useRouter();
@@ -172,7 +172,7 @@ const CreateAccount = () => {
         />
       </div>
       <div className="h-full flex flex-col items-center justify-center ">
-        <div className="w-1/2 flex flex-col items-center justify-center px-6 py-8 gap-5 bg-gray-900 bg-opacity-40">
+        <div className="w-11/12 md:w-1/2 flex flex-col items-center justify-center px-6 py-8 gap-5 bg-parchment-300 dark:bg-perse-700 bg-opacity-40 dark:bg-opacity-40">
           <h1 className="text-2xl">Create Account</h1>
           {userExists.length > 1 && <p>{userExists}</p>}
           {invalidInputs.length > 1 && (
@@ -190,7 +190,7 @@ const CreateAccount = () => {
               <input
                 type="text"
                 value={username}
-                className="rounded p-1 border-gray-500 border-2 bg-transparent "
+                className="rounded p-1 border-gray-500 border-2 bg-transparent"
                 onChange={({ target }) => setUsername(target.value)}
                 required
                 minLength={4}
