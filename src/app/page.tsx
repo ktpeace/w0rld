@@ -1,11 +1,12 @@
 "use client";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import worldBg from "../../public/worldw0rld.webp";
+import { useUser } from "@/context/UserContext";
 import Updates from "@/components/Updates";
+import worldBg from "../../public/worldw0rld.webp";
 
 export default function Home() {
-  const isUser = false;
+  const { user, setUser } = useUser();
   const router = useRouter();
 
   const handleSignUpClick = () => {
@@ -15,7 +16,7 @@ export default function Home() {
   return (
     <div
       className={`min-h-[calc(100vh-60px)] ${
-        isUser && "pt-12"
+        user && "pt-12"
       } flex flex-col items-center justify-center mx-3 md:mx-64`}
     >
       {/* Background image */}
@@ -30,7 +31,7 @@ export default function Home() {
         />
       </div>
       {/* Signup box if no signed in user */}
-      {!isUser && (
+      {!user && (
         <section className="flex flex-col p-4 md:p-6 justify-between rounded bg-gradient-to-r from-[rgba(0,151,178,0.6)] via-[rgba(82,140,65,0.6)] to-[rgba(82,140,65,0.6)]">
           <div className="text-white text-sm md:text-xl font-medium">
             <p className="mb-4">
@@ -55,7 +56,7 @@ export default function Home() {
         </section>
       )}
       {/* Updates */}
-      {isUser && <Updates />}
+      {user && <Updates />}
     </div>
   );
 }

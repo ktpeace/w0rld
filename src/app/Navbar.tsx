@@ -1,10 +1,9 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Image from "next/image";
 import { useUser } from "@/context/UserContext";
 import ThemeToggle from "@/context/ThemeToggle";
-import avatarPin from "../../public/pin-full.png";
+import AvatarDropdown from "@/components/AvatarDropdown";
 // import tanPaper from "../../public//torn-paper-2.png";
 
 export default function Navbar() {
@@ -62,16 +61,11 @@ export default function Navbar() {
           <ThemeToggle />
           <li>
             {user ? (
-              <Link href="/user">
-                <Image
-                  src={avatarPin}
-                  alt="Antique pin representing user avatar"
-                  width="40"
-                  height="40"
-                />
-              </Link>
+              <AvatarDropdown />
             ) : (
-              <span className="lowercase text-sm">Login</span>
+              <Link href="/login">
+                <span className="lowercase text-sm">Login</span>
+              </Link>
             )}
           </li>
         </ul>

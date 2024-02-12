@@ -32,7 +32,7 @@
 
 const dummyUpdates = [
   {
-    id: 576,
+    id: 123,
     timestamp: "",
     actingUserId: 2,
     elementType: "new-task",

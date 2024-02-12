@@ -172,7 +172,7 @@ const CreateAccount = () => {
         />
       </div>
       <div className="h-full flex flex-col items-center justify-center ">
-        <div className="w-11/12 md:w-1/2 flex flex-col items-center justify-center px-6 py-8 gap-5 bg-parchment-300 dark:bg-perse-700 bg-opacity-40 dark:bg-opacity-40">
+        <div className="w-11/12 md:w-1/2 flex flex-col items-center justify-center px-6 py-8 gap-5 rounded bg-parchment-300 dark:bg-perse-700 bg-opacity-50 dark:bg-opacity-50">
           <h1 className="text-2xl">Create Account</h1>
           {userExists.length > 1 && <p>{userExists}</p>}
           {invalidInputs.length > 1 && (
