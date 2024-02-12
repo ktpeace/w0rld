@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import avatarPin from "../../public/pin-full.png";
@@ -9,6 +9,10 @@ const AvatarDropdown = () => {
   const { user, setUser } = useUser();
   const [isOpen, setIsOpen] = useState(false);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    console.log("user:", user);
+  }, [user]);
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
@@ -57,7 +61,7 @@ const AvatarDropdown = () => {
         >
           <div className="py-1" role="none">
             <Link
-              href="/user/"
+              href={`/user/${encodeURIComponent(user?.id.toString() ?? "")}`}
               className="block px-4 py-2 text-sm bg-transparent hover:bg-parchment-300 dark:hover:bg-perse-500"
               role="menuitem"
               onClick={toggleDropdown}

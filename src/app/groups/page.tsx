@@ -41,7 +41,7 @@ export default function GroupsPage() {
   };
 
   return (
-    <main className="flex flex-col items-center mt-24 mx-6 md:mx-24 xl:mx-64">
+    <div className="flex flex-col items-center mt-24 mx-6 md:mx-24 xl:mx-64">
       {/* Side images */}
       <div className="absolute z-[-10] xl:z-10 w-60 h-60 top-96 right-4 overflow-hidden opacity-20 xl:opacity-100">
         <Image
@@ -134,6 +134,6 @@ export default function GroupsPage() {
           className="object-contain"
         />
       </div>
-    </main>
+    </div>
   );
 }

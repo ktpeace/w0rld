@@ -5,6 +5,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { UserProvider } from "@/context/UserContext";
 import Navbar from "./Navbar";
+// import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +24,10 @@ export default function RootLayout({
       <ThemeProvider>
         <html lang="en" className="dark">
           <body className={inter.className}>
+            {/* <Script
+              src="https://kit.fontawesome.com/d16bfd47e6.js"
+              crossOrigin="anonymous"
+            /> */}
             <div className="flex flex-col h-screen">
               <Navbar />
               <main className="flex-grow overflow-auto">{children}</main>

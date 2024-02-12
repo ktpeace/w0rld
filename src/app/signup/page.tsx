@@ -19,7 +19,7 @@ const CreateAccount = () => {
   const [invalidInputs, setInvalidInputs] = useState("");
 
   const handleLogout = () => {
-    setUser("");
+    setUser(null);
     setUsername("");
     setPassword("");
     setPassword2("");
@@ -129,7 +129,7 @@ const CreateAccount = () => {
     const loggedInUser = localStorage.getItem("user");
     if (loggedInUser) {
       const foundUser = loggedInUser;
-      setUser(foundUser);
+      setUser(JSON.parse(foundUser));
       setUsername(foundUser);
     }
   }, []);
@@ -149,7 +149,7 @@ const CreateAccount = () => {
             className="opacity-10 object-cover"
           />
         </div>
-        <div>{user} is logged in</div>
+        <div>{user.username} is logged in</div>
         <button onClick={handleLogout} className="border rounded p-2">
           Log Out
         </button>

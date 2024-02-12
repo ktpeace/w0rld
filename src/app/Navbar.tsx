@@ -9,7 +9,6 @@ import AvatarDropdown from "@/components/AvatarDropdown";
 export default function Navbar() {
   const pathname = usePathname();
   const { user, setUser } = useUser();
-  console.log("pathname:", pathname);
 
   return (
     <div className="relative w-full">

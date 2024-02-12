@@ -97,7 +97,7 @@ export default function PraxisPage() {
   );
 
   return (
-    <main className="flex flex-col items-center my-24 mx-6 md:mx-24 xl:mx-64">
+    <div className="flex flex-col items-center my-24 mx-6 md:mx-24 xl:mx-64">
       {/* Header */}
       <section className="flex w-full justify-between items-center mb-4 gap-4">
         <h1 className="font-bold dark:text-gray-400">Praxes</h1>
@@ -181,6 +181,6 @@ export default function PraxisPage() {
       )}
       {/* End of results */}
       {!hasMore && <p className="mt-20">End of the line! 🚂</p>}
-    </main>
+    </div>
   );
 }
