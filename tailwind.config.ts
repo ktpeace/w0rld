@@ -37,6 +37,7 @@ const config: Config = {
           50: "#171B1D",
         },
         perse: {
+          50: "#4E2F82",
           100: "#322a3b",
           200: "#453b53",
           300: "rgb(137 112 166)", // super bright

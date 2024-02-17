@@ -1,29 +1,37 @@
 "use client";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
-import Link from "next/link";
 import axios from "axios";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShield, faSkullCrossbones } from "@fortawesome/free-solid-svg-icons";
 import { useUser } from "@/context/UserContext";
-import avatarPin from "../../../../public/pin-full.png";
 import Error from "@/components/Error";
-import groupIconMapper from "@/components/GroupIcons";
+import { UserData } from "@/types";
+import watercolorBg from "../../../../public/gpt-dalle-bg-watercolor.webp";
+// import UserTasks from "@/components/profile/UserTasks";
+import UserProfile from "@/components/profile/UserProfile";
 
 const UserPage = () => {
+  // Get any logged-in user
   const { user, setUser } = useUser();
-  const [userData, setUserData] = useState({});
+  // Get profile page user ID
+  const pathname = usePathname();
+  const pageUserId = pathname.split("/").pop();
+  // Set profile page user info
+  const [userData, setUserData] = useState<UserData | null>(null);
+  // Set visible content based on tab
+  const [activeTab, setActiveTab] = useState("profile");
+  // Generic setters
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const userIdString = user!.id.toString();
+        // const userIdString = user!.id.toString();
         const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/${userIdString}`
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/${pageUserId}`
         );
-        console.log("user:", res, res.data);
+        console.log("userData:", res.data);
         setUserData(res.data);
       } catch (err) {
         console.error(err);
@@ -35,64 +43,115 @@ const UserPage = () => {
       }
     };
 
-    user?.id && fetchUser();
-  }, [user]);
+    pageUserId && fetchUser();
+  }, [pageUserId]);
+
+  const handleTabClick = (tabName: string) => {
+    setActiveTab(tabName);
+  };
 
   return (
     <>
-      {/* Error */}
-      {error && <Error message={error} />}
-      {/* Loading */}
-      {loading && (
-        <div
-          className="mt-36 inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-perse-50 border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-          role="status"
-        >
-          <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-            Loading...
-          </span>
+      {/* Background image */}
+      <div className="absolute inset-0 z-[-5] overflow-hidden">
+        <Image
+          src={watercolorBg}
+          alt="Background image of abstract rainbow watercolors"
+          quality={100}
+          fill
+          sizes="100vw"
+          className="opacity-20 object-cover"
+        />
+      </div>
+      {/* Tab Selection */}
+      <div className="fixed left-0 mt-24 z-10">
+        <div className="bg-perse-400/60 rounded-r-lg border border-perse-50 py-4">
+          <nav className="flex flex-col items-start gap-6 font-sans">
+            <button
+              onClick={() => handleTabClick("profile")}
+              className={`px-4 ${
+                activeTab === "profile" ? "font-bold" : "opacity-70"
+              }`}
+            >
+              Profile
+            </button>
+            <button
+              onClick={() => handleTabClick("tasks")}
+              className={`px-4 ${
+                activeTab === "tasks" ? "font-bold" : "opacity-70"
+              }`}
+            >
+              Tasks
+            </button>
+            <button
+              onClick={() => handleTabClick("praxes")}
+              className={`px-4 ${
+                activeTab === "praxes" ? "font-bold" : "opacity-70"
+              }`}
+            >
+              Praxes
+            </button>
+            <button
+              onClick={() => handleTabClick("comments")}
+              className={`px-4 ${
+                activeTab === "comments" ? "bg-perse-300/50" : "opacity-70"
+              }`}
+            >
+              Comments
+            </button>
+          </nav>
         </div>
-      )}
-      {!loading && user && (
-        <div className="flex flex-col items-center my-24 mx-6 md:mx-24 xl:mx-64">
-          <section className="">
-            <div className="flex">
-              {/* Avatar */}
-              <div>
-                <Image
-                  src={avatarPin}
-                  alt="Antique pin representing user avatar"
-                  width="60"
-                  height="60"
-                />
-              </div>
-              {/* Name & stats */}
-              <div className="flex flex-col">
-                <p className="font-bold">{user.username}</p>
-                <div>
-                  {groupIconMapper[user.groupId]} University of Aesthematics
-                </div>
-                <p>
-                  Level {user.level || "0"} / {user.points || "0"} Points
-                </p>
-              </div>
-              {/* Friend/foe */}
-              <div>
-                <FontAwesomeIcon icon={faShield} />
-                <FontAwesomeIcon icon={faSkullCrossbones} />
-              </div>
+      </div>
+      <div className="flex flex-col items-center my-24 mx-6 md:mx-32 xl:mx-72">
+        {/* Error */}
+        {error && <Error message={error} />}
+        {/* Loading */}
+        {loading && (
+          <div className="flex justify-center">
+            <div
+              className="mt-36 inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-perse-50 border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+              role="status"
+            >
+              <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+                Loading...
+              </span>
             </div>
-            {/* Terms */}
-            <div>
-              <div></div>
-            </div>
-            {/* Self-description */}
-            <div>
-              <div>{user.description}</div>
-            </div>
-          </section>
-        </div>
-      )}
+          </div>
+        )}
+        {/* Dynamic Content Based on Active Tab */}
+        {!loading && userData && (
+          <>
+            {activeTab === "profile" && <UserProfile userData={userData} />}
+            {/* {activeTab === "tasks" && pageUserId && (
+              <UserTasks
+                loading={loading}
+                setLoading={setLoading}
+                error={error}
+                setError={setError}
+                userId={pageUserId}
+              />
+            )} */}
+            {/* {activeTab === "praxes" && pageUserId && (
+              <UserPraxes
+                loading={loading}
+                setLoading={setLoading}
+                error={error}
+                setError={setError}
+                userId={pageUserId}
+              />
+            )} */}
+            {/* {activeTab === "comments" && pageUserId && (
+              <UserComments
+                loading={loading}
+                setLoading={setLoading}
+                error={error}
+                setError={setError}
+                userId={pageUserId}
+              />
+            )} */}
+          </>
+        )}
+      </div>
     </>
   );
 };

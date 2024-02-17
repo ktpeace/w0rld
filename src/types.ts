@@ -85,3 +85,21 @@ export function isPraxis(info: any): info is Praxis {
       typeof info.Task.level === "number")
   );
 }
+
+// Interfaces
+export interface UserData {
+  createdAt: string;
+  description: string | null;
+  flags: number;
+  groupId: number | null;
+  groupName: string | null;
+  id: number;
+  imagePath: string | null;
+  isBanned: boolean;
+  level: number;
+  location: string | null;
+  points: number;
+  terms: string | null;
+  username: string;
+  votes: number;
+}

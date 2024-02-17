@@ -27,36 +27,47 @@ export const useUser = () => useContext(UserContext);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const VALIDATION_THRESHOLD = 30 * 60 * 1000; // 30 minutes
 
   useEffect(() => {
-    // Retrieve user object from localStorage and parse it
     const userInLocalStorage = localStorage.getItem("user");
-    if (userInLocalStorage) {
+    const lastValidationTime = localStorage.getItem("lastValidationTime");
+    const currentTime = new Date().getTime();
+
+    if (
+      userInLocalStorage &&
+      lastValidationTime &&
+      currentTime - parseInt(lastValidationTime, 10) < VALIDATION_THRESHOLD
+    ) {
       setUser(JSON.parse(userInLocalStorage));
     } else {
-      // Validate session with backend if no user object in local storage
-      const validateSession = async () => {
-        try {
-          const response = await axios.get(
-            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/validate-session`,
-            { withCredentials: true }
-          );
-          if (response.data) {
-            setUser(response.data);
-            // Store the user object in localStorage
-            localStorage.setItem("user", JSON.stringify(response.data));
-          }
-        } catch (error) {
-          // Clear user & localstorage if validation fails
-          console.error("Session validation failed:", error);
-          setUser(null);
-          localStorage.removeItem("user");
-        }
-      };
-
       validateSession();
     }
   }, []);
+
+  const validateSession = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/validate-session`,
+        { withCredentials: true }
+      );
+      if (response.data) {
+        setUser(response.data);
+        localStorage.setItem("user", JSON.stringify(response.data));
+        localStorage.setItem(
+          "lastValidationTime",
+          new Date().getTime().toString()
+        );
+      } else {
+        throw new Error("No active session");
+      }
+    } catch (error) {
+      console.error("Session validation failed or no active session:", error);
+      setUser(null);
+      localStorage.removeItem("user");
+      localStorage.removeItem("lastValidationTime");
+    }
+  };
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
