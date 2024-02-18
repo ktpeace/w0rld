@@ -1,7 +1,8 @@
-const Error: React.FC<{ title?: string; message?: string }> = ({
-  title,
-  message,
-}) => {
+const Error: React.FC<{
+  title?: string;
+  message?: string;
+  setError: React.Dispatch<React.SetStateAction<string>>;
+}> = ({ title, message, setError }) => {
   return (
     <div
       className="w-full p-12 mt-8 flex flex-col items-center gap-2 bg-red-200 bg-opacity-10 border border-red-400 text-red-600 rounded relative"
@@ -14,7 +15,10 @@ const Error: React.FC<{ title?: string; message?: string }> = ({
         {title || "FLOCK OF BATS 🦇🦇🦇"}
       </strong>
       <span className="block sm:inline">{message}</span>
-      <span className="absolute top-0 bottom-0 right-0 px-4 py-3">
+      <span
+        className="absolute top-0 bottom-0 right-0 px-4 py-3"
+        onClick={() => setError("")}
+      >
         <svg
           className="fill-current h-6 w-6 text-red-500"
           role="button"

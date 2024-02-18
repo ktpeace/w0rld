@@ -40,6 +40,7 @@ const config: Config = {
           50: "#4E2F82",
           100: "#322a3b",
           200: "#453b53",
+          250: "#8753e0",
           300: "rgb(137 112 166)", // super bright
           400: "rgb(56 48 67)", // card & desc border
           500: "#2F2E40", // desc bg
@@ -52,6 +53,7 @@ const config: Config = {
           920: "#25380d",
         },
         turquoise: {
+          50: "#2fa0b4",
           100: "#aabdc0",
           200: "#85a0a5",
           300: "#0097B2", // using for updates cards

@@ -3,16 +3,17 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import axios from "axios";
-import { useUser } from "@/context/UserContext";
+// import { useUser } from "@/context/UserContext";
 import Error from "@/components/Error";
 import { UserData } from "@/types";
 import watercolorBg from "../../../../public/gpt-dalle-bg-watercolor.webp";
 // import UserTasks from "@/components/profile/UserTasks";
 import UserProfile from "@/components/profile/UserProfile";
+import UserProfileEdit from "@/components/profile/UserProfileEdit";
 
 const UserPage = () => {
   // Get any logged-in user
-  const { user, setUser } = useUser();
+  // const { user, setUser } = useUser();
   // Get profile page user ID
   const pathname = usePathname();
   const pageUserId = pathname.split("/").pop();
@@ -20,6 +21,9 @@ const UserPage = () => {
   const [userData, setUserData] = useState<UserData | null>(null);
   // Set visible content based on tab
   const [activeTab, setActiveTab] = useState("profile");
+  // Profile edits
+  const [isEditing, setIsEditing] = useState(false);
+  const [shouldRefetch, setShouldRefetch] = useState(false);
   // Generic setters
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -44,7 +48,7 @@ const UserPage = () => {
     };
 
     pageUserId && fetchUser();
-  }, [pageUserId]);
+  }, [pageUserId, shouldRefetch]);
 
   const handleTabClick = (tabName: string) => {
     setActiveTab(tabName);
@@ -104,7 +108,7 @@ const UserPage = () => {
       </div>
       <div className="flex flex-col items-center my-24 mx-6 md:mx-32 xl:mx-72">
         {/* Error */}
-        {error && <Error message={error} />}
+        {error && <Error message={error} setError={setError} />}
         {/* Loading */}
         {loading && (
           <div className="flex justify-center">
@@ -121,7 +125,18 @@ const UserPage = () => {
         {/* Dynamic Content Based on Active Tab */}
         {!loading && userData && (
           <>
-            {activeTab === "profile" && <UserProfile userData={userData} />}
+            {activeTab === "profile" &&
+              (isEditing ? (
+                <UserProfileEdit
+                  userData={userData}
+                  setIsEditing={setIsEditing}
+                  setLoading={setLoading}
+                  setError={setError}
+                  setShouldRefetch={setShouldRefetch}
+                />
+              ) : (
+                <UserProfile userData={userData} setIsEditing={setIsEditing} />
+              ))}
             {/* {activeTab === "tasks" && pageUserId && (
               <UserTasks
                 loading={loading}

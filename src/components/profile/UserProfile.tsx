@@ -8,7 +8,15 @@ import { PencilIcon } from "@heroicons/react/24/solid";
 import { useUser } from "@/context/UserContext";
 import { useEffect } from "react";
 
-const UserProfile: React.FC<{ userData: UserData }> = ({ userData }) => {
+interface UserProfileProps {
+  userData: UserData;
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const UserProfile: React.FC<UserProfileProps> = ({
+  userData,
+  setIsEditing,
+}) => {
   const { user } = useUser();
 
   useEffect(() => {
@@ -50,9 +58,12 @@ const UserProfile: React.FC<{ userData: UserData }> = ({ userData }) => {
         </div>
         {/* Friend/foe or Edit */}
         {user?.id === userData.id ? (
-          <>
+          <button
+            onClick={() => setIsEditing(true)}
+            className="flex cursor-pointer"
+          >
             <PencilIcon className="h-5 w-5" />
-          </>
+          </button>
         ) : (
           <div className="flex gap-4">
             <FontAwesomeIcon icon={faShield} size="2x" />
