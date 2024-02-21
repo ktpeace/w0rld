@@ -12,6 +12,7 @@ import barnOwl from "../../../public/barnowl-trans.png";
 import goldenEagle from "../../../public/eagle.png";
 import groupsBg from "../../../public/gptgroups.webp";
 import Error from "@/components/Error";
+import Message from "@/components/Message";
 
 export default function GroupsPage() {
   const { theme, setTheme } = useTheme();
@@ -64,7 +65,7 @@ export default function GroupsPage() {
         />
       </div>
       {/* Groups explanation */}
-      <div className="flex mb-10">
+      {/* <div className="flex mb-10">
         <div className="relative w-36 mr-2">
           <Image
             src={theme === "dark" ? barnOwl : goldenEagle}
@@ -80,9 +81,14 @@ export default function GroupsPage() {
             your choice.”
           </p>
         </div>
-      </div>
+      </div> */}
+      <Message
+        text={`Groups represent certain ideologies and confer different benefits.
+            Consider your group carefully, but know that you can always change
+            your choice.`}
+      />
       {/* Error */}
-      {error && <Error message={error} />}
+      {error && <Error message={error} setError={setError} />}
       {/* Loading */}
       {loading && (
         <div

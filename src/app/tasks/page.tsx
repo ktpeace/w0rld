@@ -12,6 +12,7 @@ import {
 import { Task } from "@/types";
 import TaskCard from "@/components/TaskCard";
 import Error from "@/components/Error";
+import Link from "next/link";
 
 export default function TasksPage() {
   const [loading, setLoading] = useState(true);
@@ -144,6 +145,14 @@ export default function TasksPage() {
             )}
           </button>
         </div>
+        <Link href="/tasks/new">
+          <button
+            title="Propose new task"
+            className="p-2 border rounded uppercase border-perse-300 bg-perse-400 hover:bg-perse-600 hover:border-perse-200 text-parchment-100 font-bold"
+          >
+            New
+          </button>
+        </Link>
       </section>
       {/* Task Cards */}
       {tasks.length > 0 && (
@@ -160,7 +169,7 @@ export default function TasksPage() {
         </section>
       )}
       {/* Error */}
-      {error && <Error message={error} />}
+      {error && <Error message={error} setError={setError} />}
       {/* Loading */}
       {loading && (
         <div

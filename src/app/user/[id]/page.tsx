@@ -51,6 +51,7 @@ const UserPage = () => {
   }, [pageUserId, shouldRefetch]);
 
   const handleTabClick = (tabName: string) => {
+    setError("");
     setActiveTab(tabName);
   };
 

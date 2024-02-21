@@ -21,3 +21,11 @@ body {
 .dark body {
   @apply bg-smoke-50 text-parchment-100;
 }
+
+/* Quill Editor */
+.react-quill .ql-editor {
+  @apply h-72;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}

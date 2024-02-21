@@ -5,7 +5,7 @@ const Error: React.FC<{
 }> = ({ title, message, setError }) => {
   return (
     <div
-      className="w-full p-12 mt-8 flex flex-col items-center gap-2 bg-red-200 bg-opacity-10 border border-red-400 text-red-600 rounded relative"
+      className="w-full p-12 mb-2 flex flex-col items-center gap-2 bg-red-200 bg-opacity-10 border border-red-400 text-red-600 rounded relative"
       role="alert"
     >
       <strong
