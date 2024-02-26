@@ -29,6 +29,7 @@ const TextEditor: React.FC<{ placeholder: string }> = ({ placeholder }) => {
     <div className="text-editor flex flex-col items-center mt-8 md:mx-24 xl:mx-64">
       {/* Explanation */}
       <Message text="After submission, your task will be immediately visible in the inactive 'proposed' state. Once a moderator approves your task, it will be available for adoption." />
+
       {/* Editor */}
       <ReactQuill
         value={editorHtml}
@@ -53,6 +54,7 @@ const TextEditor: React.FC<{ placeholder: string }> = ({ placeholder }) => {
           ],
         }}
       />
+
       {/* Action buttons */}
       <div className="mt-8 flex justify-center gap-8">
         <Link href="/tasks">
@@ -64,7 +66,7 @@ const TextEditor: React.FC<{ placeholder: string }> = ({ placeholder }) => {
           onClick={handleSubmit}
           className="bg-turquoise-500 hover:bg-turquoise-600 border border-turquoise-600 hover:border-turquoise-700 font-bold py-2 px-4 rounded-3xl uppercase"
         >
-          Confirm
+          Submit
         </button>
       </div>
     </div>
