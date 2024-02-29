@@ -17,6 +17,27 @@ export type Task = {
   participantsCount?: number;
 };
 
+export type TaskById = {
+  id: number;
+  name: string;
+  description: string;
+  level: number;
+  points: number;
+  createdAt: string;
+  creatorUserId: number;
+  imagePath?: string;
+  status: string;
+  participantsCount: number;
+  creator: {
+    username: string;
+    imagePath?: string;
+  };
+  groups: {
+    id: number;
+    name: string;
+  }[];
+};
+
 export type Group = {
   id: number;
   name: string;

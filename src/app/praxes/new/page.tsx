@@ -11,7 +11,7 @@ import Error from "@/components/Error";
 // Dynamically import ReactQuill to avoid SSR issues
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
-const TextEditor = () => {
+const AddPraxis = () => {
   const router = useRouter();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -181,4 +181,4 @@ const TextEditor = () => {
   );
 };
 
-export default TextEditor;
+export default AddPraxis;
