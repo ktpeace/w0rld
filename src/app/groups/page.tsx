@@ -3,19 +3,19 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
-import { useTheme } from "@/context/ThemeContext";
+// import { useTheme } from "@/context/ThemeContext";
 import { Group } from "@/types";
 import groupIconMapper from "@/components/GroupIcons";
 import acorns from "../../../public/acorns.png";
 import mushrooms from "../../../public/mushrooms-ghost.png";
-import barnOwl from "../../../public/barnowl-trans.png";
-import goldenEagle from "../../../public/eagle.png";
+// import barnOwl from "../../../public/barnowl-trans.png";
+// import goldenEagle from "../../../public/eagle.png";
 import groupsBg from "../../../public/gptgroups.webp";
 import Error from "@/components/Error";
 import Message from "@/components/Message";
 
 export default function GroupsPage() {
-  const { theme, setTheme } = useTheme();
+  // const { theme, setTheme } = useTheme();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [groups, setGroups] = useState<Group[]>([]);

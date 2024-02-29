@@ -36,7 +36,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     const axiosResponseInterceptor = axios.interceptors.response.use(
       (response) => response,
       (error) => {
-        if (error.response.status === 401) {
+        if (error.response?.status === 401) {
           // Handle global logout
           setUser(null);
           localStorage.removeItem("user");
