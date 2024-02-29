@@ -101,9 +101,11 @@ const TaskPage = () => {
 
   // Complete task
   const handleComplete = async () => {
+    const taskId = params.id;
     try {
       setLoading(true);
-      router.push("/praxes/new");
+      if (!taskId) throw new Error("Unable to get task ID");
+      router.push(`/praxes/new/${taskId}`);
     } catch (err) {
       console.error(err);
     } finally {

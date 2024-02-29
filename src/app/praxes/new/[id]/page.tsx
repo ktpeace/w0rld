@@ -1,70 +1,63 @@
 "use client";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useParams, useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
-import "react-quill/dist/quill.snow.css";
-import Message from "@/components/Message";
 import Link from "next/link";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+import "react-quill/dist/quill.snow.css";
+// import Message from "@/components/Message";
+
 import Error from "@/components/Error";
 
 // Dynamically import ReactQuill to avoid SSR issues
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
-const AddPraxis = () => {
+const PraxisPost = () => {
   const router = useRouter();
+  const params = useParams();
+  const taskId = params.id;
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState("");
-  const [level, setLevel] = useState(1);
-  const [points, setPoints] = useState(1);
   const MAX_WORDS = 3000;
   const [editorHtml, setEditorHtml] = useState("");
 
-  // Validate points input on change
-  const handlePointsChange = (e: { target: { value: string } }) => {
-    const value = parseInt(e.target.value, 10);
-    setPoints(Number.isInteger(value) && value > 0 ? value : 1);
-  };
-
-  // Validate level input on change
-  const handleLevelChange = (e: { target: { value: string } }) => {
-    const value = parseInt(e.target.value, 10);
-    setLevel(Number.isInteger(value) && value > 0 ? value : 1);
-  };
-
   // Set editorHtml on change
   const handleChange = (html: string) => {
+    error && setError("");
     setEditorHtml(html);
   };
 
   // Handle form submission
   const handleSubmit = async () => {
-    console.log("Submitting content: ", editorHtml, level, points, title);
+    console.log("Submitting content: ", editorHtml, title);
     try {
-      if (!editorHtml || !level || !points || !title) {
-        setError("All fields are required.");
+      if (!editorHtml || !title) {
+        setError("Both fields are required.");
         return;
       }
       // const userIdString = user!.id.toString();
-      const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/tasks/new`,
+      const { data } = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/praxis`,
         {
-          title: title,
+          taskId,
+          title,
           description: editorHtml,
-          level: level,
-          points: points,
         },
         {
           withCredentials: true,
         }
       );
-      console.log("res:", res);
-      const id = res.data.id;
-      router.push(`/tasks/${id}`);
+      console.log("res:", data);
+      router.push(`/praxes/${data}`);
     } catch (err) {
       console.error(err);
-      setError("Sorry, an error occurred. Please retry.");
+      const axiosError = err as AxiosError;
+      if (axiosError.response?.status === 409) {
+        setError("It seems you've already got a praxis for this task!");
+      } else {
+        setError("Sorry, an error occurred. Please retry.");
+      }
     } finally {
       setLoading(false);
     }
@@ -86,7 +79,7 @@ const AddPraxis = () => {
   return (
     <div className="text-editor flex flex-col items-center mt-8 mx-6 md:mx-24 xl:mx-64">
       {/* Explanation */}
-      <Message text="After submission, your task will be immediately visible in the inactive 'proposed' state. Once a moderator approves your task, it will be available for adoption." />
+      <h2>Praxis for Task {taskId}</h2>
       {/* Error */}
       {error && <Error message={error} setError={setError} />}
       {/* Title*/}
@@ -103,37 +96,6 @@ const AddPraxis = () => {
           required
           className="w-full px-2 py-1 bg-transparent border-2 rounded dark:border-gray-600"
         />
-      </div>
-
-      <div className="w-full mb-4 flex flex-row md:flex-col justify-between">
-        {/* Level */}
-        <div className="w-full mb-4 flex gap-2 items-center">
-          <label htmlFor="level" className="min-w-14">
-            Level:
-          </label>
-          <input
-            id="level"
-            type="number"
-            value={level}
-            onChange={handleLevelChange}
-            required
-            className="max-w-20 px-2 py-1 bg-transparent border-2 rounded dark:border-gray-600"
-          />
-        </div>
-        {/* Points */}
-        <div className="w-full mb-4 flex justify-end md:justify-start items-center gap-2">
-          <label htmlFor="points" className="min-w-14">
-            Points:
-          </label>
-          <input
-            id="points"
-            type="number"
-            value={points}
-            onChange={handlePointsChange}
-            required
-            className="max-w-20 px-2 py-1 bg-transparent border-2 rounded dark:border-gray-600"
-          />
-        </div>
       </div>
 
       {/* Editor */}
@@ -174,11 +136,11 @@ const AddPraxis = () => {
           onClick={handleSubmit}
           className="py-2 px-4 rounded-3xl font-bold uppercase bg-turquoise-50 hover:bg-turquoise-300 border-turquoise-300 hover:border-turquoise-400 dark:bg-turquoise-500 dark:hover:bg-turquoise-600 border dark:border-turquoise-600 dark:hover:border-turquoise-700"
         >
-          Propose
+          Praxify
         </button>
       </div>
     </div>
   );
 };
 
-export default AddPraxis;
+export default PraxisPost;
