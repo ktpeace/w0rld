@@ -65,6 +65,24 @@ export type Praxis = {
   imagePath?: string;
 };
 
+export type PraxisDetailed = {
+  id: number;
+  taskId: number;
+  userId: number;
+  completedAt: string;
+  title: string;
+  description: string;
+  User: { id: number; username: string; imagePath: string };
+  Task: {
+    id: number;
+    name: string;
+    points: number;
+    level: number;
+  };
+  imagePath?: string;
+  voteCount: number;
+};
+
 export type Update = {
   id: number;
   timestamp: string;

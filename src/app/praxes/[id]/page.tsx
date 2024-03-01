@@ -2,8 +2,8 @@
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import axios, { AxiosError } from "axios";
-import { Praxis } from "@/types";
-import Error from "@/components/Error";
+import { PraxisDetailed } from "@/types";
+import ErrorMessage from "@/components/Error";
 import { useUser } from "@/context/UserContext";
 import Link from "next/link";
 import formatISODateStringCompact from "@/utils/formatDateTime";
@@ -13,7 +13,7 @@ const PraxisPage = () => {
   const { user } = useUser();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [praxis, setPraxis] = useState<Praxis | undefined>(undefined);
+  const [praxis, setPraxis] = useState<PraxisDetailed | undefined>(undefined);
   const [isAuthor, setIsAuthor] = useState(false);
 
   // Check if user is the praxis post author
@@ -24,6 +24,10 @@ const PraxisPage = () => {
   //     }
   //   }
   // }, [user]);
+
+  // #toadd check if user already voted
+
+  // #toadd allow edit of praxis
 
   // Fetch & set groups
   useEffect(() => {
@@ -51,10 +55,27 @@ const PraxisPage = () => {
     console.log("edit!");
   };
 
+  const handleVote = async () => {
+    console.log("Vote!");
+    try {
+      if (!id) {
+        throw new Error("Missing praxis ID from URL");
+      }
+      const { data } = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/praxis/vote/${id}`,
+        null,
+        { withCredentials: true }
+      );
+      console.log("data", data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div className="mt-24 mx-6 md:mx-24 xl:mx-64 flex flex-col items-center gap-4">
       {/* Error */}
-      {error && <Error message={error} setError={setError} />}
+      {error && <ErrorMessage message={error} setError={setError} />}
       {/* Loading */}
       {loading && (
         <div
@@ -72,14 +93,14 @@ const PraxisPage = () => {
             <div className="flex-1"></div>
             <h1 className="flex-1 text-xl font-bold">{praxis.title}</h1>
             <div className="flex-1 flex justify-end">
-              {!isAuthor && (
+              {/* {isAuthor && (
                 <button
                   className="p-1 border border-parchment-300 rounded uppercase font-bold"
                   onClick={handleEdit}
                 >
                   Edit
                 </button>
-              )}
+              )} */}
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -101,6 +122,16 @@ const PraxisPage = () => {
             <span>Points: {praxis.Task.points}</span>
           </div>
           <p>{praxis.description}</p>
+          <div className="w-full flex items-center justify-end gap-2">
+            <span>Votes: {praxis.voteCount}</span>
+            <button
+              className="p-1 border border-parchment-300 rounded uppercase font-bold"
+              onClick={handleVote}
+              disabled={isAuthor}
+            >
+              Vote
+            </button>
+          </div>
         </>
       )}
     </div>
