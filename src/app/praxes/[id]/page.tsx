@@ -14,16 +14,18 @@ const PraxisPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [praxis, setPraxis] = useState<PraxisDetailed | undefined>(undefined);
+  const [votes, setVotes] = useState(praxis?.voteCount);
   const [isAuthor, setIsAuthor] = useState(false);
 
   // Check if user is the praxis post author
-  // useEffect(() => {
-  //   if (user) {
-  //     if (parseInt(id) === user.groupId) {
-  //       setIsPoster(true);
-  //     }
-  //   }
-  // }, [user]);
+  useEffect(() => {
+    if (user && praxis) {
+      console.log("ids:", praxis.userId, user.id);
+      if (praxis.userId === user.id) {
+        setIsAuthor(true);
+      }
+    }
+  }, [user, praxis]);
 
   // #toadd check if user already voted
 
@@ -43,6 +45,7 @@ const PraxisPage = () => {
       );
       console.log("praxis:", data);
       setPraxis(data);
+      setVotes(data.voteCount);
     } catch (error) {
       console.error("Failed to fetch praxis:", error);
       setError("Sorry, an error occurred fetching this praxis! Please reload.");
@@ -67,6 +70,9 @@ const PraxisPage = () => {
         { withCredentials: true }
       );
       console.log("data", data);
+      if (praxis?.voteCount !== undefined) {
+        setVotes((prevVotes) => (prevVotes !== undefined ? prevVotes + 1 : 1));
+      }
     } catch (err) {
       console.error(err);
     }
@@ -91,7 +97,9 @@ const PraxisPage = () => {
         <>
           <div className="w-full flex justify-between">
             <div className="flex-1"></div>
-            <h1 className="flex-1 text-xl font-bold">{praxis.title}</h1>
+            <h1 className="flex-1 text-xl font-bold text-center">
+              {praxis.title}
+            </h1>
             <div className="flex-1 flex justify-end">
               {/* {isAuthor && (
                 <button
@@ -123,9 +131,13 @@ const PraxisPage = () => {
           </div>
           <p>{praxis.description}</p>
           <div className="w-full flex items-center justify-end gap-2">
-            <span>Votes: {praxis.voteCount}</span>
+            <span>Votes: {votes}</span>
             <button
-              className="p-1 border border-parchment-300 rounded uppercase font-bold"
+              className={`p-1 border rounded uppercase font-bold ${
+                isAuthor
+                  ? "border-gray-800 text-gray-500 cursor-not-allowed"
+                  : "border-parchment-300"
+              }`}
               onClick={handleVote}
               disabled={isAuthor}
             >
