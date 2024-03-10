@@ -29,7 +29,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     if (storedTheme !== theme) {
       setTheme(storedTheme);
     }
-  }, []);
+  }, [theme]);
 
   useEffect(() => {
     console.log("theme changed:", theme);

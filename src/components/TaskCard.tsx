@@ -70,7 +70,7 @@ const TaskCard = ({ task, color }: CardProps) => {
             {/* Creator & Date */}
             <div className="w-full flex items-center justify-between lg:justify-start mb-4 lg:mb-0">
               <span className="font-bold mr-2 text-sm">by {task.creator}</span>
-              <span>{task.created_at}</span>
+              <span>{task.createdAt}</span>
             </div>
             {/* Stats */}
             <div className="flex flex-col md:flex-row justify-between items-center w-full lg:w-1/2">

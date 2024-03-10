@@ -66,6 +66,7 @@ export default function UserTasks({
         setLoading(false);
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [hasMore, searchTerm, sortOrder]
   ); // Dependencies for useCallback
 
@@ -82,6 +83,7 @@ export default function UserTasks({
     debouncedFetch();
 
     return () => debouncedFetch.cancel();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTerm, sortOrder]);
 
   // Last task ref setup for infinite scroll

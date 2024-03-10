@@ -55,7 +55,8 @@ const TaskPage = () => {
     };
 
     taskId && fetchTask();
-  }, [params]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params?.id]);
 
   // Set user task status
   useEffect(() => {
@@ -80,6 +81,7 @@ const TaskPage = () => {
     }
 
     userId && taskId && fetchUserTaskStatus();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   // Add task

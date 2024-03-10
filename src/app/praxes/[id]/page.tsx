@@ -34,6 +34,7 @@ const PraxisPage = () => {
   // Fetch & set groups
   useEffect(() => {
     id && fetchPraxis();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const fetchPraxis = async () => {

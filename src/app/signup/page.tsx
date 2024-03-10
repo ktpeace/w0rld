@@ -29,6 +29,7 @@ const CreateAccount = () => {
 
   useEffect(() => {
     if (invalidInputs.length > 0) setInvalidInputs("");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [username, password, password2, email]);
 
   const validateUsername = () => {
@@ -132,7 +133,7 @@ const CreateAccount = () => {
       setUser(JSON.parse(foundUser));
       setUsername(foundUser);
     }
-  }, []);
+  }, [setUser]);
 
   // if there's a user show the message below
   if (user) {

@@ -74,6 +74,7 @@ export default function PraxisPage() {
     debouncedFetch();
 
     return () => debouncedFetch.cancel();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTerm, sortOrder]);
 
   // Last task ref setup for infinite scroll
@@ -163,7 +164,7 @@ export default function PraxisPage() {
         </section>
       )}
       {/* Error */}
-      {error && <Error message={error} />}
+      {error && <Error message={error} setError={setError} />}
       {/* Loading */}
       {loading && (
         <div

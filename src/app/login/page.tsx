@@ -17,6 +17,7 @@ const Login = () => {
   // Clear error messages on user typing
   useEffect(() => {
     if (loginError) setLoginError("");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [usernameOrEmail, password]);
 
   // Handle login attempt

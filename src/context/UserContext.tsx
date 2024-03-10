@@ -51,6 +51,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       // Eject the interceptor when the component unmounts to avoid duplicates
       axios.interceptors.response.eject(axiosResponseInterceptor);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -94,7 +95,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     } else {
       validateSession();
     }
-  }, []);
+  }, [VALIDATION_THRESHOLD]);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
