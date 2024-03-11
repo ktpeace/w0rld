@@ -29,7 +29,8 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     if (storedTheme !== theme) {
       setTheme(storedTheme);
     }
-  }, [theme]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     console.log("theme changed:", theme);
